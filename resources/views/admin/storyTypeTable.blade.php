@@ -57,13 +57,18 @@
 						                	{{__('false')}}
 						                	@endif
 					                    </td>
-	                                    <td class="col-md-1">                                
-			                                <button type="button" class="btn btn-default waves-effect">
+	                                    <td class="col-md-2">                                
+			                                <a href="{{ route('storymaster.edit', ['id' => $type ->type_id]) }}" type="button" class="btn btn-default waves-effect">
 			                                    <i class="material-icons">mode_edit</i>
-			                                </button>
-			                                <button type="button" class="btn bg-red waves-effect">
+			                                </a>
+			                                <a type="button" class="btn bg-red waves-effect" onclick="event.preventDefault();
+                                                     document.getElementById('destroy{{$type ->type_id}}').submit();">
 			                                    <i class="material-icons">delete_forever</i>
-			                                </button>
+			                                </a>
+                                            <form id="destroy{{$type ->type_id}}" action="{{ route('storymaster.destroy', ['id' => $type ->type_id]) }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+                                            </form>
 	                            		</td>
 					                </tr>
 					            @endforeach

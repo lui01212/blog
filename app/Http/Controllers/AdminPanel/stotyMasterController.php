@@ -88,7 +88,11 @@ class stotyMasterController extends Controller
      */
     public function edit($id)
     {
+        $storyType = StoryType::find($id);
         //
+        $user = Auth::user();
+        //
+        return view('admin.storyTypeEdit',['user' =>$user,'storyType' => $storyType]);
     }
 
     /**
@@ -98,9 +102,17 @@ class stotyMasterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(storyTypeRequest $request, $id)
     {
+        $storyType = storyType::find($id);
+
+        $storyType->type_name = $request->input('type_name');
+
+        $storyType->flag = $request->input('flag');
         //
+        $storyType->save();
+        //
+        return redirect()->route('storymaster.edit',['id' => $id]);
     }
 
     /**
@@ -111,6 +123,12 @@ class stotyMasterController extends Controller
      */
     public function destroy($id)
     {
+        $storyType = storyType::find($id);
+
+        $storyType->flag = 2;
         //
+        $storyType->save();
+        //
+        return redirect()->route('storymaster.index');
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2018 at 12:09 PM
+-- Generation Time: Jul 17, 2018 at 05:03 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -75,9 +75,10 @@ CREATE TABLE `story_types` (
 --
 
 INSERT INTO `story_types` (`type_id`, `type_name`, `type_name_link`, `flag`, `created_at`, `updated_at`) VALUES
-(3, 'Tiên Hiệp', 'tien-hiep', 1, '2018-07-17 03:01:13', '2018-07-17 03:01:13'),
-(4, 'Huyền Huyễn', 'huyen-huyen', 1, '2018-07-17 03:02:01', '2018-07-17 03:02:01'),
-(5, 'Xuyên Không', 'xuyen-khong', 1, '2018-07-17 03:06:56', '2018-07-17 03:06:56');
+(3, 'Tiên Hiệp', 'tien-hiep', 1, '2018-07-17 03:01:13', '2018-07-17 08:00:31'),
+(4, 'Huyền Huyễn', 'huyen-huyen', 1, '2018-07-17 03:02:01', '2018-07-17 08:00:39'),
+(5, 'Xuyên Không', 'xuyen-khong', 1, '2018-07-17 03:06:56', '2018-07-17 08:00:50'),
+(6, 'Dị Giới', 'di-gioi', 1, '2018-07-17 05:02:14', '2018-07-17 08:01:03');
 
 -- --------------------------------------------------------
 
@@ -148,7 +149,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `story_types`
 --
 ALTER TABLE `story_types`
-  MODIFY `type_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `type_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -21,16 +21,17 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        THÊM THỂ LOẠI
+                        THỂ LOẠI
                     </h2>
                 </div>
                 <div class="body">
-                    <form method="PUT" action="{{ route('storymaster.store') }}">
-                    	{{ csrf_field() }}
+                    <form method="POST" action="{{ route('storymaster.update', ['id' => $storyType ->type_id]) }}"  >
+                        {{ csrf_field() }}
+                        {{ method_field('PUT') }}
                         <label for="type_name">Loại Truyện</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text"  name ="type_name" id="type_name" class="form-control" placeholder="Nhập Thể Loại .....">
+                                <input type="text"  name ="type_name" id="type_name" class="form-control" value="{{$storyType ->type_name}}">
                             </div>
                         </div>
                         @if ($errors->has('type_name'))
@@ -38,7 +39,14 @@
 						        <strong>{{ $errors->first('type_name') }}</strong>
 	                        </div>
 						@endif
-                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">THÊM</button>
+                        <div class="form-group">
+                            <input type="radio" name="flag"  value="1" id="flag1" class="with-gap" @if($storyType ->flag ==1) checked @endif>
+                            <label for="flag1">true</label>
+
+                            <input type="radio" name="flag" value="2" id="flag2" class="with-gap" @if($storyType ->flag ==2) checked @endif > 
+                            <label for ="flag2" class="m-l-20">false</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">SỬA</button>
                     </form>
                 </div>
             </div>
