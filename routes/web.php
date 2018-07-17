@@ -27,4 +27,9 @@ Route::group(['prefix' => 'admin'],function(){
 	//Dashboard
 	//-----------------------------------------------------------------------
 	Route::get('/',['as' => 'admin','uses' => 'AdminPanel\\DashboardCotroller@getDashboard']);
+	//-----------------------------------------------------------------------
+	//Tables
+	//-----------------------------------------------------------------------
+	Route::resource('storymaster', 'AdminPanel\\stotyMasterController');
+	//
 });

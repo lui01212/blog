@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Auth;
+
 class DashboardCotroller extends Controller
 {
 	 /**
@@ -20,6 +22,8 @@ class DashboardCotroller extends Controller
 
     public function getDashboard()
     {
-    	return "error";
+        $user = Auth::user();
+
+    	return view('admin.Dashboard',['user' =>$user]);
     }
 }

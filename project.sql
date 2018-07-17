@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2018 at 01:54 AM
+-- Generation Time: Jul 17, 2018 at 12:09 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -40,7 +40,8 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1);
+(2, '2014_10_12_100000_create_password_resets_table', 1),
+(3, '2018_07_17_083116_create_story_types_table', 2);
 
 -- --------------------------------------------------------
 
@@ -53,6 +54,30 @@ CREATE TABLE `password_resets` (
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `story_types`
+--
+
+CREATE TABLE `story_types` (
+  `type_id` int(10) UNSIGNED NOT NULL,
+  `type_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_name_link` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `flag` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `story_types`
+--
+
+INSERT INTO `story_types` (`type_id`, `type_name`, `type_name_link`, `flag`, `created_at`, `updated_at`) VALUES
+(3, 'Tiên Hiệp', 'tien-hiep', 1, '2018-07-17 03:01:13', '2018-07-17 03:01:13'),
+(4, 'Huyền Huyễn', 'huyen-huyen', 1, '2018-07-17 03:02:01', '2018-07-17 03:02:01'),
+(5, 'Xuyên Không', 'xuyen-khong', 1, '2018-07-17 03:06:56', '2018-07-17 03:06:56');
 
 -- --------------------------------------------------------
 
@@ -77,7 +102,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `level`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'Admin', 'bvl0165@gmail.com', '$2y$10$Z/mbqq/r7ByDeKOBTyvN4eLjy8QgcALdWHWN3g8ksmQdi/G1mj1PW', 0, 'vTTrmb2cDMAm0lADDDflO6iPv7tB60WSRoYcBOJt0ZizCEpYYjJ1ZweYg2QS', '2018-07-16 05:34:40', '2018-07-16 05:34:40');
+(1, 'Admin', 'Admin', 'bvl0165@gmail.com', '$2y$10$Z/mbqq/r7ByDeKOBTyvN4eLjy8QgcALdWHWN3g8ksmQdi/G1mj1PW', 0, 'ty7fCM3V2tSAhHbIrNg7kyjGlokY5sd7QOlTyfwXSKFcXlT4ohjOYa0W48m0', '2018-07-16 05:34:40', '2018-07-16 05:34:40');
 
 --
 -- Indexes for dumped tables
@@ -96,6 +121,12 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `story_types`
+--
+ALTER TABLE `story_types`
+  ADD PRIMARY KEY (`type_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -111,7 +142,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `story_types`
+--
+ALTER TABLE `story_types`
+  MODIFY `type_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
