@@ -118,7 +118,7 @@ class storiesController extends Controller
         //     $typeStoryDetail->save();
         // }
         // return $storyType;
-        return $request ->all();
+        return $request ->all(); 
     }
 
     /**
