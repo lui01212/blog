@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2018 at 12:12 PM
+-- Generation Time: Jul 18, 2018 at 04:30 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -43,7 +43,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2018_07_17_083116_create_story_types_table', 2),
 (5, '2018_07_18_034551_create_story_authors_table', 3),
-(6, '2018_07_18_044659_create_stories_table', 4);
+(6, '2018_07_18_044659_create_stories_table', 4),
+(7, '2018_07_18_141214_create_story_type_details_table', 5);
 
 -- --------------------------------------------------------
 
@@ -103,7 +104,8 @@ CREATE TABLE `story_authors` (
 --
 
 INSERT INTO `story_authors` (`author_id`, `author_name`, `author_name_link`, `flag`, `created_at`, `updated_at`) VALUES
-(1, 'Thiên Tằm Tổ Đậu', 'thien-tam-to-dau', 1, '2018-07-17 21:37:09', '2018-07-17 21:45:45');
+(1, 'Thiên Tằm Tổ Đậu', 'thien-tam-to-dau', 1, '2018-07-17 21:37:09', '2018-07-17 21:45:45'),
+(2, 'Đường Gia Tam Thiếu', 'duong-gia-tam-thieu', 1, '2018-07-18 04:30:36', '2018-07-18 04:30:36');
 
 -- --------------------------------------------------------
 
@@ -130,6 +132,20 @@ INSERT INTO `story_types` (`type_id`, `type_name`, `type_name_link`, `flag`, `cr
 (5, 'Xuyên Không', 'xuyen-khong', 1, '2018-07-17 03:06:56', '2018-07-17 18:12:29'),
 (6, 'Dị Giới', 'di-gioi', 1, '2018-07-17 05:02:14', '2018-07-17 08:01:03'),
 (7, 'Trọng Sinh', 'trong-sinh', 1, '2018-07-17 18:21:27', '2018-07-17 18:21:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `story_type_details`
+--
+
+CREATE TABLE `story_type_details` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `story_id` int(11) NOT NULL,
+  `type_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -191,6 +207,12 @@ ALTER TABLE `story_types`
   ADD PRIMARY KEY (`type_id`);
 
 --
+-- Indexes for table `story_type_details`
+--
+ALTER TABLE `story_type_details`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -206,7 +228,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `stories`
@@ -218,13 +240,19 @@ ALTER TABLE `stories`
 -- AUTO_INCREMENT for table `story_authors`
 --
 ALTER TABLE `story_authors`
-  MODIFY `author_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `author_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `story_types`
 --
 ALTER TABLE `story_types`
   MODIFY `type_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `story_type_details`
+--
+ALTER TABLE `story_type_details`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`

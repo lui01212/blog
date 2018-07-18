@@ -18,10 +18,11 @@
 	    </a>
 	</div>
     <!-- Vertical Layout -->
+    <form method="POST" action="{{ route('storiesmaster.store') }}">
+    {{ csrf_field() }}
     <div class="row clearfix">
-        <form method="POST" action="{{ route('storiesmaster.store') }}">
-            {{ csrf_field() }}
-            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
                 <div class="card">
                     <div class="thumbnail">
                         <div class="caption">
@@ -38,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-12">
                 <div class="card">
                     <div class="header">
                         <h2>
@@ -52,8 +53,11 @@
                                 <label for="story_name">Tên Truyện</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="story_name" name="story_name" class="form-control" placeholder="Nhập Tên Truyện..." >
+                                        <input type="story_name"  value="{{ old('story_name') }}" name="story_name" class="form-control" placeholder="Nhập Tên Truyện..." >
                                     </div>
+                                     @if ($errors->has('story_name'))
+                                    <h6 id="story_name-error" class="error col-pink" for="story_name">{{ $errors->first('story_name') }}</h6>
+                                    @endif
                                 </div>
                             </div>
 
@@ -61,9 +65,13 @@
                                 <label for="author_id">Tác Giả</label>
                                 <select class="form-control show-tick" name="author_id">
                                     <option ></option>
-                                    <option>Thiên Tằm Thổ Đậu</option>
-                                    <option>Đường Gia Tam Thiếu</option>
+                                    @foreach($storyAuthor as $author)
+                                    <option value="{{$author ->author_id}}" @if (old('author_id') == $author ->author_id) selected="selected" @endif>{{$author ->author_name}}</option>
+                                    @endforeach
                                 </select>
+                            @if ($errors->has('author_id'))
+                            <h6 id="author_id-error" class="error col-pink" for="author_id">{{ $errors->first('author_id') }}</h6>
+                            @endif
                             </div>
 
                         </div>
@@ -73,27 +81,37 @@
                                <label for="story_source">Nguồn</label>
                                <div class="form-group">
                                     <div class="form-line">
-                                       <input type="story_source" name="story_source" class="form-control" placeholder="Nhập Nguồn Truyện..." > 
+                                       <input type="story_source" value="{{ old('story_source') }}" name="story_source" class="form-control" placeholder="Nhập Nguồn Truyện..." > 
                                     </div>
+                                    @if ($errors->has('story_source'))
+                                    <h6 id="story_source-error" class="error col-pink" for="story_source">{{ $errors->first('story_source') }}</h6>
+                                    @endif
                                 </div>
+
                             </div>
 
 
                             <div class="col-md-4">
-                                <label for="storyType">Loại Truyện</label>
-                                <select multiple  class="form-control show-tick" multiple name="storyType[]">
-                                    <option>Mustard</option>
-                                    <option>Ketchup</option>
-                                    <option>Relish</option>
+                                <label for="story_type">Loại Truyện</label>
+                                <select multiple  class="form-control show-tick" multiple name="story_type[]">
+                                    @foreach($storyType as $type)
+                                    <option value="{{$type ->type_id}}">{{$type ->type_name}}</option>
+                                    @endforeach
                                  </select>
+                            @if ($errors->has('story_type'))
+                            <h6 id="story_type-error" class="error col-pink" for="story_type">{{ $errors->first('story_type') }}</h6>
+                            @endif
                             </div>
 
                             <div class="col-md-4">
                                <label for="story_sum_chapter">Số Chương</label>
                                <div class="form-group">
                                     <div class="form-line">
-                                       <input type="text" name="story_sum_chapter" class="form-control">
+                                       <input type="text" value="{{ old('story_sum_chapter') }}" name="story_sum_chapter" class="form-control">
                                     </div>
+                                     @if ($errors->has('story_sum_chapter'))
+                                    <h6 id="story_sum_chapter-error" class="error col-pink" for="story_sum_chapter">{{ $errors->first('story_sum_chapter') }}</h6>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -103,51 +121,56 @@
                                 <label for="story_view">Lược Xem</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" name="story_view" class="form-control" id="story_view">
+                                        <input type="text"  value="{{ old('story_view') }}" name="story_view" class="form-control" id="story_view">
                                     </div>
+                                    @if ($errors->has('story_view'))
+                                    <h6 id="story_view-error" class="error col-pink" for="story_view">{{ $errors->first('story_view') }}</h6>
+                                    @endif
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <label for="story_rating">Đánh Giá</label>
-                                <select class="form-control show-tick" name="story_rating">
+                                <select class="form-control show-tick" value="{{ old('story_rating') }}" name="story_rating">
                                     <option ></option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
+                                    @for($ix = 1; $ix <= 10 ;$ix++)
+                                    <option value="{{$ix}}" @if (old('story_rating') == $ix) selected="selected" @endif>{{$ix}}*</option>
+                                    @endfor
                                 </select>
+                            @if ($errors->has('story_rating'))
+                            <h6 id="story_rating-error" class="error col-pink" for="story_rating">{{ $errors->first('story_rating') }}</h6>
+                            @endif
                             </div>
 
                             <div class="col-md-3">
                                 <label for="story_status">Trạng Thái</label>
                                 <select class="form-control show-tick" name="story_status" id="story_status">
                                     <option></option>
-                                    <option value="1">Hoàn Thành</option>
-                                    <option value="2">Đang Ra</option>
+                                    <option value="1" @if (old('story_status') == '1') selected="selected" @endif>Hoàn Thành</option>
+                                    <option value="2" @if (old('story_status') == '2') selected="selected" @endif>Đang Ra</option>
                                 </select>
+                            @if ($errors->has('story_status'))
+                            <h6 id="story_status-error" class="error col-pink" for="story_status">{{ $errors->first('story_status') }}</h6>
+                            @endif
                             </div>
 
                             <div class="col-md-3">
                                 <label for="story_price">Tính Phí</label>
-                                <select class="form-control show-tick" name="story_price" id="story_price">
+                                <select class="form-control show-tick" value="{{ old('story_price') }}"  name="story_price">
                                     <option></option>
-                                    <option value="1">Có</option>
-                                    <option value="2">Không</option>
+                                    <option value="1" @if (old('story_price') == '1') selected="selected" @endif>Có</option>
+                                    <option value="2" @if (old('story_price') == '2') selected="selected" @endif>Không</option>
                                 </select>
+                            @if ($errors->has('story_price'))
+                            <h6 id="story_price-error" class="error col-pink" for="story_price">{{ $errors->first('story_price') }}</h6>
+                            @endif
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </div>      
     </div>
+
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
@@ -157,25 +180,21 @@
                     </h2>
                 </div>
                 <div class="body">
-                    <textarea id="tinymce">
-                        <h2>WYSIWYG Editor</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ullamcorper sapien non nisl facilisis bibendum in quis tellus. Duis in urna bibendum turpis pretium fringilla. Aenean neque velit, porta eget mattis ac, imperdiet quis nisi. Donec non dui et tortor vulputate luctus. Praesent consequat rhoncus velit, ut molestie arcu venenatis sodales.</p>
-                        <h3>Lacinia</h3>
-                        <ul>
-                            <li>Suspendisse tincidunt urna ut velit ullamcorper fermentum.</li>
-                            <li>Nullam mattis sodales lacus, in gravida sem auctor at.</li>
-                            <li>Praesent non lacinia mi.</li>
-                            <li>Mauris a ante neque.</li>
-                            <li>Aenean ut magna lobortis nunc feugiat sagittis.</li>
-                        </ul>
-                        <h3>Pellentesque adipiscing</h3>
-                        <p>Maecenas quis ante ante. Nunc adipiscing rhoncus rutrum. Pellentesque adipiscing urna mi, ut tempus lacus ultrices ac. Pellentesque sodales, libero et mollis interdum, dui odio vestibulum dolor, eu pellentesque nisl nibh quis nunc. Sed porttitor leo adipiscing venenatis vehicula. Aenean quis viverra enim. Praesent porttitor ut ipsum id ornare.</p>
+                    <textarea id="tinymce" name="story_intro">
+                        {{ old('story_intro') }}
                     </textarea>
+                @if ($errors->has('story_intro'))
+                <h6 id="story_intro-error" class="error col-pink" for="story_intro">{{ $errors->first('story_intro') }}</h6>
+                @endif
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary m-t-15 waves-effect">THÊM</button>
+        <br>
     </div>
+    <div class="row clearfix">
+    <button type="submit" class="btn btn-primary m-t-5 m-b-15 waves-effect">THÊM</button>
+    </div>
+    </form>
     <!-- #END# Vertical Layout -->
 </div>
 @endsection
