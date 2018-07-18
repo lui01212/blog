@@ -33,12 +33,11 @@
                             <div class="form-line">
                                 <input type="text"  name ="type_name" id="type_name" class="form-control" value="{{$storyType ->type_name}}">
                             </div>
+                            @if ($errors->has('type_name'))
+                            <label id="email-error" class="error" for="email">{{ $errors->first('type_name') }}</label>
+                            @endif
                         </div>
-                        @if ($errors->has('type_name'))
-						    <div class="alert alert-danger" role="alert">
-						        <strong>{{ $errors->first('type_name') }}</strong>
-	                        </div>
-						@endif
+                        
                         <div class="form-group">
                             <input type="radio" name="flag"  value="1" id="flag1" class="with-gap" @if($storyType ->flag ==1) checked @endif>
                             <label for="flag1">true</label>

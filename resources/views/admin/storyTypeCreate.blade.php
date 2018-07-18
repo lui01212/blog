@@ -25,19 +25,18 @@
                     </h2>
                 </div>
                 <div class="body">
-                    <form method="PUT" action="{{ route('storymaster.store') }}">
+                    <form method="POST" action="{{ route('storymaster.store') }}">
                     	{{ csrf_field() }}
                         <label for="type_name">Loại Truyện</label>
                         <div class="form-group">
                             <div class="form-line">
                                 <input type="text"  name ="type_name" id="type_name" class="form-control" placeholder="Nhập Thể Loại .....">
                             </div>
+                            @if ($errors->has('type_name'))
+                            <label id="email-error" class="error" for="email">{{ $errors->first('type_name') }}</label>
+                            @endif
                         </div>
-                        @if ($errors->has('type_name'))
-						    <div class="alert alert-danger" role="alert">
-						        <strong>{{ $errors->first('type_name') }}</strong>
-	                        </div>
-						@endif
+						
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">THÊM</button>
                     </form>
                 </div>

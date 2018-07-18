@@ -57,16 +57,14 @@ class stotyMasterController extends Controller
      */
     public function store(storyTypeRequest $request)
     {
-        $typeName = $request->input('type_name');
-        $StoryType = new StoryType();
-        $StoryType ->type_name      = $typeName;
-        $StoryType ->type_name_link = str_slug($typeName);
-        $StoryType ->flag = 1;
-        $StoryType ->save();
+        $typeName   = $request->input('type_name');
+        $StoryType  = new StoryType();
+        $StoryType  ->type_name      = $typeName;
+        $StoryType  ->type_name_link = str_slug($typeName);
+        $StoryType  ->flag = 1;
+        $StoryType  ->save();
         //
-        $user = Auth::user();
-        //
-        return view('admin.storyTypeCreate',['user' =>$user]);
+        return redirect()->route('storymaster.index');
     }
 
     /**

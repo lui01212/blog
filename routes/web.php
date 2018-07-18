@@ -31,5 +31,13 @@ Route::group(['prefix' => 'admin'],function(){
 	//Tables
 	//-----------------------------------------------------------------------
 	Route::resource('storymaster', 'AdminPanel\\stotyMasterController');
+	//-----------------------------------------------------------------------
+	//Tables
+	//-----------------------------------------------------------------------
+	Route::resource('authormaster', 'AdminPanel\\storyAuthorController');
+	//-----------------------------------------------------------------------
+	//Tables
+	//-----------------------------------------------------------------------
+	Route::resource('storiesmaster', 'AdminPanel\\storiesController');
 	//
 });
