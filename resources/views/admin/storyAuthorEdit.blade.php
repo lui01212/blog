@@ -10,7 +10,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="block-header">
-	    <a href="{{ route('storymaster.index') }}" class="btn btn-success waves-effect">
+	    <a href="{{ route('authormaster.index') }}" class="btn btn-success waves-effect">
 	        <i class="material-icons">assignment_return</i>
 	        <span>TRỞ VỀ LIST</span>
 	    </a>
@@ -21,28 +21,28 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        THỂ LOẠI
+                        TÁC GIẢ
                     </h2>
                 </div>
                 <div class="body">
-                    <form method="POST" action="{{ route('storymaster.update', ['id' => $storyType ->type_id]) }}"  >
+                    <form method="POST" action="{{ route('authormaster.update', ['id' => $storyAuthor ->author_id]) }}"  >
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
-                        <label for="type_name">Loại Truyện</label>
+                        <label for="author_name">Loại Truyện</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text"  name ="type_name" id="type_name" class="form-control" value="{{$storyType ->type_name}}">
+                                <input type="text"  name ="author_name" id="author_name" class="form-control" value="{{$storyAuthor ->author_name}}">
                             </div>
-                            @if ($errors->has('type_name'))
-                            <label id="email-error" class="error" for="email">{{ $errors->first('type_name') }}</label>
+                            @if ($errors->has('author_name'))
+                            <label id="email-error" class="error" for="email">{{ $errors->first('author_name') }}</label>
                             @endif
                         </div>
                         
                         <div class="form-group">
-                            <input type="radio" name="flag"  value="1" id="flag1" class="with-gap" @if($storyType ->flag ==1) checked @endif>
+                            <input type="radio" name="flag"  value="1" id="flag1" class="with-gap" @if($storyAuthor ->flag ==1) checked @endif>
                             <label for="flag1">true</label>
 
-                            <input type="radio" name="flag" value="2" id="flag2" class="with-gap" @if($storyType ->flag ==2) checked @endif > 
+                            <input type="radio" name="flag" value="2" id="flag2" class="with-gap" @if($storyAuthor ->flag ==2) checked @endif > 
                             <label for ="flag2" class="m-l-20">false</label>
                         </div>
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">SỬA</button>

@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\AdminPanel;
 
-use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
-use App\Http\Requests\storyTypeRequest;
+use App\Http\Requests\storyAuthorRequest;
 
-use App\StoryType;
+use App\StoryAuthor;
 
-class stotyMasterController extends Controller
+class storyAuthorController extends Controller
 {
      /**
      * Create a new controller instance.
@@ -32,9 +32,9 @@ class stotyMasterController extends Controller
     {
         $user = Auth::user();
 
-        $storyType = StoryType::all();
+        $storyAuthor = StoryAuthor::all();
 
-        return view('admin.storyTypeTable',['user' =>$user,'storyType' =>$storyType]);
+        return view('admin.storyAuthorTable',['user' =>$user,'storyAuthor' =>$storyAuthor]);
     }
 
     /**
@@ -46,7 +46,7 @@ class stotyMasterController extends Controller
     {
         $user = Auth::user();
 
-        return view('admin.storyTypeCreate',['user' =>$user]);
+        return view('admin.storyAuthorCreate',['user' =>$user]);
     }
 
     /**
@@ -55,16 +55,16 @@ class stotyMasterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(storyTypeRequest $request)
+    public function store(storyAuthorRequest $request)
     {
-        $typeName   = $request->input('type_name');
-        $StoryType  = new StoryType();
-        $StoryType  ->type_name      = $typeName;
-        $StoryType  ->type_name_link = str_slug($typeName);
-        $StoryType  ->flag = 1;
-        $StoryType  ->save();
+        $authorName   = $request->input('author_name');
+        $StoryAuthor  = new StoryAuthor();
+        $StoryAuthor  ->author_name      = $authorName;
+        $StoryAuthor  ->author_name_link = str_slug($authorName);
+        $StoryAuthor  ->flag = 1;
+        $StoryAuthor  ->save();
         //
-        return redirect()->route('storymaster.index');
+        return redirect()->route('authormaster.index');
     }
 
     /**
@@ -86,11 +86,11 @@ class stotyMasterController extends Controller
      */
     public function edit($id)
     {
-        $storyType = StoryType::find($id);
+        $storyAuthor = StoryAuthor::find($id);
         //
         $user = Auth::user();
         //
-        return view('admin.storyTypeEdit',['user' =>$user,'storyType' => $storyType]);
+        return view('admin.storyAuthorEdit',['user' =>$user,'storyAuthor' => $storyAuthor]);
     }
 
     /**
@@ -100,17 +100,17 @@ class stotyMasterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(storyTypeRequest $request, $id)
+    public function update(storyAuthorRequest $request, $id)
     {
-        $storyType = storyType::find($id);
+        $storyAuthor = StoryAuthor::find($id);
 
-        $storyType->type_name = $request->input('type_name');
+        $storyAuthor->author_name = $request->input('author_name');
 
-        $storyType->flag = $request->input('flag');
+        $storyAuthor->flag = $request->input('flag');
         //
-        $storyType->save();
+        $storyAuthor->save();
         //
-        return redirect()->route('storymaster.edit',['id' => $id]);
+        return redirect()->route('authormaster.edit',['id' => $id]);
     }
 
     /**
@@ -121,12 +121,12 @@ class stotyMasterController extends Controller
      */
     public function destroy($id)
     {
-        $storyType = storyType::find($id);
+        $storyAuthor = StoryAuthor::find($id);
 
-        $storyType->flag = 2;
+        $storyAuthor->flag = 2;
         //
-        $storyType->save();
+        $storyAuthor->save();
         //
-        return redirect()->route('storymaster.index');
+        return redirect()->route('authormaster.index');
     }
 }

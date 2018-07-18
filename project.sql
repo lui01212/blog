@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2018 at 05:03 PM
+-- Generation Time: Jul 18, 2018 at 12:12 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -41,7 +41,9 @@ CREATE TABLE `migrations` (
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
 (2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2018_07_17_083116_create_story_types_table', 2);
+(3, '2018_07_17_083116_create_story_types_table', 2),
+(5, '2018_07_18_034551_create_story_authors_table', 3),
+(6, '2018_07_18_044659_create_stories_table', 4);
 
 -- --------------------------------------------------------
 
@@ -54,6 +56,54 @@ CREATE TABLE `password_resets` (
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stories`
+--
+
+CREATE TABLE `stories` (
+  `story_id` int(10) UNSIGNED NOT NULL,
+  `story_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `story_name_link` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `author_id` int(10) UNSIGNED NOT NULL,
+  `story_image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `story_type` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `story_intro` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `story_rating` int(10) UNSIGNED NOT NULL,
+  `story_view` int(10) UNSIGNED NOT NULL,
+  `story_sum_chapter` int(10) UNSIGNED NOT NULL,
+  `story_source` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `story_status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `story_price` int(11) NOT NULL,
+  `update_id` int(11) NOT NULL,
+  `flag` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `story_authors`
+--
+
+CREATE TABLE `story_authors` (
+  `author_id` int(10) UNSIGNED NOT NULL,
+  `author_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `author_name_link` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `flag` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `story_authors`
+--
+
+INSERT INTO `story_authors` (`author_id`, `author_name`, `author_name_link`, `flag`, `created_at`, `updated_at`) VALUES
+(1, 'Thiên Tằm Tổ Đậu', 'thien-tam-to-dau', 1, '2018-07-17 21:37:09', '2018-07-17 21:45:45');
 
 -- --------------------------------------------------------
 
@@ -75,10 +125,11 @@ CREATE TABLE `story_types` (
 --
 
 INSERT INTO `story_types` (`type_id`, `type_name`, `type_name_link`, `flag`, `created_at`, `updated_at`) VALUES
-(3, 'Tiên Hiệp', 'tien-hiep', 1, '2018-07-17 03:01:13', '2018-07-17 08:00:31'),
-(4, 'Huyền Huyễn', 'huyen-huyen', 1, '2018-07-17 03:02:01', '2018-07-17 08:00:39'),
-(5, 'Xuyên Không', 'xuyen-khong', 1, '2018-07-17 03:06:56', '2018-07-17 08:00:50'),
-(6, 'Dị Giới', 'di-gioi', 1, '2018-07-17 05:02:14', '2018-07-17 08:01:03');
+(3, 'Tiên Hiệp', 'tien-hiep', 1, '2018-07-17 03:01:13', '2018-07-17 21:45:29'),
+(4, 'Huyền Huyễn', 'huyen-huyen', 1, '2018-07-17 03:02:01', '2018-07-17 18:12:34'),
+(5, 'Xuyên Không', 'xuyen-khong', 1, '2018-07-17 03:06:56', '2018-07-17 18:12:29'),
+(6, 'Dị Giới', 'di-gioi', 1, '2018-07-17 05:02:14', '2018-07-17 08:01:03'),
+(7, 'Trọng Sinh', 'trong-sinh', 1, '2018-07-17 18:21:27', '2018-07-17 18:21:27');
 
 -- --------------------------------------------------------
 
@@ -122,6 +173,18 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `stories`
+--
+ALTER TABLE `stories`
+  ADD PRIMARY KEY (`story_id`);
+
+--
+-- Indexes for table `story_authors`
+--
+ALTER TABLE `story_authors`
+  ADD PRIMARY KEY (`author_id`);
+
+--
 -- Indexes for table `story_types`
 --
 ALTER TABLE `story_types`
@@ -143,13 +206,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `stories`
+--
+ALTER TABLE `stories`
+  MODIFY `story_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `story_authors`
+--
+ALTER TABLE `story_authors`
+  MODIFY `author_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `story_types`
 --
 ALTER TABLE `story_types`
-  MODIFY `type_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `type_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -12,7 +12,7 @@
                     <span>Home</span>
                 </a>
             </li>
-            <li class="{{ request()->is('admin/storymaster') ? 'active' : '' }}" >
+            <li class="{{ request()->is('admin/storymaster') || request()->is('admin/authormaster')||request()->is('admin/storiesmaster') ? 'active' : '' }}" >
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">view_list</i>
                     <span>Tables</span>
@@ -21,12 +21,12 @@
                     <li class="{{ request()->is('admin/storymaster') ? 'active' : '' }}">
                         <a href="{{ route('storymaster.index') }}">Thể Loại</a>
                     </li>
-                    <!-- <li>
-                        <a href="../pages/tables/jquery-datatable.html">Jquery Datatables</a>
+                    <li class="{{ request()->is('admin/authormaster') ? 'active' : '' }}">
+                        <a href="{{ route('authormaster.index') }}">Tác Giả</a>
                     </li>
-                    <li>
-                        <a href="../pages/tables/editable-table.html">Editable Tables</a>
-                    </li> -->
+                    <li class="{{ request()->is('admin/storiesmaster') ? 'active' : '' }}">
+                        <a href="{{ route('storiesmaster.index') }}">Truyện</a>
+                    </li>
                 </ul>
             </li>
         </ul>

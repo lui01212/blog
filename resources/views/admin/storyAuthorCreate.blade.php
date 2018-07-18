@@ -10,7 +10,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="block-header">
-	    <a href="{{ route('storymaster.index') }}" class="btn btn-success waves-effect">
+	    <a href="{{ route('authormaster.index') }}" class="btn btn-success waves-effect">
 	        <i class="material-icons">assignment_return</i>
 	        <span>TRỞ VỀ LIST</span>
 	    </a>
@@ -21,19 +21,19 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        THÊM THỂ LOẠI
+                        THÊM TÁC GIẢ
                     </h2>
                 </div>
                 <div class="body">
-                    <form method="POST" action="{{ route('storymaster.store') }}">
+                    <form method="POST" action="{{ route('authormaster.store') }}">
                     	{{ csrf_field() }}
-                        <label for="type_name">Loại Truyện</label>
+                        <label for="author_name">Tác Giả</label>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text"  name ="type_name" id="type_name" class="form-control" placeholder="Nhập Thể Loại .....">
+                                <input type="text"  name ="author_name" id="author_name" class="form-control" placeholder="Nhập Tác Giả .....">
                             </div>
-                            @if ($errors->has('type_name'))
-                            <label id="email-error" class="error" for="email">{{ $errors->first('type_name') }}</label>
+                            @if ($errors->has('author_name'))
+                            <label id="email-error" class="error" for="email">{{ $errors->first('author_name') }}</label>
                             @endif
                         </div>
 						
