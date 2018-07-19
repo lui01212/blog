@@ -64,7 +64,7 @@ class storyAuthorController extends Controller
         $StoryAuthor  ->flag = 1;
         $StoryAuthor  ->save();
         //
-        return redirect()->route('authormaster.index');
+        return redirect()->route('authormaster.create');
     }
 
     /**
@@ -75,7 +75,7 @@ class storyAuthorController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**

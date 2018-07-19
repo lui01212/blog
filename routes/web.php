@@ -40,4 +40,14 @@ Route::group(['prefix' => 'admin'],function(){
 	//-----------------------------------------------------------------------
 	Route::resource('storiesmaster', 'AdminPanel\\storiesController');
 	//
+	//-----------------------------------------------------------------------
+	//Story detail
+	//-----------------------------------------------------------------------
+	Route::group(['prefix' => 'storydetail'],function(){
+		//
+		Route::get('/{id}',['as' =>'storydetail.index','uses' =>'AdminPanel\\storyDetailController@index']);
+		//
+		Route::get('/{id}/create',['as' =>'storydetail.create','uses' =>'AdminPanel\\storyDetailController@create']);
+		//
+	});
 });

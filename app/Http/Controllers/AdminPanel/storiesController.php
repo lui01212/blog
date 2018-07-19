@@ -16,6 +16,12 @@ use App\StoryType;
 
 use App\StoryAuthor;
 
+use App\storyTypeDetail;
+
+use DB;
+
+use File;
+
 class storiesController extends Controller
 {
     /**
@@ -36,9 +42,12 @@ class storiesController extends Controller
     {
         $user = Auth::user();
 
-        $stores = Stories::paginate(2);
+        $storyType = StoryType::all();
 
-        return view('admin.storiesTable',['user' =>$user,'stores' =>$stores]);
+        $stories = DB::table('stories') ->leftjoin('story_authors','stories.author_id','=','story_authors.author_id')->select('stories.*','story_authors.author_name')->get();
+
+        return view('admin.storiesTable',['user' =>$user,'stories' =>$stories,'storyType' =>$storyType]);
+        // return $stories;
     }
 
     /**
@@ -46,7 +55,7 @@ class storiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($success = null)
     {
         $user = Auth::user();
 
@@ -54,7 +63,7 @@ class storiesController extends Controller
 
         $storyAuthor    = StoryAuthor::all();
 
-        return view('admin.storiesCreate',['user' =>$user,'storyType'=>$storyType,'storyAuthor'=>$storyAuthor]);
+        return view('admin.storiesCreate',['user' =>$user,'storyType'=>$storyType,'storyAuthor'=>$storyAuthor,'success'=>$success]);
     }
 
     /**
@@ -65,60 +74,70 @@ class storiesController extends Controller
      */
     public function store(storiesRequest $request)
     {
-        // $nameImage = "";
+        try{
+            ////////////////////////////////////////////////////////////
+            DB::beginTransaction();
+            ////////////////////////////////////////////////////////////
+            $nameImage = "194x284.png";
 
-        // if ($request ->hasFile('storyImage')) {
+            if ($request ->hasFile('story_image')) {
 
-        //     $file = $request ->file('storyImage');
+                $file = $request ->file('story_image');
 
-        //     $nameFile = $file->getClientOriginalName();
+                $nameFile = $file->getClientOriginalName();
 
-        //     $nameImage = str_random(4)."_".$nameFile;
+                $nameImage = str_random(4)."_".$nameFile;
 
-        //     while (file_exists('images/'.$nameImage)) {
+                while (file_exists('images/'.$nameImage)) {
 
-        //         $nameImage = str_random(4)."_".$nameFile;
+                    $nameImage = str_random(4)."_".$nameFile;
 
-        //     }
+                }
 
-        //     $file ->move('images/',$nameImage);
+                $file ->move('images/',$nameImage);
 
-        // }
-        // $listStory      = new listStory();
-        // $listStory->story_image = $nameImage;
-        // //
-        // $storyType = $request ->input('storyType');
-        // //
-        // $html = '';
-        // $step = '';
-        // foreach ($storyType as  $value) {
-        //     $html = $html.$step.$value;
-        //     $step = ',';
-        // }
-        // $listStory->story_type = $html;
-        // //
-        // $listStory->story_name = $request ->input('storyName');
-        // $listStory->author_id = $request ->input('authorId');
-        // $listStory->story_source = $request ->input('storySource');
-        // $listStory->story_sum_chapter = $request ->input('storySumChapter');
-        // $listStory->story_view = $request ->input('storyView');
-        // $listStory->story_rating = $request ->input('storyRating');
-        // $listStory->story_status = $request ->input('storyStatus');
-        // $listStory->story_price = $request ->input('storyPrice');
-        // $listStory->story_intro = $request ->input('storyIntro');
-        // $listStory->update_id = Auth::id();
-        // $listStory->flag = 1;
-        // //
-        // $listStory ->save();
-        // //---------------------------------------------------------------------
-        // foreach ($storyType as  $value) {
-        //     $typeStoryDetail = new typeStoryDetail();
-        //     $typeStoryDetail ->story_id = $listStory->story_id;
-        //     $typeStoryDetail ->type_name_link = str_slug($value);
-        //     $typeStoryDetail->save();
-        // }
-        // return $storyType;
-        return $request ->all(); 
+            }
+            $stories      = new Stories();
+            //
+            $stories->story_image = $nameImage;
+            //
+            $storyType = $request ->input('story_type');
+            //
+            $stories->story_type = serialize($storyType);
+            //
+            $stories->story_name = $request ->input('story_name');
+            $stories->story_name_link = str_slug($stories->story_name);
+            $stories->author_id = $request ->input('author_id');
+            $stories->story_source = $request ->input('story_source');
+            $stories->story_sum_chapter = $request ->input('story_sum_chapter');
+            $stories->story_view = $request ->input('story_view');
+            $stories->story_rating = $request ->input('story_rating');
+            $stories->story_status = $request ->input('story_status');
+            $stories->story_price = $request ->input('story_price');
+            $stories->story_intro = $request ->input('story_intro');
+            $stories->update_id = Auth::id();
+            $stories->flag = 1;
+            //
+
+            $stories ->save();
+            //---------------------------------------------------------------------
+            foreach ($storyType as  $value) {
+                $storyTypeDetail = new storyTypeDetail();
+                $storyTypeDetail ->story_id = $stories->story_id;
+                $storyTypeDetail ->type_id = str_slug($value);
+                $storyTypeDetail->save();
+            }
+            /////////////////////////////////////////////////////////////
+            DB::commit();
+            /////////////////////////////////////////////////////////////
+            return redirect()->route('storiesmaster.create',['success'=>'Đã lưu thành công']);
+            /////////////////////////////////////////////////////////////
+        }catch(\Exception $e){  
+            //
+            DB::rollback();
+            //
+            return redirect()->route('storiesmaster.create',['success'=>'Lưu thất bại']);
+        }
     }
 
     /**
@@ -129,7 +148,9 @@ class storiesController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = Auth::user();
+
+        return view('admin.storiesShow',['user' =>$user]);
     }
 
     /**
@@ -140,7 +161,15 @@ class storiesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+
+        $storyType   = StoryType::all();
+
+        $storyAuthor    = StoryAuthor::all();
+
+        $stories     = Stories::find($id);
+
+        return view('admin.storiesEdit',['user' =>$user,'storyType'=>$storyType,'storyAuthor'=>$storyAuthor,'stories' =>$stories]);
     }
 
     /**
@@ -150,9 +179,69 @@ class storiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(storiesRequest $request, $id)
     {
-        //
+        try{
+            ////////////////////////////////////////////////////////////
+            DB::beginTransaction();
+            ////////////////////////////////////////////////////////////
+            //
+            $stories      = Stories::find($id);
+            //
+            $nameImage    = $stories ->story_image;
+            //
+            if ($request ->hasFile('story_image')) {
+
+                $file = $request ->file('story_image');
+
+                while (file_exists('images/'.$nameImage)) {
+
+                    unlink('images/'.$nameImage);
+
+                }
+
+                $file ->move('images/',$nameImage);
+
+            }
+            //
+            $storyType = $request ->input('story_type');
+            //
+            $stories->story_type = serialize($storyType);
+            //
+            $stories->story_name = $request ->input('story_name');
+            $stories->story_name_link = str_slug($stories->story_name);
+            $stories->author_id = $request ->input('author_id');
+            $stories->story_source = $request ->input('story_source');
+            $stories->story_sum_chapter = $request ->input('story_sum_chapter');
+            $stories->story_view = $request ->input('story_view');
+            $stories->story_rating = $request ->input('story_rating');
+            $stories->story_status = $request ->input('story_status');
+            $stories->story_price = $request ->input('story_price');
+            $stories->story_intro = $request ->input('story_intro');
+            $stories->update_id = Auth::id();
+            $stories->flag = $request ->input('flag');
+            //
+
+            $stories ->save();
+            //---------------------------------------------------------------------
+            $storyTypeDetail = storyTypeDetail::where('story_id',$id) ->delete();
+            foreach ($storyType as  $value) {
+                $storyTypeDetail = new storyTypeDetail();
+                $storyTypeDetail ->story_id = $stories->story_id;
+                $storyTypeDetail ->type_id = str_slug($value);
+                $storyTypeDetail->save();
+            }
+            /////////////////////////////////////////////////////////////
+            DB::commit();
+            /////////////////////////////////////////////////////////////
+            return redirect()->route('storiesmaster.edit',['id' => $id]);
+            /////////////////////////////////////////////////////////////
+        }catch(\Exception $e){  
+            //
+            DB::rollback();
+            //
+            // return redirect()->route('storiesmaster.create',['success'=>'Lưu thất bại']);
+        }
     }
 
     /**
@@ -163,6 +252,12 @@ class storiesController extends Controller
      */
     public function destroy($id)
     {
+        $Stories = Stories::find($id);
+
+        $Stories->flag = 2;
         //
+        $Stories->save();
+        //
+        return redirect()->route('storiesmaster.index');
     }
 }

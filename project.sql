@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2018 at 04:30 PM
+-- Generation Time: Jul 19, 2018 at 11:44 AM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -44,7 +44,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2018_07_17_083116_create_story_types_table', 2),
 (5, '2018_07_18_034551_create_story_authors_table', 3),
 (6, '2018_07_18_044659_create_stories_table', 4),
-(7, '2018_07_18_141214_create_story_type_details_table', 5);
+(7, '2018_07_18_141214_create_story_type_details_table', 5),
+(9, '2018_07_19_072445_create_story_list_details_table', 6);
 
 -- --------------------------------------------------------
 
@@ -84,6 +85,13 @@ CREATE TABLE `stories` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `stories`
+--
+
+INSERT INTO `stories` (`story_id`, `story_name`, `story_name_link`, `author_id`, `story_image`, `story_type`, `story_intro`, `story_rating`, `story_view`, `story_sum_chapter`, `story_source`, `story_status`, `story_price`, `update_id`, `flag`, `created_at`, `updated_at`) VALUES
+(12, 'Đấu La Đại Lục', 'dau-la-dai-luc', 2, 'Sooi_dau-la-dai-luc.jpg', 'a:3:{i:0;s:1:\"5\";i:1;s:1:\"6\";i:2;s:1:\"8\";}', '<p>sssssssssssssssssssssssssss</p>', 9, 0, 0, 'truyện full', '1', 2, 1, 1, '2018-07-18 23:54:56', '2018-07-19 00:52:39');
+
 -- --------------------------------------------------------
 
 --
@@ -104,8 +112,31 @@ CREATE TABLE `story_authors` (
 --
 
 INSERT INTO `story_authors` (`author_id`, `author_name`, `author_name_link`, `flag`, `created_at`, `updated_at`) VALUES
-(1, 'Thiên Tằm Tổ Đậu', 'thien-tam-to-dau', 1, '2018-07-17 21:37:09', '2018-07-17 21:45:45'),
-(2, 'Đường Gia Tam Thiếu', 'duong-gia-tam-thieu', 1, '2018-07-18 04:30:36', '2018-07-18 04:30:36');
+(1, 'Thiên Tằm Tổ Đậu', 'thien-tam-to-dau', 2, '2018-07-17 21:37:09', '2018-07-18 20:43:04'),
+(2, 'Đường Gia Tam Thiếu', 'duong-gia-tam-thieu', 1, '2018-07-18 04:30:36', '2018-07-18 04:30:36'),
+(3, 'Ngã Tật Cây Hồng Thị', 'nga-tat-cay-hong-thi', 1, '2018-07-18 19:12:03', '2018-07-18 19:12:03'),
+(4, 'Tiêu Thiên Tứ', 'tieu-thien-tu', 1, '2018-07-19 02:17:20', '2018-07-19 02:17:20'),
+(5, 'Huy Xích Phương Tù', 'huy-xich-phuong-tu', 1, '2018-07-19 02:17:43', '2018-07-19 02:17:43'),
+(6, 'Vưu Tiền', 'vuu-tien', 1, '2018-07-19 02:17:53', '2018-07-19 02:17:53'),
+(7, 'Lão Hói', 'lao-hoi', 1, '2018-07-19 02:18:03', '2018-07-19 02:18:03'),
+(8, 'Thạch Long', 'thach-long', 1, '2018-07-19 02:18:13', '2018-07-19 02:18:13'),
+(9, 'Gió Tới', 'gio-toi', 1, '2018-07-19 02:18:27', '2018-07-19 02:18:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `story_list_details`
+--
+
+CREATE TABLE `story_list_details` (
+  `chapter_id` int(10) UNSIGNED NOT NULL,
+  `chapter` int(10) UNSIGNED NOT NULL,
+  `chapter_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `chapter_content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `flag` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -131,7 +162,9 @@ INSERT INTO `story_types` (`type_id`, `type_name`, `type_name_link`, `flag`, `cr
 (4, 'Huyền Huyễn', 'huyen-huyen', 1, '2018-07-17 03:02:01', '2018-07-17 18:12:34'),
 (5, 'Xuyên Không', 'xuyen-khong', 1, '2018-07-17 03:06:56', '2018-07-17 18:12:29'),
 (6, 'Dị Giới', 'di-gioi', 1, '2018-07-17 05:02:14', '2018-07-17 08:01:03'),
-(7, 'Trọng Sinh', 'trong-sinh', 1, '2018-07-17 18:21:27', '2018-07-17 18:21:27');
+(7, 'Trọng Sinh', 'trong-sinh', 1, '2018-07-17 18:21:27', '2018-07-17 18:21:27'),
+(8, 'Đô Thị', 'do-thi', 1, '2018-07-18 19:12:33', '2018-07-18 19:12:33'),
+(9, 'Truyện Teen', 'truyen-teen', 1, '2018-07-18 19:13:30', '2018-07-18 19:13:30');
 
 -- --------------------------------------------------------
 
@@ -146,6 +179,15 @@ CREATE TABLE `story_type_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `story_type_details`
+--
+
+INSERT INTO `story_type_details` (`id`, `story_id`, `type_id`, `created_at`, `updated_at`) VALUES
+(141, 12, '5', '2018-07-19 00:52:39', '2018-07-19 00:52:39'),
+(142, 12, '6', '2018-07-19 00:52:39', '2018-07-19 00:52:39'),
+(143, 12, '8', '2018-07-19 00:52:39', '2018-07-19 00:52:39');
 
 -- --------------------------------------------------------
 
@@ -170,7 +212,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `level`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'Admin', 'bvl0165@gmail.com', '$2y$10$Z/mbqq/r7ByDeKOBTyvN4eLjy8QgcALdWHWN3g8ksmQdi/G1mj1PW', 0, 'ty7fCM3V2tSAhHbIrNg7kyjGlokY5sd7QOlTyfwXSKFcXlT4ohjOYa0W48m0', '2018-07-16 05:34:40', '2018-07-16 05:34:40');
+(1, 'Admin', 'Admin', 'bvl0165@gmail.com', '$2y$10$Z/mbqq/r7ByDeKOBTyvN4eLjy8QgcALdWHWN3g8ksmQdi/G1mj1PW', 0, 'z9dTvQIptjtn8kzxYbqq7S5cLp7qw1E6hHrANNLZ8eCvj4XkEs4m8GwWou5v', '2018-07-16 05:34:40', '2018-07-16 05:34:40');
 
 --
 -- Indexes for dumped tables
@@ -201,6 +243,12 @@ ALTER TABLE `story_authors`
   ADD PRIMARY KEY (`author_id`);
 
 --
+-- Indexes for table `story_list_details`
+--
+ALTER TABLE `story_list_details`
+  ADD PRIMARY KEY (`chapter_id`);
+
+--
 -- Indexes for table `story_types`
 --
 ALTER TABLE `story_types`
@@ -228,31 +276,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `stories`
 --
 ALTER TABLE `stories`
-  MODIFY `story_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `story_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `story_authors`
 --
 ALTER TABLE `story_authors`
-  MODIFY `author_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `author_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `story_list_details`
+--
+ALTER TABLE `story_list_details`
+  MODIFY `chapter_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `story_types`
 --
 ALTER TABLE `story_types`
-  MODIFY `type_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `type_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `story_type_details`
 --
 ALTER TABLE `story_type_details`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
 
 --
 -- AUTO_INCREMENT for table `users`

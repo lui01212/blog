@@ -16,11 +16,11 @@
 	        <i class="material-icons">assignment_return</i>
 	        <span>TRỞ VỀ LIST</span>
 	    </a>
-        {{ $success or '' }}
 	</div>
     <!-- Vertical Layout -->
-    <form method="POST" action="{{ route('storiesmaster.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('storiesmaster.update',['id' => $stories ->story_id]) }}" enctype="multipart/form-data">
     {{ csrf_field() }}
+    {{ method_field('PUT') }}
     <div class="row clearfix">
 
             <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
@@ -29,7 +29,7 @@
                         <div class="caption">
                             <h3>Ảnh Đại Diện</h3>
                         </div>
-                        <img class="img-thumbnail" alt="194x284" src="http://placehold.it/194x284" style="width: 194px; height: 284px;">
+                        <img class="img-thumbnail" alt="194x284" src="{{asset('images/' . $stories->story_image)}}" style="width: 194px; height: 284px;">
                         <div class="caption">
                             <p>
                                 <a onclick="event.preventDefault();
@@ -54,7 +54,7 @@
                                 <label for="story_name">Tên Truyện</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="story_name"  value="{{ old('story_name') }}" name="story_name" class="form-control" placeholder="Nhập Tên Truyện..." >
+                                        <input type="story_name"  value="{{ $stories->story_name or old('story_name') }}" name="story_name" class="form-control" placeholder="Nhập Tên Truyện..." >
                                     </div>
                                      @if ($errors->has('story_name'))
                                     <h6 id="story_name-error" class="error col-pink" for="story_name">{{ $errors->first('story_name') }}</h6>
@@ -67,7 +67,7 @@
                                 <select class="form-control show-tick" name="author_id">
                                     <option ></option>
                                     @foreach($storyAuthor as $author)
-                                    <option value="{{$author ->author_id}}" @if (old('author_id') == $author ->author_id) selected="selected" @endif>{{$author ->author_name}}</option>
+                                    <option value="{{$author ->author_id}}" @if ($stories->author_id  == $author ->author_id) selected="selected" @endif>{{$author ->author_name}}</option>
                                     @endforeach
                                 </select>
                             @if ($errors->has('author_id'))
@@ -82,7 +82,7 @@
                                <label for="story_source">Nguồn</label>
                                <div class="form-group">
                                     <div class="form-line">
-                                       <input type="story_source" value="{{ old('story_source') }}" name="story_source" class="form-control" placeholder="Nhập Nguồn Truyện..." > 
+                                       <input type="story_source" value="{{ $stories->story_source or old('story_source') }}" name="story_source" class="form-control" placeholder="Nhập Nguồn Truyện..." > 
                                     </div>
                                     @if ($errors->has('story_source'))
                                     <h6 id="story_source-error" class="error col-pink" for="story_source">{{ $errors->first('story_source') }}</h6>
@@ -96,7 +96,14 @@
                                 <label for="story_type">Loại Truyện</label>
                                 <select multiple  class="form-control show-tick" multiple name="story_type[]">
                                     @foreach($storyType as $type)
-                                    <option value="{{$type ->type_id}}">{{$type ->type_name}}</option>
+                                    <option value="{{$type ->type_id}}" 
+                                        @foreach(unserialize($stories ->story_type) as $types)
+                                                @if($types == $type ->type_id)
+                                                    selected="selected"
+                                                    @break;
+                                                @endif
+                                        @endforeach
+                                    >{{$type ->type_name}}</option>
                                     @endforeach
                                  </select>
                             @if ($errors->has('story_type'))
@@ -108,7 +115,7 @@
                                <label for="story_sum_chapter">Số Chương</label>
                                <div class="form-group">
                                     <div class="form-line">
-                                       <input type="text" value="{{ old('story_sum_chapter') }}" name="story_sum_chapter" class="form-control">
+                                       <input type="text" value="{{ $stories->story_sum_chapter or old('story_sum_chapter') }}" name="story_sum_chapter" class="form-control">
                                     </div>
                                      @if ($errors->has('story_sum_chapter'))
                                     <h6 id="story_sum_chapter-error" class="error col-pink" for="story_sum_chapter">{{ $errors->first('story_sum_chapter') }}</h6>
@@ -122,7 +129,7 @@
                                 <label for="story_view">Lược Xem</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text"  value="{{ old('story_view') }}" name="story_view" class="form-control" id="story_view">
+                                        <input type="text"  value="{{ $stories->story_view or old('story_view') }}" name="story_view" class="form-control" id="story_view">
                                     </div>
                                     @if ($errors->has('story_view'))
                                     <h6 id="story_view-error" class="error col-pink" for="story_view">{{ $errors->first('story_view') }}</h6>
@@ -132,10 +139,10 @@
 
                             <div class="col-md-3">
                                 <label for="story_rating">Đánh Giá</label>
-                                <select class="form-control show-tick" value="{{ old('story_rating') }}" name="story_rating">
+                                <select class="form-control show-tick" name="story_rating">
                                     <option ></option>
                                     @for($ix = 1; $ix <= 10 ;$ix++)
-                                    <option value="{{$ix}}" @if (old('story_rating') == $ix) selected="selected" @endif>{{$ix}}*</option>
+                                    <option value="{{$ix}}" @if ($stories->story_rating == $ix) selected="selected" @endif>{{$ix}}*</option>
                                     @endfor
                                 </select>
                             @if ($errors->has('story_rating'))
@@ -147,8 +154,8 @@
                                 <label for="story_status">Trạng Thái</label>
                                 <select class="form-control show-tick" name="story_status" id="story_status">
                                     <option></option>
-                                    <option value="1" @if (old('story_status') == '1') selected="selected" @endif>Hoàn Thành</option>
-                                    <option value="2" @if (old('story_status') == '2') selected="selected" @endif>Đang Ra</option>
+                                    <option value="1" @if($stories->story_status == '1') selected="selected" @endif>Hoàn Thành</option>
+                                    <option value="2" @if($stories->story_status == '2') selected="selected" @endif>Đang Ra</option>
                                 </select>
                             @if ($errors->has('story_status'))
                             <h6 id="story_status-error" class="error col-pink" for="story_status">{{ $errors->first('story_status') }}</h6>
@@ -157,14 +164,25 @@
 
                             <div class="col-md-3">
                                 <label for="story_price">Tính Phí</label>
-                                <select class="form-control show-tick" value="{{ old('story_price') }}"  name="story_price">
+                                <select class="form-control show-tick" name="story_price">
                                     <option></option>
-                                    <option value="1" @if (old('story_price') == '1') selected="selected" @endif>Có</option>
-                                    <option value="2" @if (old('story_price') == '2') selected="selected" @endif>Không</option>
+                                    <option value="1" @if($stories->story_price == '1') selected="selected" @endif>Có</option>
+                                    <option value="2" @if($stories->story_price == '2') selected="selected" @endif>Không</option>
                                 </select>
                             @if ($errors->has('story_price'))
                             <h6 id="story_price-error" class="error col-pink" for="story_price">{{ $errors->first('story_price') }}</h6>
                             @endif
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input type="radio" name="flag"  value="1" id="flag1" class="with-gap" @if($stories ->flag ==1) checked @endif>
+                                    <label for="flag1">true</label>
+
+                                    <input type="radio" name="flag" value="2" id="flag2" class="with-gap" @if($stories ->flag ==2) checked @endif > 
+                                    <label for ="flag2" class="m-l-20">false</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -182,7 +200,7 @@
                 </div>
                 <div class="body">
                     <textarea id="tinymce" name="story_intro">
-                        {{ old('story_intro') }}
+                        {{ $stories->story_intro or old('story_intro') }}
                     </textarea>
                 @if ($errors->has('story_intro'))
                 <h6 id="story_intro-error" class="error col-pink" for="story_intro">{{ $errors->first('story_intro') }}</h6>
@@ -193,7 +211,7 @@
         <br>
     </div>
     <div class="row clearfix">
-    <button type="submit" class="btn btn-primary m-t-5 m-b-15 waves-effect">THÊM</button>
+    <button type="submit" class="btn btn-primary m-t-5 m-b-15 waves-effect">SỬA</button>
     </div>
     </form>
     <!-- #END# Vertical Layout -->

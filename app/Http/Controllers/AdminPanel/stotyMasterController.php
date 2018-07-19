@@ -64,7 +64,7 @@ class stotyMasterController extends Controller
         $StoryType  ->flag = 1;
         $StoryType  ->save();
         //
-        return redirect()->route('storymaster.index');
+        return redirect()->route('storymaster.create');
     }
 
     /**
