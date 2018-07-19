@@ -49,5 +49,7 @@ Route::group(['prefix' => 'admin'],function(){
 		//
 		Route::get('/{id}/create',['as' =>'storydetail.create','uses' =>'AdminPanel\\storyDetailController@create']);
 		//
+		Route::post('/{id}/store',['as' =>'storydetail.store','uses' =>'AdminPanel\\storyDetailController@store']);
+		//
 	});
 });

@@ -16,7 +16,9 @@ class CreateStoryListDetailsTable extends Migration
         Schema::create('story_list_details', function (Blueprint $table) {
             $table->increments('chapter_id');
             $table->integer('chapter') ->unsigned();
+            $table->integer('story_id') ->unsigned();
             $table->string('chapter_name');
+            $table->string('chapter_name_link');
             $table->longText('chapter_content');
             $table->integer('flag');
             $table->timestamps();

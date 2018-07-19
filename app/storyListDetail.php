@@ -11,6 +11,6 @@ class storyListDetail extends Model
     //
     protected $primaryKey 	= 'chapter_id';
     //
-    protected $fillable 	= ['chapter_id','chapter','chapter_name','chapter_content','flag'];
+    protected $fillable 	= ['chapter_id','story_id','chapter','chapter_name','chapter_content','flag'];
     //
 }
