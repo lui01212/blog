@@ -11,13 +11,29 @@
 <!-- Content -->
 @section('content')
 <div class="container-fluid">
-    <div class="block-header">
+    <div class="block-header col-md-6">
         <a href="{{ route('storydetail.index',['id'=>$id]) }}" class="btn btn-success waves-effect">
             <i class="material-icons">assignment_return</i>
             <span>TRỞ VỀ LIST CHAPTER </span>
         </a>
     </div>
-    <form method="POST" action="{{ route('storydetail.store',['id'=>$id]) }}">
+    <div class="block-header col-md-4">
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="material-icons">link</i>
+            </span>
+            <div class="form-line">
+                <input type="text"  class="form-control" id="chapter_link" placeholder="Nhập link chương">
+            </div>
+        </div>
+    </div>
+    <div class="block-header col-md-2">
+        <a id="btn_chapter_link" class="btn btn-success waves-effect align-right">
+        <i class="material-icons">autorenew</i>
+        <span class="hidden-span">LOAD CHƯƠNG</span>
+        </a>
+    </div>
+    <form method="POST" action="{{ route('autoloadchapter.store',['id'=>$id]) }}">
         {{ csrf_field() }}
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
@@ -41,7 +57,7 @@
                                     <i class="material-icons">skip_next</i>
                                 </span>
                                 <div class="form-line">
-                                    <input type="text" class="form-control" value="{{$stories ->story_sum_chapter + 1}}"  name="chapter" placeholder="Nhập chương tiếp theo">
+                                    <input type="text" class="form-control" value="{{$stories ->story_sum_chapter + 1}}"  name="chapter" placeholder="Nhập chương tiếp theo" required>
                                 </div>
                                 @if ($errors->has('chapter'))
                                 <label id="email-error" class="error" for="email">{{ $errors->first('chapter') }}</label>
@@ -60,6 +76,9 @@
                                 <label id="email-error" class="error" for="email">{{ $errors->first('chapter_name') }}</label>
                                 @endif
                             </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <button type="submit" class="btn btn-primary m-t-5 m-b-15 waves-effect">ADD CHAPTER</button>
                         </div>
                     </div>
                 </div>
@@ -84,6 +103,11 @@
             <button type="submit" class="btn btn-primary m-t-5 m-b-15 waves-effect">THÊM CHAPTER</button>
         </div>
     </form>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <iframe src="https://thichdoctruyen.com/doc-truyen/dau-la-dai-luc/chuong-1-141.html" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" height="1000px">
+            <p>Trình duyệt của bạn không hỗ trợ iframe.</p>
+        </iframe>
+    </div>
     <br>
 </div>
 @endsection
@@ -113,6 +137,6 @@
     tinymce.suffix = ".min";
     tinyMCE.baseURL = "{{ asset('plugins/tinymce') }}";
 </script>
-<script src="{{ asset('js/admin.stories.js') }}"></script>
+<script src="{{ asset('js/admin.autoloading.js') }}"></script>
 @endsection
 <!-- #END# Custom Js -->

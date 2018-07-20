@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 
+use App\Http\Controllers\library\simple_html_dom;
+
 use Illuminate\Support\Facades\Auth;
 
 use App\storyListDetail;
@@ -82,4 +84,79 @@ class storyDetailController extends Controller
         //
         return redirect()->route('storydetail.create',['id'=>$id]);
     }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id = null,$chapter_id = null)
+    {
+        $user = Auth::user();
+        //
+        $Stories = Stories::find($id);
+        //
+        $storyListDetail  = storyListDetail::find($chapter_id);
+        //
+        return view('admin.chapterEdit',['user'=>$user,'stories' =>$Stories,'storyListDetail' =>$storyListDetail]);
+
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(storyDetailRequest $request,$id,$chapter_id)
+    {
+        // DB::beginTransaction();
+        // //
+        // $storyListDetail  = storyListDetail::find($chapter_id);
+        // $storyListDetail  ->chapter  = $request->input('chapter');
+        // $storyListDetail  ->chapter_name = $request->input('chapter_name'); 
+        // $storyListDetail  ->chapter_name_link = 'chuong'.'-'.str_slug($storyListDetail  ->chapter).'_'.str_random(4);
+        // $storyListDetail  ->chapter_content = $request->input('chapter_content'); 
+        // $storyListDetail  ->flag = $request->input('flag');
+        // $storyListDetail  ->save();
+        // //
+        // $Stories = Stories::find($id);
+        // //
+        // $Stories ->story_sum_chapter = storyListDetail::whereRaw('flag = 1 and story_id = '.$id) ->count();
+        // //
+        // $Stories ->save();
+        // //
+        // DB::commit();
+        // //
+        // return redirect()->route('storydetail.edit',['id'=>$id,'chapter_id'=>$chapter_id]);
+        $html = file_get_html('http://truyenfull.vn/dau-la-dai-luc/chuong-2/');
+        echo $html;
+    }
+        /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id,$chapter_id)
+    {
+        DB::beginTransaction();
+        //
+        $storyListDetail  = storyListDetail::find($chapter_id);
+
+        $storyListDetail->flag = 2;
+        //
+        $storyListDetail->save();
+        //
+        $Stories = Stories::find($id);
+        //
+        $Stories ->story_sum_chapter = storyListDetail::whereRaw('flag = 1 and story_id = '.$id) ->count();
+        //
+        $Stories ->save();
+        //
+        DB::commit();
+        //
+        return redirect()->route('storydetail.index',['id'=>$id]);
+    }
+
 }

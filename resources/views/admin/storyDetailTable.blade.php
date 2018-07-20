@@ -9,14 +9,20 @@
 <!-- Content -->
 @section('content')
 <div class="container-fluid">
-    <div class="block-header">
+    <div class="block-header col-md-10">
         <a href="{{ route('storiesmaster.index') }}" class="btn btn-success waves-effect">
             <i class="material-icons">assignment_return</i>
-            <span>TRỞ VỀ LIST TRUYỆN</span>
+            <span class="hidden-span">TRỞ VỀ LIST TRUYỆN</span>
         </a>
         <a href="{{ route('storydetail.create',['id'=>$id]) }}" class="btn btn-success waves-effect">
             <i class="material-icons">add</i>
-            <span>THÊM CHƯƠNG TRUYỆN</span>
+            <span class="hidden-span">THÊM CHƯƠNG TRUYỆN</span>
+        </a>
+    </div>
+    <div class="block-header col-md-2">
+        <a href="{{ route('autoloadchapter.index',['id'=>$id]) }}" class="btn btn-success waves-effect align-right">
+        <i class="material-icons">autorenew</i>
+        <span class="hidden-span">AUTOLOADING</span>
         </a>
     </div>
     <!-- Basic Examples -->
@@ -47,7 +53,19 @@
                                     <td>{{$chapter ->chapter}}</td>
                                     <td>{{$chapter ->chapter_name}}</td>
                                     <td>{{$chapter ->flag}}</td>
-                                    <td></td>
+                                    <td>
+                                        <a href="{{ route('storydetail.edit', ['id' => $chapter ->story_id ,'chapter_id'=>$chapter ->chapter_id]) }}" type="button" class="btn btn-default waves-effect">
+                                            <i class="material-icons">mode_edit</i>
+                                        </a>
+                                        <a type="button" class="btn bg-red waves-effect" onclick="event.preventDefault();
+                                                 document.getElementById('destroy{{$chapter ->story_id}}').submit();">
+                                            <i class="material-icons">delete_forever</i>
+                                        </a>
+                                        <form id="destroy{{$chapter ->story_id}}" action="{{ route('storydetail.destroy', ['id' => $chapter ->story_id ,'chapter_id'=>$chapter ->chapter_id]) }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                        </form>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

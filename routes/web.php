@@ -51,5 +51,21 @@ Route::group(['prefix' => 'admin'],function(){
 		//
 		Route::post('/{id}/store',['as' =>'storydetail.store','uses' =>'AdminPanel\\storyDetailController@store']);
 		//
+		Route::get('/{id}/{chapter_id}/edit',['as' =>'storydetail.edit','uses' =>'AdminPanel\\storyDetailController@edit']);
+		//
+		Route::put('/{id}/update/{chapter_id}',['as' =>'storydetail.update','uses' =>'AdminPanel\\storyDetailController@update']);
+		//
+		Route::delete('/{id}/{chapter_id}',['as' =>'storydetail.destroy','uses' =>'AdminPanel\\storyDetailController@destroy']);
+		//
+	});
+	//-----------------------------------------------------------------------
+	//autoloadchapter
+	//-----------------------------------------------------------------------
+	Route::group(['prefix' => 'autoloadchapter'],function(){
+		//
+		Route::get('/{id}',['as' =>'autoloadchapter.index','uses' =>'AdminPanel\\autoloadChapterController@index']);
+		//
+		Route::post('/{id}/store',['as' =>'autoloadchapter.store','uses' =>'AdminPanel\\autoloadChapterController@store']);
+		//
 	});
 });

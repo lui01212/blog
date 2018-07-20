@@ -12,13 +12,14 @@
 @section('content')
 <div class="container-fluid">
     <div class="block-header">
-        <a href="{{ route('storydetail.index',['id'=>$id]) }}" class="btn btn-success waves-effect">
+        <a href="{{ route('storydetail.index',['id'=>$stories ->story_id]) }}" class="btn btn-success waves-effect">
             <i class="material-icons">assignment_return</i>
             <span>TRỞ VỀ LIST CHAPTER </span>
         </a>
     </div>
-    <form method="POST" action="{{ route('storydetail.store',['id'=>$id]) }}">
-        {{ csrf_field() }}
+    <form method="POST" action="{{ route('storydetail.update',['id'=>$stories ->story_id,'chapter_id'=> $storyListDetail ->chapter_id]) }}">
+            {{ csrf_field() }}
+            {{ method_field('PUT') }}
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="header">
@@ -41,7 +42,7 @@
                                     <i class="material-icons">skip_next</i>
                                 </span>
                                 <div class="form-line">
-                                    <input type="text" class="form-control" value="{{$stories ->story_sum_chapter + 1}}"  name="chapter" placeholder="Nhập chương tiếp theo">
+                                    <input type="text" class="form-control" value="{{$storyListDetail ->chapter}}"  name="chapter" placeholder="Nhập chương">
                                 </div>
                                 @if ($errors->has('chapter'))
                                 <label id="email-error" class="error" for="email">{{ $errors->first('chapter') }}</label>
@@ -54,13 +55,22 @@
                                     <i class="material-icons">subject</i>
                                 </span>
                                 <div class="form-line">
-                                    <input type="text"  value="{{ old('chapter_name') }}" class="form-control" name="chapter_name" placeholder="Nhập tên chương">
+
+                                    <input type="text"  value="{{ $storyListDetail->chapter_name }}" class="form-control" name="chapter_name" placeholder="Nhập tên chương">
                                 </div>
                                 @if ($errors->has('chapter_name'))
                                 <label id="email-error" class="error" for="email">{{ $errors->first('chapter_name') }}</label>
                                 @endif
                             </div>
+                            <div class="input-group">
+                                <input type="radio" name="flag"  value="1" id="flag1" class="with-gap" @if($storyListDetail ->flag ==1) checked @endif>
+                                <label for="flag1">true</label>
+
+                                <input type="radio" name="flag" value="2" id="flag2" class="with-gap" @if($storyListDetail ->flag ==2) checked @endif > 
+                                <label for ="flag2" class="m-l-20">false</label>
+                            </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -74,14 +84,14 @@
                 </div>
                 <div class="body">
                     <textarea id="tinymce" name="chapter_content">
-                        {{ old('chapter_content') }}
+                        {{ $storyListDetail->chapter_content }}
                     </textarea>
                 @if ($errors->has('chapter_content'))
                 <h6 id="story_intro-error" class="error col-pink" for="story_intro">{{ $errors->first('chapter_content') }}</h6>
                 @endif
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary m-t-5 m-b-15 waves-effect">THÊM CHAPTER</button>
+            <button type="submit" class="btn btn-primary m-t-5 m-b-15 waves-effect">SỬA CHAPTER</button>
         </div>
     </form>
     <br>
