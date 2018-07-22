@@ -17,22 +17,6 @@
             <span>TRỞ VỀ LIST CHAPTER </span>
         </a>
     </div>
-    <div class="block-header col-md-4">
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="material-icons">link</i>
-            </span>
-            <div class="form-line">
-                <input type="text"  class="form-control" id="chapter_link" placeholder="Nhập link chương">
-            </div>
-        </div>
-    </div>
-    <div class="block-header col-md-2">
-        <a id="btn_chapter_link" class="btn btn-success waves-effect align-right">
-        <i class="material-icons">autorenew</i>
-        <span class="hidden-span">LOAD CHƯƠNG</span>
-        </a>
-    </div>
     <form method="POST" action="{{ route('autoloadchapter.store',['id'=>$id]) }}">
         {{ csrf_field() }}
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -67,16 +51,13 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="input-group">
                                 <span class="input-group-addon">
-                                    <i class="material-icons">subject</i>
+                                    <i class="material-icons">link</i>
                                 </span>
                                 <div class="form-line">
-                                    <input type="text"  value="{{ old('chapter_name') }}" class="form-control" name="chapter_name" placeholder="Nhập tên chương">
+                                    <input type="text" class="form-control" name="chapter_link" value="{{$link_next}}" required>
                                 </div>
-                                @if ($errors->has('chapter_name'))
-                                <label id="email-error" class="error" for="email">{{ $errors->first('chapter_name') }}</label>
-                                @endif
-                            </div>
                         </div>
+                            </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <button type="submit" class="btn btn-primary m-t-5 m-b-15 waves-effect">ADD CHAPTER</button>
                         </div>
@@ -84,29 +65,54 @@
                 </div>
             </div>
         </div>  
+    </form>
+    <form method="POST" action="{{ route('autoloadchapter.autoupload',['id'=>$id]) }}">
+        {{ csrf_field() }}
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
-                <div class="header">
-                    <h2>
-                        NỘI DUNG CHAPTER
-                    </h2>
-                </div>
                 <div class="body">
-                    <textarea id="tinymce" name="chapter_content">
-                        {{ old('chapter_content') }}
-                    </textarea>
-                @if ($errors->has('chapter_content'))
-                <h6 id="story_intro-error" class="error col-pink" for="story_intro">{{ $errors->first('chapter_content') }}</h6>
-                @endif
+                    <div class="row clearfix demo-icon-container">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                            <div class="col-md-6">
+                                <label for="chapter_to">Từ chương</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="story_name"  value="{{$stories ->story_sum_chapter + 1}}"  name="chapter_to" class="form-control" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="chapter_from">Tới chương</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text"  value="{{$stories ->story_sum_chapter + 5 }}" name="chapter_from" class="form-control" placeholder="Nhập chương cuối..." >
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">link</i>
+                                </span>
+                                <div class="form-line">
+                                    <input type="text" class="form-control" name="chapter_link" value="{{$link_next}}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <button type="submit" id="i_autoloadchapter"class="btn btn-primary m-t-5 m-b-15 waves-effect">AUTO LOADING CHAPTER</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary m-t-5 m-b-15 waves-effect">THÊM CHAPTER</button>
-        </div>
+        </div>  
     </form>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <iframe src="https://thichdoctruyen.com/doc-truyen/dau-la-dai-luc/chuong-1-141.html" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" height="1000px">
-            <p>Trình duyệt của bạn không hỗ trợ iframe.</p>
-        </iframe>
+        <button id="i_stopautoloadchapter"class="btn btn-primary m-t-5 m-b-15 waves-effect">STOP</button>   
     </div>
     <br>
 </div>
@@ -115,28 +121,9 @@
 
 <!-- Custom Js -->
 @section('customJs')
-<!-- TinyMCE -->
-<script src="{{ asset('plugins/tinymce/tinymce.js') }}"></script>
+<!-- Jquery Core Js -->
+<script src="{{ asset('plugins/jquery-cookie/jquery.cookie.js') }}"></script>
 <script src="{{ asset('js/admin.js') }}"></script>
-<script language="javascript">
-    //TinyMCE
-    tinymce.init({
-        selector: "textarea#tinymce",
-        theme: "modern",
-        height: 300,
-        plugins: [
-            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-            'searchreplace wordcount visualblocks visualchars code fullscreen',
-            'insertdatetime media nonbreaking save table contextmenu directionality',
-            'emoticons template paste textcolor colorpicker textpattern imagetools'
-        ],
-        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-        toolbar2: 'print preview media | forecolor backcolor emoticons',
-        image_advtab: true
-    });
-    tinymce.suffix = ".min";
-    tinyMCE.baseURL = "{{ asset('plugins/tinymce') }}";
-</script>
-<script src="{{ asset('js/admin.autoloading.js') }}"></script>
+<script src="{{ asset('js/admin.autoloadingChapter.js') }}"></script>
 @endsection
 <!-- #END# Custom Js -->

@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 
-use App\Http\Controllers\library\simple_html_dom;
-
 use Illuminate\Support\Facades\Auth;
 
 use App\storyListDetail;
@@ -38,7 +36,7 @@ class storyDetailController extends Controller
     {
     	$user = Auth::user();
 
-    	$storyListDetail  = storyListDetail::paginate(1);
+    	$storyListDetail  = storyListDetail::where('story_id', '=', $id)->paginate(20);
 
         return view('admin.storyDetailTable',compact('id','user','storyListDetail'));
     }
@@ -94,7 +92,7 @@ class storyDetailController extends Controller
     {
         $user = Auth::user();
         //
-        $Stories = Stories::find($id);
+        $Stories = DB::table('stories') ->where('story_id', $id) ->leftjoin('story_authors','stories.author_id','=','story_authors.author_id')->select('stories.*','story_authors.author_name')->first();
         //
         $storyListDetail  = storyListDetail::find($chapter_id);
         //
@@ -110,27 +108,25 @@ class storyDetailController extends Controller
      */
     public function update(storyDetailRequest $request,$id,$chapter_id)
     {
-        // DB::beginTransaction();
-        // //
-        // $storyListDetail  = storyListDetail::find($chapter_id);
-        // $storyListDetail  ->chapter  = $request->input('chapter');
-        // $storyListDetail  ->chapter_name = $request->input('chapter_name'); 
-        // $storyListDetail  ->chapter_name_link = 'chuong'.'-'.str_slug($storyListDetail  ->chapter).'_'.str_random(4);
-        // $storyListDetail  ->chapter_content = $request->input('chapter_content'); 
-        // $storyListDetail  ->flag = $request->input('flag');
-        // $storyListDetail  ->save();
-        // //
-        // $Stories = Stories::find($id);
-        // //
-        // $Stories ->story_sum_chapter = storyListDetail::whereRaw('flag = 1 and story_id = '.$id) ->count();
-        // //
-        // $Stories ->save();
-        // //
-        // DB::commit();
-        // //
-        // return redirect()->route('storydetail.edit',['id'=>$id,'chapter_id'=>$chapter_id]);
-        $html = file_get_html('http://truyenfull.vn/dau-la-dai-luc/chuong-2/');
-        echo $html;
+        DB::beginTransaction();
+        //
+        $storyListDetail  = storyListDetail::find($chapter_id);
+        $storyListDetail  ->chapter  = $request->input('chapter');
+        $storyListDetail  ->chapter_name = $request->input('chapter_name'); 
+        $storyListDetail  ->chapter_name_link = 'chuong'.'-'.str_slug($storyListDetail  ->chapter).'_'.str_random(4);
+        $storyListDetail  ->chapter_content = $request->input('chapter_content'); 
+        $storyListDetail  ->flag = $request->input('flag');
+        $storyListDetail  ->save();
+        //
+        $Stories = Stories::find($id);
+        //
+        $Stories ->story_sum_chapter = storyListDetail::whereRaw('flag = 1 and story_id = '.$id) ->count();
+        //
+        $Stories ->save();
+        //
+        DB::commit();
+        //
+        return redirect()->route('storydetail.edit',['id'=>$id,'chapter_id'=>$chapter_id]);
     }
         /**
      * Remove the specified resource from storage.

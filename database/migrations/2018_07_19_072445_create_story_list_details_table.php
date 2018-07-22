@@ -19,7 +19,7 @@ class CreateStoryListDetailsTable extends Migration
             $table->integer('story_id') ->unsigned();
             $table->string('chapter_name');
             $table->string('chapter_name_link');
-            $table->longText('chapter_content');
+            $table->text('chapter_content');
             $table->integer('flag');
             $table->timestamps();
         });

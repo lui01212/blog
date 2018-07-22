@@ -67,5 +67,7 @@ Route::group(['prefix' => 'admin'],function(){
 		//
 		Route::post('/{id}/store',['as' =>'autoloadchapter.store','uses' =>'AdminPanel\\autoloadChapterController@store']);
 		//
+		Route::post('/{id}/autoupload',['as' =>'autoloadchapter.autoupload','uses' =>'AdminPanel\\autoloadChapterController@autoupload']);
+		//
 	});
 });
