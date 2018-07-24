@@ -14,7 +14,7 @@ function OnJscStartUp()
 	    //
 	    setTimeout(function() 
 			    {
-			       if($('input[name="chapter_link"]').val() !="" && $.cookie("flagautoloadchapter") == 1){
+			       if($('input[name="chapter_link"]').val() !="" && $.cookie("flagautoloadchapter") == 1 && $('input[name="chapter_from"]').val() < 10){
 			       	$('#i_autoloadchapter').click();
 			    } 
 	    }, 2000);
