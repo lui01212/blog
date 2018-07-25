@@ -59,7 +59,7 @@
     <!-- #END# Right Sidebar -->
     </section>
     <!-- #END# Alignments -->
-    <section class="content col-md-8">
+    <section class="content">
         <!-- Content -->
         @yield('content')
         <!-- #END# Content -->
