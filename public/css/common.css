@@ -9,6 +9,116 @@
     text-overflow: ellipsis;
     border-bottom: 1px solid #4E4E4E;
 }
+.column{
+  height: 20rem;
+  text-align: center;
+  position: relative;
+}
+.column img {
+    vertical-align: middle;
+    width: 16.6%;
+    height: 100%;
+}
+.column img {
+    -moz-transition: 0.3s;
+    -o-transition: 0.3s;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.column img:hover {
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.column-contents h6{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.list-group > a {
+  border-top: 3px solid #009688;
+  text-align: center;
+}
+/* */
+/* */
+.card-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.card-carousel .my-card {
+  height: 20rem;
+  width: 35rem;
+  position: relative;
+  z-index: 1;
+  -webkit-transform: scale(0.6) translateY(-2rem);
+  transform: scale(0.6) translateY(-2rem);
+  opacity: 0;
+  cursor: pointer;
+  pointer-events: none;
+  background: #2e5266;
+  background: linear-gradient(to top, #2e5266, #6e8898);
+  transition: 1s;
+}
+
+.card-carousel .my-card:after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  border-radius: 100%;
+  background-color: rgba(0,0,0,0.3);
+  bottom: -5rem;
+  -webkit-filter: blur(4px);
+  filter: blur(4px);
+}
+
+.card-carousel .my-card.active {
+  z-index: 3;
+  -webkit-transform: scale(1) translateY(0) translateX(0);
+  transform: scale(1) translateY(0) translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+  transition: 1s;
+}
+
+.card-carousel .my-card.prev, .card-carousel .my-card.next {
+  z-index: 2;
+  -webkit-transform: scale(0.8) translateY(-1rem) translateX(0);
+  transform: scale(0.8) translateY(-1rem) translateX(0);
+  opacity: 0.6;
+  pointer-events: auto;
+  transition: 1s;
+}
+/* */
+/* */
 section.content{
   margin: 0;
 }
+/* Materialize Css | Taken from www.materializecss.com */
+/* Media ======================================= */
+@media (max-width: 767px) {
+  .list-group{
+    display: none;
+  }
+  .card-carousel .my-card {
+  height: 8rem;
+  width: 35rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .list-group{
+    display: none;
+  }
+  .card-carousel .my-card {
+  height: 12rem;
+  width: 35rem;
+  }
+}
+@media (min-width: 992px) and (max-width: 1169px) {
+
+}
+
