@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
 
-    <div class="row">
+    <div class="row" id="story-hot">
         <div class="col-md-10 col-md-offset-1">
             <!-- Badges -->
                 <div class="block-header">
@@ -46,13 +46,55 @@
                 <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
                     <div class="row"> 
                         <div class="card-carousel">
-                          <div class="my-card"> 1 </div>
-                          <div class="my-card"> 2 </div>
-                          <div class="my-card"> 3 </div>
-                          <div class="my-card"> 4 </div>
-                          <div class="my-card"> 5 </div>
-                          <div class="my-card"> 6 </div>
-                          <div class="my-card"> 7 </div>
+                            <div class="my-card">
+                                <img src="http://truyencv.com/images/poster/toi-cuong-trang-buc-da-kiem-he-thong-poster-1518975314-220x330.jpg"/>
+                                  <div class="my-card-content">
+                                    <p>Tối Cường Trang Bức Đả Kiểm Hệ Thống</p>
+                                    <a href="javascript:void(0);" class="btn bg-pink btn-block btn-xs waves-effect">Đọc</a>
+                                  </div>
+                            </div>
+                            <div class="my-card">
+                                <img src="http://truyencv.com/images/poster/vo-han-phuc-loi-than-hao-poster-1529331181-200x300.jpg"/>
+                                <div class="my-card-content">
+                                    <p>Vô Hạn Phúc Lợi Thần Hào</p>
+                                    <a href="javascript:void(0);" class="btn bg-pink btn-block btn-xs waves-effect">Đọc</a>
+                                </div>
+                            </div>
+                            <div class="my-card">
+                                <img  src="http://truyencv.com/images/poster/trong-chinh-mat-the-poster-1518518734-200x300.jpg"/>
+                                <div class="my-card-content">
+                                    <p>Vô Hạn Phúc Lợi Thần Hào</p>
+                                    <a href="javascript:void(0);" class="btn bg-pink btn-block btn-xs waves-effect">Đọc</a>
+                                </div>
+                            </div>
+                            <div class="my-card">
+                                <img src="http://truyencv.com/images/poster/vong-du-tan-the-toan-cau-poster-1523513200-200x300.jpg"/>
+                                <div class="my-card-content">
+                                    <p>Vô Hạn Phúc Lợi Thần Hào</p>
+                                    <a href="javascript:void(0);" class="btn bg-pink btn-block btn-xs waves-effect">Đọc</a>
+                                </div>
+                            </div>
+                             <div class="my-card">
+                                <img src="http://truyencv.com/images/poster/kinh-thien-kiem-de-poster-1530800289-200x300.jpg"/>
+                                <div class="my-card-content">
+                                    <p>Vô Hạn Phúc Lợi Thần Hào</p>
+                                    <a href="javascript:void(0);" class="btn bg-pink btn-block btn-xs waves-effect">Đọc</a>
+                                </div>
+                            </div>
+                            <div class="my-card">
+                                <img src="http://truyencv.com/images/poster/phong-luu-chan-tien-poster-1515781874-200x300.jpg" />
+                                <div class="my-card-content">
+                                    <p>Vô Hạn Phúc Lợi Thần Hào</p>
+                                    <a href="javascript:void(0);" class="btn bg-pink btn-block btn-xs waves-effect">Đọc</a>
+                                </div>
+                            </div>
+                            <div class="my-card">
+                                <img src="http://truyencv.com/images/poster/toi-cuong-than-thoai-de-hoang-poster-20170228-200x300.jpg"/>
+                                <div class="my-card-content">
+                                    <p>Vô Hạn Phúc Lợi Thần Hào</p>
+                                    <a href="javascript:void(0);" class="btn bg-pink btn-block btn-xs waves-effect">Đọc</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -120,6 +162,8 @@
             <!-- #END# Badges -->
        </div>
     </div>
+     <div class="row" style="height: 2000px;">
+     </div>
 </div>
 @endsection
 <!-- #END# Content -->

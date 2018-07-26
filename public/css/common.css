@@ -48,7 +48,10 @@
   justify-content: center;
   position: relative;
 }
-
+.card-carousel img {
+	width: 100%;
+	height: 100%;
+}
 .card-carousel .my-card {
   height: 20rem;
   width: 35rem;
@@ -59,8 +62,8 @@
   opacity: 0;
   cursor: pointer;
   pointer-events: none;
-  background: #2e5266;
-  background: linear-gradient(to top, #2e5266, #6e8898);
+  /*background: #2e5266;*/
+  /*background: linear-gradient(to top, #2e5266, #6e8898);*/
   transition: 1s;
 }
 
@@ -70,7 +73,7 @@
   height: 2px;
   width: 100%;
   border-radius: 100%;
-  background-color: rgba(0,0,0,0.3);
+  /*background-color: rgba(0,0,0,0.3);*/
   bottom: -5rem;
   -webkit-filter: blur(4px);
   filter: blur(4px);
@@ -93,6 +96,23 @@
   pointer-events: auto;
   transition: 1s;
 }
+.my-card img{
+	position: absolute;
+}
+.my-card .my-card-content{
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+    color: #f1f1f1;
+    width: 100%;
+    text-align: center;
+}
+.my-card p{
+	position: absolute;
+	bottom: 20px;
+	margin-bottom: 0;
+	background: rgba(8, 60, 55, 0.96);
+}
 /* */
 /* */
 section.content{
@@ -100,22 +120,24 @@ section.content{
 }
 /* Materialize Css | Taken from www.materializecss.com */
 /* Media ======================================= */
+@media only screen and (max-width: 600px) {
+    #story-hot{
+    	display: none;
+    }
+}
 @media (max-width: 767px) {
+  .column img {
+    vertical-align: middle;
+    width: 16.6%;
+    height: 50%;
+  }
   .list-group{
     display: none;
-  }
-  .card-carousel .my-card {
-  height: 8rem;
-  width: 35rem;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .list-group{
     display: none;
-  }
-  .card-carousel .my-card {
-  height: 12rem;
-  width: 35rem;
   }
 }
 @media (min-width: 992px) and (max-width: 1169px) {
