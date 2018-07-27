@@ -1,4 +1,4 @@
-.block-header   h2 {
+.block-header-custum   h2 {
 	font-family: 'Roboto Condensed';
     font-size: 20px;
     height: 40px;
@@ -8,6 +8,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     border-bottom: 1px solid #4E4E4E;
+    color: #009688!important;
 }
 .column{
   height: 20rem;
@@ -41,19 +42,19 @@
     top: 8px;
     right: 16px;
 }
-.list-group{
+.list-group-custum{
   /*border: 3px solid #009688;*/
   /*background-color: #e9e9e9;*/
       -moz-box-shadow: 5px 10px 8px 0 rgba(0, 0, 0, 0.2), 6px 12px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-box-shadow: 5px 10px 8px 0 rgba(0, 0, 0, 0.2), 6px 12px 20px 0 rgba(0, 0, 0, 0.19);
     box-shadow: 5px 10px 8px 0 rgba(0, 0, 0, 0.2), 6px 12px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.list-group > a {
+.list-group-custum > a {
   /*border-top: 3px solid #009688;*/
   text-align: center;
   z-index: 5;
 }
-.list-group-item{
+.list-group-custum .list-group-item {
   background-color: #e9e9e9;
 }
 /* */
@@ -141,6 +142,50 @@
   margin-top: -22px;
   right: 15%;
 }
+.row-list-item div a {
+font-size: 16px;
+color: #009688 !important;
+}
+.row-list-item{
+    border-bottom: 1px dashed #CCC;
+}
+.row-list-item div{
+    height: 45px;
+    line-height: 45px;
+    border-right: 1px dashed #CCC;
+    overflow: hidden;
+}
+.row-list-item div:last-child{
+    border-right: none;
+}
+.media-custum{
+      border-bottom: 1px dashed #CCC;
+      margin: 0;
+      padding: 5px 0 5px 0;
+}
+.media-custum .media-body .media-heading {
+    font-size: 14px;
+    font-weight: initial;
+    color: #333;
+}
+.media-custum .media-body > a {
+    color: black;
+}
+.tab-content{
+  background-color: #f9f9f9;
+}
+.block .row-list-item > div{
+  background-color: #fff;
+  border-right: none;
+}
+.footer{
+  background-color: #fff;
+}
+/*.row-convert{
+  background-image: url('../images/background.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}*/
 /* */
 /* */
 section.content{
