@@ -15,11 +15,11 @@ Route::get('/', ['as' =>'index.index','uses' =>'Page\\indexController@index']);
 
 Route::get('/tac-gia/{author}',['as' =>'authorpage','uses' =>'Page\\detailController@getStoryForAuthor']);
 
-Route::get('/the-loai/{type}',['as' =>'typepage','uses' =>'Page\\detailController@getStoryForType']);
+Route::get('/the-loai/{type}',['as' =>'typepage.index','uses' =>'Page\\detailController@getStoryForType']);
 
-Route::get('/truyen/{story}',['as' =>'storydetailpage','uses' =>'Page\\detailController@getStoryDetail']);
+Route::get('/truyen/{story}',['as' =>'storydetailpage.index','uses' =>'Page\\detailController@getStoryDetail']);
 
-Route::get('/truyen/{story}/{chapter}',['as' =>'chapterpage','uses' =>'Page\\detailController@getChapterPage']);
+Route::get('/truyen/{story}/{chapter}',['as' =>'chapterpage.index','uses' =>'Page\\detailController@getChapterPage']);
 
 Route::get('/seach/{seach}',['as' =>'seachpage','uses' =>'Page\\detailController@getSeachPage']);
 Auth::routes();

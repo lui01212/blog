@@ -25,7 +25,7 @@
                         @if($key == 12) 
                           @break;
                         @endif
-                        <a href="javascript:void(0);" class="list-group-item">{{$type ->type_name}}</a>
+                        <a href="{{route('typepage.index',['type'=>$type->type_name_link])}}" class="list-group-item">{{$type ->type_name}}</a>
                     @endforeach
                 </div>
             </div>
@@ -40,7 +40,7 @@
                             <img src="{{asset('images/' . $story ->story_image )}}" />
                             <div class="my-card-content">
                                 <p>{{$story ->story_name}}</p>
-                                <a href="javascript:void(0);" class="btn bg-pink btn-block btn-xs waves-effect">Đọc<span class="badge">99k+</span></a>
+                                <a href="{{route('storydetailpage.index',['story'=> $story ->story_name_link])}}" class="btn bg-pink btn-block btn-xs waves-effect">Đọc<span class="badge">{{round ($story ->story_view/1000 , 2)}}Kv</span></a>
                             </div>
                         </div>
                         @endforeach
@@ -62,10 +62,10 @@
                         <img class="hover-shadow" src="{{asset('images/' . $story ->story_image )}}" style="width: 100%" />
                         <div class="top-right"><span class="badge bg-pink">New</span></div>
                         <div class="column-contents">
-                            <h6 class="text-nowrap">{{$story->story_name}}</h6>
+                            <h6 class="text-nowrap"><a href="{{route('storydetailpage.index',['story'=> $story ->story_name_link])}}" >{{$story->story_name}}</a></h6>
                             <h6 class="col-teal">{{$story->story_sum_chapter}} chương</h6>
                         </div>
-                        <a href="javascript:void(0);" class="btn bg-pink btn-block btn-xs waves-effect">Đọc<span class="badge">99k+</span></a>
+                        <a href="{{route('storydetailpage.index',['story'=> $story ->story_name_link])}}" class="btn bg-pink btn-block btn-xs waves-effect">Đọc<span class="badge">{{round ($story ->story_view/1000 , 2)}}Kv</span></a>
                     </div>
                     @endforeach
                 </div>
@@ -76,7 +76,7 @@
                         @if($key < 12 || $key > 23) 
                           @continue;
                         @endif
-                        <a href="javascript:void(0);" class="list-group-item">{{$type ->type_name}}</a>
+                        <a href="{{route('typepage.index',['type'=>$type->type_name_link])}}" class="list-group-item">{{$type ->type_name}}</a>
                     @endforeach
                 </div>
             </div>
@@ -90,247 +90,37 @@
                     <div class="block-header block-header-custum">
                         <h2>TRUYỆN MỚI CẬP NHẬT</h2>
                     </div>
+                    @foreach($storiesNewUpdate as $story)
                     <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
+                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9 font-16">
+                            <span class="glyphicon glyphicon-chevron-right"></span><a href="{{route('storydetailpage.index',['story'=>$story ->story_name_link])}}" title="{{$story ->story_name}}">{{$story ->story_name}}</a>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
+
+                            <?php $step = ''; ?>
+                            @foreach($storyType as $type)
+                                        @foreach(unserialize($story ->story_type) as $types)
+                                                @if($types == $type ->type_id)
+                                                {{$step}}<a class="font-14" title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
+                                                <?php $step =','; ?>
+                                                @break;
+                                                @endif
+                                        @endforeach
+                            @endforeach
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
+                            <a href="{{route('chapterpage.index',['story'=>$type->type_name_link,'chapter'=>$story ->chapter_name_link])}}" title="{{$story->story_name}}  -  {{$story->chapter_name}}"><span class="chapter-text"><span>Chương </span></span>{{$story ->chapter}}</a>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
+                            <?php 
+                                $date = new DateTime($story->updated_at);
+                                $now  = new DateTime('now');
+                                $diff = $now->getTimestamp() - $date->getTimestamp();
+                            ?>
+                            {{round($diff/3600,0) . ' tiếng trước'}}
                         </div>
                     </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-                    <div class="row row-list-item">
-
-                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-                            <a itemprop="genre" href="http://truyenfull.vn/the-loai/do-thi/" title="Đô Thị">Đô Thị</a>, <a itemprop="genre" href="http://truyenfull.vn/the-loai/vong-du/" title="Võng Du">Võng Du</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="http://truyenfull.vn/toi-ten-la-ark/quyen-5-chuong-5-2/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất - Quyển 5 Chương 5-2"><span class="book-text"><span>Quyển </span></span>5 - <span class="chapter-text"><span>Chương </span></span>5-2</a>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
-                            5 giờ trước 
-                        </div>
-                    </div>
-
+                    @endforeach
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <!-- hot For Sidebars -->
@@ -348,86 +138,16 @@
                         <div class="block-header block-header-custum">
                             <h2>TRUYỆN ĐÃ HOÀN THÀNH</h2>
                         </div>
+                        @foreach($storiesFull as $story)
                         <div class="row row-list-item">
                             <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">1</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
+                                <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">1</button><a href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}" title="{{$story->story_name}}">{{$story->story_name}}</a>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
+                                {{$story->story_view}}
                             </div>
                         </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float">2</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-l-15 p-r-15">
@@ -435,86 +155,16 @@
                         <div class="block-header block-header-custum">
                             <h2>TRUYỆN MỚI ĐĂNG</h2>
                         </div>
+                        @foreach($storiesNew as $story)
                         <div class="row row-list-item">
                             <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">1</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
+                                <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">1</button><a href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}" title="{{$story->story_name}}">{{$story->story_name}}</a>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
+                                {{$story->story_view}}
                             </div>
                         </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float">2</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-l-15 p-r-15">
@@ -522,86 +172,16 @@
                         <div class="block-header block-header-custum">
                             <h2>TRUYỆN BTV ĐỀ CỬ</h2>
                         </div>
+                        @foreach($storiesOffer as $story)
                         <div class="row row-list-item">
                             <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">1</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
+                                <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">1</button><a href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}" title="{{$story->story_name}}">{{$story->story_name}}</a>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
+                                {{$story->story_view}}
                             </div>
                         </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float">2</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">3</button><a href="http://truyenfull.vn/toi-ten-la-ark/" title="Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất">Tết Thiếu Nhi Của Sơ Tam Và Lục Nhất</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                1222k
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
