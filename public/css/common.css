@@ -1,3 +1,6 @@
+.content{
+  min-height: calc(100vh  - 285px) ;
+}
 .block-header-custum   h2 {
 	font-family: 'Roboto Condensed';
     font-size: 20px;
@@ -129,6 +132,7 @@
 	bottom: 20px;
 	margin-bottom: 0;
 	background: rgba(8, 60, 55, 0.96);
+  width: 100%;
 }
 .bnt-prev {
   position: absolute;
@@ -155,8 +159,14 @@ color: #009688 !important;
     border-right: 1px dashed #CCC;
     overflow: hidden;
 }
+
 .row-list-item div:last-child{
     border-right: none;
+}
+.row-list-item button {
+	width: 30px;
+	height: 30px;
+	line-height:22px;
 }
 .media-custum{
       border-bottom: 1px dashed #CCC;
@@ -180,6 +190,24 @@ color: #009688 !important;
 }
 .footer{
   background-color: #fff;
+  ; 
+}
+.boder-dashed{
+  border-bottom: 1px dashed #CCC;
+}
+.boder-dashed .media-custum{
+  border-bottom: none;
+}
+.boder-dashed > div > a{
+   line-height: 80px;
+}
+.list-item{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.list-item > a{
+  line-height: 30px;
 }
 /*.row-convert{
   background-image: url('../images/background.jpg');

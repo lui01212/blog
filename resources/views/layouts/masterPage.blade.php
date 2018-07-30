@@ -63,6 +63,41 @@
         <!-- Content -->
         @yield('content')
         <!-- #END# Content -->
+
+    </section>
+    <section>
+        <div class="container-fluid footer m-t-25">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 align-center m-t-25">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-1">
+                            <p class="align-left">
+                                <b>Giới Thiệu</b>
+                            </p>
+                            <div class="align-left">
+                                Truyện Tiên Hiệp Full - Đọc truyện online, đọc truyện chữ, truyện hay. Website luôn cập nhật những bộ truyện mới thuộc các thể loại đặc sắc như truyện tiên hiệp, truyện kiếm hiệp, hay truyện ngôn tình một cách nhanh nhất. Hỗ trợ mọi thiết bị như di động và máy tính bảng.
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <p class="align-left">
+                                <b>Liên Hệ Quảng Cáo</b>
+                            </p>
+                            <div class="align-left">
+                                <i class="material-icons">email</i><span class="icon-name">truyentienhiepfull@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="legal m-t-30">
+                        <div class="copyright">
+                            &copy; 2018 <a href="javascript:void(0);">Admin - TruyenTienHiepFull</a>.
+                        </div>
+                        <div class="version">
+                            <b>Version: </b>1.0.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Jquery Core Js -->
