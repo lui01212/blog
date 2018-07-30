@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 
 use App\StoryType;
 
+use App\Stories;
+
 use DB;
 
 class detailController extends Controller
@@ -33,12 +35,33 @@ class detailController extends Controller
     }
 
     public function getStoryDetail($story){
-    	return view('page.storyDetailPage');
+
+        $storyType =  storyType::all();
+
+        $storys = Stories::where('story_name_link','=',$story)->leftjoin('story_authors','stories.author_id','=','story_authors.author_id')->first();
+
+        $storiesList = DB::table('stories')->where('story_name_link','=',$story) 
+        ->leftjoin('story_list_details','stories.story_id','=','story_list_details.story_id')
+        ->select('stories.story_name','stories.story_name_link','story_list_details.chapter_name','story_list_details.chapter_name_link')
+        ->orderBy('story_list_details.chapter', 'asc')
+        ->paginate(50);
+
+    	return view('page.storyDetailPage',['storyType'=>$storyType,'story'=> $storys,'storiesList'=>$storiesList]);
+        // return $storiesList;
+
+        // return $stories;
     }
     public function getSeachPage($seach){
     	return view('page.seachPage');
     }
     public function getChapterPage($story,$chapter){
-        return view('page.chapterPage');
+        $chapter = DB::table('stories')
+        ->where('stories.story_name_link','=',$story)
+        ->leftjoin('story_list_details','story_list_details.story_id','=','stories.story_id')
+        ->where('story_list_details.chapter_name_link','=',$chapter)
+        ->select('stories.story_name','stories.story_name_link','story_list_details.chapter_name','story_list_details.chapter_content')
+        ->first();
+        return view('page.chapterPage',['chapter' =>$chapter]);
+        // return $chapter;
     }
 }

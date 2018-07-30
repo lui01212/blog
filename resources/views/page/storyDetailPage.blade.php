@@ -8,22 +8,43 @@
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <a href="javascript:void(0);" class="thumbnail">
-            <img src="http://cdnaz.truyenfull.vn/cover/eJwN0UcWojAAANAT8YYibTELSqQoTRADm7zQJBQBQYmcfuZf4Q-t8OdJZs8V-cWq95P0sW-TUbM2vUFmel3YEOndOR_LklnBwYyoX4bUlwyRtDoWiltG4igjXQhdBYjNlk7pQBws7Gqdb8yQ9108aEYcD1x7SVidUpv25uS--_p2iY7f3EZvOQckLYJHVbOJH79Tf7EvgqKvB3cB-RgFgwyXwKmIRiDTWvsdV0mP6agn8hTb22jWyAIXo0-UqtcC1FfCFhS90zc51yDoO9WiChVgNR99bzxUs9dDRibN3dM-57j8gLUzXe87Xs3PPLYIG5mHBtzGH8fQ5KhKztGY1VCu9MaPoxG4qD4L0qokU2L_8FMoHfDifzqa_VlkjrIotZNAVS3BlNFBrHVPoOJguxNgaeluDNTMChq2oXXoisZf3dOTjzls7WrMT5Mghuank19LJoteyb-wV-6CRz2bLfc3NGrZ_iwVbOtSQPKbC7bB3b-rnd9InN3XvekiGjMvCYaKPT5RoY-KX_F1lsZh5UA5ArisypCBplyXre-vylmMk5d_cCIIFhZInK1lOe3xSUlS9T1kD91wXDe10mXV4A1Z3Ry4P-pNVcMvs9_AjQw8OQxmD9F7mOw7IdJ3-pGt5R7KOmlXtk9-s6uuNWmtDXvJ_pAuBn-kYDzmJwahLTpPqZ6LY0U-9eD_netbc-rCdBIsSBIOuLDFD9pY8PR35zmRaQWe_wdmS-d8/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo.jpg" class="img-responsive">
+            <img src="{{asset('images/' . $story ->story_image )}}">
         </a>
     </div>
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
         <div class="align-center boder-dashed">
-            <h2>ĐẤU LA ĐẠI LỤC</h2>
+            <h2>{{$story ->story_name}}</h2>
         </div>
         <ul class="list-unstyled">
             <li>&nbsp;</li>
-            <li><span class="font-bold">Tác Giả :</span><span>Thiên Tằm Thổ Đậu</span></li>
+            <li><span class="font-bold">Tác Giả : </span><span>{{$story->author_name}}</span></li>
             <li>&nbsp;</li>
-            <li><span class="font-bold">Thể Loại :</span><span>Tiên Hiệp,Huyền Huyễn</span></li>
+            <li><span class="font-bold">Thể Loại :</span>
+            <span>
+            <?php $step = ''; ?>
+            @foreach($storyType as $type)
+                @foreach(unserialize($story ->story_type) as $types)
+                        @if($types == $type ->type_id)
+                        {{$step}}<a title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
+                        <?php $step =','; ?>
+                        @break;
+                        @endif
+                @endforeach
+            @endforeach
+            </span>
+            </li>
             <li>&nbsp;</li>
-            <li><span class="font-bold">Tình Trạng :</span><span>Hoàn Thành</span></li>
+            <li><span class="font-bold">Tình Trạng :</span>
+                <span>
+                    @if($story->story_status == '1')
+                    {{__('Hoàn Thành')}}
+                    @else
+                    {{__('Đang Ra')}}
+                    @endif
+                </span>
+            </li>
             <li>&nbsp;</li>
-            <li><span class="font-bold">Nguồn :</span><span>Tàng Thư Viện</span></li>
+            <li><span class="font-bold">Nguồn :</span><span>{{$story->story_source}}</span></li>
             <li>&nbsp;</li>
         </ul>
 <!--         <div class="row">
@@ -39,11 +60,7 @@
             <h3>TÓM LƯỢC</h3>
     </div>
     <span>
-        Sinh ra từ một đại gia tộc, chơi đùa chiến trường buôn bán, tranh đấu trong gia tộc, chung quy lại không thể thoát khỏi số kiếp, đành phải ôm hận ra đi.......
-
-        Tỉnh lại lần nữa, nàng biến thành Đại tiểu thư ngốc nghếch của phủ tướng quân, đã như thế, nàng sẽ đem danh hiệu "ngốc nghếch" này phát huy đến tận cùng, giả thành heo ăn thịt lão hổ, để cho phủ tướng quân loạn như một nồi lẩu.
-
-        Một đạo thánh chỉ hạ xuống, bổ nhiệm nàng làm Vương phi của Dự Vương gia ngu dại, kết quả trời đất tạo nên một đôi ngốc nghếch - ngu dại, từ đó không hề loạn nhà nữa, mà là loạn nước!
+    {!! $story ->story_intro !!}
     </span>
 </div>
 </div>
@@ -53,99 +70,40 @@
     </div>
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 m-t-20">
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-3/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-3: Ngày hôm trước diệt, hôm nay sinh"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-3: Ngày hôm trước diệt, hôm nay sinh</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-3/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-3: Ngày hôm trước diệt, hôm nay sinh"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-3: Ngày hôm trước diệt, hôm nay sinh</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-3/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-3: Ngày hôm trước diệt, hôm nay sinh">1-3: Ngày hôm trước diệt, hôm nay sinh Ngày hôm trước diệt, hôm nay sinh</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
+            @foreach($storiesList as $key => $storys)
+            @if($key == 25) 
+            @break;
+            @endif
             <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
+                <span class="glyphicon glyphicon-certificate"></span> <a href="{{route('chapterpage.index',['story'=>$storys ->story_name_link,'chapter'=>$storys->chapter_name_link])}}" title="Vương {{$storys ->story_name}} - {{$storys->chapter_name}}"><span class="book-text"><span class="chapter-text"><span>{{$storys->chapter_name}}</a>
             </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-3/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-3: Ngày hôm trước diệt, hôm nay sinh"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-3: Ngày hôm trước diệt, hôm nay sinh</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
+            @endforeach
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 m-t-20">
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
+            @foreach($storiesList as $key => $storys)
+            @if($key < 25)
+            @continue;
+            @endif
+            <div class="list-item">
+                <span class="glyphicon glyphicon-certificate"></span> <a href="{{route('chapterpage.index',['story'=>$storys ->story_name_link,'chapter'=>$storys->chapter_name_link])}}" title="Vương {{$storys ->story_name}} - {{$storys->chapter_name}}"><span class="book-text"><span class="chapter-text"><span>{{$storys->chapter_name}}</a>
             </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-                        <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="http://truyenfull.vn/vuong-gia-ngoc-nghech-treu-choc-vuong-phi-ngay-ngo/quyen-1-chuong-1-1/" title="Vương Gia Ngốc Nghếch Trêu Chọc Vương Phi Ngây Ngô - Quyển 1 Chương 1-1: Mở đầu"><span class="book-text"><span>Quyển </span></span>1 - <span class="chapter-text"><span>Chương </span></span>1-1: Mở đầu</a>
-            </div>
-        </div>
+            @endforeach
+       </div>
     </div>
+    @if ($storiesList->lastPage() > 1)
+    <ul class="pagination">
+        <li class="{{ ($storiesList->currentPage() == 1) ? ' disabled' : '' }}">
+            <a href="{{ $storiesList->url(1) }}">Previous</a>
+        </li>
+        @for ($i = 1; $i <= $storiesList->lastPage(); $i++)
+            <li class="{{ ($storiesList->currentPage() == $i) ? ' active' : '' }}">
+                <a href="{{ $storiesList->url($i) }}">{{ $i }}</a>
+            </li>
+        @endfor
+        <li class="{{ ($storiesList->currentPage() == $storiesList->lastPage()) ? ' disabled' : '' }}">
+            <a href="{{ $storiesList->url($storiesList->currentPage()+1) }}" >Next</a>
+        </li>
+    </ul>
+    @endif
 </div>
 @endsection
