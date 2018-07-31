@@ -13,15 +13,16 @@
 
 Route::get('/', ['as' =>'index.index','uses' =>'Page\\indexController@index']);
 
-Route::get('/tac-gia/{author}',['as' =>'authorpage','uses' =>'Page\\detailController@getStoryForAuthor']);
+Route::get('/tac-gia/{author_name_link}',['as' =>'authorpage.index','uses' =>'Page\\detailController@getStoryForAuthor']);
 
-Route::get('/the-loai/{type}',['as' =>'typepage.index','uses' =>'Page\\detailController@getStoryForType']);
+Route::get('/the-loai/{type_name_link}',['as' =>'typepage.index','uses' =>'Page\\detailController@getStoryForType']);
 
-Route::get('/truyen/{story}',['as' =>'storydetailpage.index','uses' =>'Page\\detailController@getStoryDetail']);
+Route::get('/truyen/{story_name_link}',['as' =>'storydetailpage.index','uses' =>'Page\\detailController@getStoryDetail']);
 
-Route::get('/truyen/{story}/{chapter}',['as' =>'chapterpage.index','uses' =>'Page\\detailController@getChapterPage']);
+Route::get('/truyen/{story_name_link}/{chapter_name_link}',['as' =>'chapterpage.index','uses' =>'Page\\detailController@getChapterPage']);
 
-Route::get('/seach/{seach}',['as' =>'seachpage','uses' =>'Page\\detailController@getSeachPage']);
+Route::post('/seach',['as' =>'seachpage.index','uses' =>'Page\\detailController@getSeachPage']);
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

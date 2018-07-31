@@ -3,17 +3,14 @@
 @section('list-content')
 <!-- Badges -->
 <div class="block-header block-header-custum">
-    <h2>@if (isset($storyType))
-            {{ 'TRUYỆN '.  mb_strtoupper($storyType ->type_name ,'UTF-8')}}
-        @else
-            {{__('THỂ LOẠI KHÔNG TỒN TẠI')}}
-        @endif
+    <h2>
+        {{ 'TRUYỆN '.  mb_strtoupper($type ->type_name ,'UTF-8')}}
     </h2>
 </div>
 @if($stories)
 @foreach($stories as $story)
 @if($story ->story_name == null)
-    <h3>{{__('TRUYỆN THUỘC THỂ LOẠI '. mb_strtoupper($storyType ->type_name ,'UTF-8') . ' KHÔNG TỒN TẠI')}}</h3>
+    <h3>{{__('TRUYỆN THUỘC THỂ LOẠI '. mb_strtoupper($type ->type_name ,'UTF-8') . ' KHÔNG TỒN TẠI')}}</h3>
     @break;
 @endif
 <div class="row boder-dashed">
@@ -25,7 +22,7 @@
                 </a>
             </div>
             <div class="media-body">
-                <h4 class="media-heading"><a href="{{route('storydetailpage.index',['story'=>$story ->story_name_link])}}" title="{{$story ->story_name}}">{{$story ->story_name}}</a></h4>{{$story ->author_name}}
+                <h4 class="media-heading"><a href="{{route('storydetailpage.index',['story'=>$story ->story_name_link])}}" title="{{$story ->story_name}}">{{$story ->story_name}}</a></h4><a href="{{route('authorpage.index',['author'=>$story ->author_name_link])}}" title="{{$story ->author_name}}">{{$story ->author_name}}</a>
             </div>
         </div>
     </div>
@@ -37,17 +34,11 @@
 
 @if ($stories->lastPage() > 1)
 <ul class="pagination">
-    <li class="{{ ($stories->currentPage() == 1) ? ' disabled' : '' }}">
-        <a href="{{ $stories->url(1) }}">Previous</a>
-    </li>
     @for ($i = 1; $i <= $stories->lastPage(); $i++)
         <li class="{{ ($stories->currentPage() == $i) ? ' active' : '' }}">
             <a href="{{ $stories->url($i) }}">{{ $i }}</a>
         </li>
     @endfor
-    <li class="{{ ($stories->currentPage() == $stories->lastPage()) ? ' disabled' : '' }}">
-        <a href="{{ $stories->url($stories->currentPage()+1) }}" >Next</a>
-    </li>
 </ul>
 @endif
 @endif

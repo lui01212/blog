@@ -6,14 +6,21 @@
             <li>
                 <a href="{{ url('/') }}">
                     <i class="material-icons">home</i>
-                    <span>Home</span>
+                    <span>Trang Chủ</span>
                 </a>
             </li>
-            <li class="" >
+            <li class="{{ request()->is('the-loai/*') ? 'active' : '' }}" >
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">view_list</i>
-                    <span>Tables</span>
+                    <span>Thể Loại</span>
                 </a>
+                <ul class="ml-menu">
+                    @foreach($storyType as $key => $value)
+                    <li class="{{ request()->is('the-loai/' . $value->type_name_link) ? 'active' : '' }}">
+                        <a href="{{route('typepage.index',['type_name_link'=>$value->type_name_link])}}">{{$value ->type_name}}</a>
+                    </li>
+                    @endforeach
+                </ul>
             </li>
         </ul>
     </div>

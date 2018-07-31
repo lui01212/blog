@@ -47,11 +47,12 @@
             <li><span class="font-bold">Nguồn :</span><span>{{$story->story_source}}</span></li>
             <li>&nbsp;</li>
         </ul>
-<!--         <div class="row">
-            <div class="col-md-4 col-md-offset-4"> -->
-            <button type="button" class="btn bg-pink btn-block btn-lg waves-effect">ĐỌC TỪ ĐẦU</button>
-<!--             </div>
-        </div> -->
+            @foreach($stories as $key => $value)
+            @if($key == 1) 
+            @break;
+            @endif
+            <a href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}"" class="btn bg-pink btn-block btn-lg waves-effect">ĐỌC TỪ ĐẦU</a>
+            @endforeach
     </div>
 </div>
 <div class="row">
@@ -70,40 +71,36 @@
     </div>
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 m-t-20">
-            @foreach($storiesList as $key => $storys)
+            @foreach($stories as $key => $value)
             @if($key == 25) 
             @break;
             @endif
             <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="{{route('chapterpage.index',['story'=>$storys ->story_name_link,'chapter'=>$storys->chapter_name_link])}}" title="Vương {{$storys ->story_name}} - {{$storys->chapter_name}}"><span class="book-text"><span class="chapter-text"><span>{{$storys->chapter_name}}</a>
+                <span class="glyphicon glyphicon-certificate"></span> <a href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}" title="Vương {{$value ->story_name}} - {{$value->chapter_name}}"><span class="book-text"><span class="chapter-text"><span>{{$value->chapter_name}}</a>
             </div>
             @endforeach
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 m-t-20">
-            @foreach($storiesList as $key => $storys)
+            @foreach($stories as $key => $value)
             @if($key < 25)
             @continue;
             @endif
             <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="{{route('chapterpage.index',['story'=>$storys ->story_name_link,'chapter'=>$storys->chapter_name_link])}}" title="Vương {{$storys ->story_name}} - {{$storys->chapter_name}}"><span class="book-text"><span class="chapter-text"><span>{{$storys->chapter_name}}</a>
+                <span class="glyphicon glyphicon-certificate"></span> <a href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}" title="Vương {{$value ->story_name}} - {{$value->chapter_name}}"><span class="book-text"><span class="chapter-text"><span>{{$value->chapter_name}}</a>
             </div>
             @endforeach
        </div>
     </div>
-    @if ($storiesList->lastPage() > 1)
+    <div class="row">
+    @if ($stories->lastPage() > 1)
     <ul class="pagination">
-        <li class="{{ ($storiesList->currentPage() == 1) ? ' disabled' : '' }}">
-            <a href="{{ $storiesList->url(1) }}">Previous</a>
-        </li>
-        @for ($i = 1; $i <= $storiesList->lastPage(); $i++)
-            <li class="{{ ($storiesList->currentPage() == $i) ? ' active' : '' }}">
-                <a href="{{ $storiesList->url($i) }}">{{ $i }}</a>
+        @for ($i = 1; $i <= $stories->lastPage(); $i++)
+            <li class="{{ ($stories->currentPage() == $i) ? ' active' : '' }}">
+                <a href="{{ $stories->url($i) }}">{{ $i }}</a>
             </li>
         @endfor
-        <li class="{{ ($storiesList->currentPage() == $storiesList->lastPage()) ? ' disabled' : '' }}">
-            <a href="{{ $storiesList->url($storiesList->currentPage()+1) }}" >Next</a>
-        </li>
     </ul>
     @endif
+    </div>
 </div>
 @endsection

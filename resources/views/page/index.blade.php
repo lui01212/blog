@@ -25,7 +25,7 @@
                         @if($key == 12) 
                           @break;
                         @endif
-                        <a href="{{route('typepage.index',['type'=>$type->type_name_link])}}" class="list-group-item">{{$type ->type_name}}</a>
+                        <a href="{{route('typepage.index',['type_name_link'=>$type->type_name_link])}}" class="list-group-item">{{$type ->type_name}}</a>
                     @endforeach
                 </div>
             </div>
@@ -76,7 +76,7 @@
                         @if($key < 12 || $key > 23) 
                           @continue;
                         @endif
-                        <a href="{{route('typepage.index',['type'=>$type->type_name_link])}}" class="list-group-item">{{$type ->type_name}}</a>
+                        <a href="{{route('typepage.index',['type_name_link'=>$type->type_name_link])}}" class="list-group-item">{{$type ->type_name}}</a>
                     @endforeach
                 </div>
             </div>
@@ -101,7 +101,7 @@
                             @foreach($storyType as $type)
                                         @foreach(unserialize($story ->story_type) as $types)
                                                 @if($types == $type ->type_id)
-                                                {{$step}}<a class="font-14" title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
+                                                {{$step}}<a class="font-14" title="{{$type->type_name}}" href="{{route('typepage.index',['type_name_link'=>$type->type_name_link])}}">{{$type->type_name}}</a>
                                                 <?php $step =','; ?>
                                                 @break;
                                                 @endif
@@ -109,7 +109,7 @@
                             @endforeach
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                            <a href="{{route('chapterpage.index',['story'=>$type->type_name_link,'chapter'=>$story ->chapter_name_link])}}" title="{{$story->story_name}}  -  {{$story->chapter_name}}"><span class="chapter-text"><span>Chương </span></span>{{$story ->chapter}}</a>
+                            <a href="{{route('chapterpage.index',['story'=>$story->story_name_link,'chapter'=>$story ->chapter_name_link])}}" title="{{$story->story_name}}  -  {{$story->chapter_name}}"><span class="chapter-text"><span>Chương </span></span>{{$story ->chapter}}</a>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
                             <?php 
