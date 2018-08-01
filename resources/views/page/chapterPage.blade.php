@@ -1,5 +1,17 @@
 @extends('layouts.masterPage')
 
+@section('breadcrumb')
+<div class="row clearfix" style="margin: 80px 0 0 0;">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ol class="breadcrumb align-center">
+            <li><a href="{{ url('/') }}"><i class="material-icons">home</i> Home</a></li>
+            <li><a href="{{route('storydetailpage.index',['story'=>$chapter ->story_name_link])}}"><i class="material-icons">library_books</i>{{$chapter ->story_name}}</a></li>
+            <li><a href="javascript:void(0);" class="active"><i class="material-icons">archive</i>{{$chapter ->chapter_name}}</a></li>
+        </ol>
+    </div>
+</div>
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row">

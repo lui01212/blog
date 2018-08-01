@@ -146,7 +146,7 @@ class detailController extends Controller
             return 'trang không tồn tại';
         }
     }
-    public function getSeachPage(Request $request){
+    public function postSeachPage(Request $request){
 
         $storyType = StoryType::all();
         //----------------------------------------------------------------------//
@@ -167,9 +167,13 @@ class detailController extends Controller
                                      ->where('stories.flag','=',1);
                     })
 
-                    ->where('stories.story_name','like','%' . $keyword . '%') 
+                    ->where('stories.story_name','like','%' . $keyword . 'a%') 
 
-                    ->orWhere('story_authors.author_name','like','%' . $keyword . '%') 
+                    ->orWhere('stories.story_name_link','like','%' . str_slug($keyword). '%') 
+
+                    ->orWhere('story_authors.author_name','like','%' . $keyword . '%')
+
+                    ->orWhere('story_authors.author_name_link','like','%' . str_slug($keyword) . '%') 
 
                     ->select('stories.story_name'
                         ,'stories.story_name_link'
@@ -187,6 +191,39 @@ class detailController extends Controller
 
         }
     	return view('page.seachPage',['storyType'=>$storyType,'keyword'=>$keyword,'stories'=> $stories]);
+    }
+    public function getSeachPage($keyword){
+
+        $storyType = StoryType::all();
+        //----------------------------------------------------------------------//
+        if($keyword !== null){
+
+        $stories   = DB::table('stories')
+
+                    ->leftjoin('story_authors',function($leftjoin){
+                            $leftjoin->on('story_authors.author_id','stories.author_id')
+                                     ->where('stories.flag','=',1);
+                    })
+                    ->where('stories.flag','=',1) 
+                    ->where(function ($query)use($keyword){
+                            $query->where('stories.story_name','like','%' . $keyword . '%') 
+                                  ->orWhere('story_authors.author_name','like','%' . $keyword . '%');
+                    })
+
+                    ->select('stories.story_name'
+                        ,'stories.story_name_link'
+                        ,'stories.story_image'
+                        ,'story_authors.author_name'
+                        ,'story_authors.author_name_link'
+                        )
+
+                    ->limit(6)
+
+                    ->get();
+        }else{
+            $stories = null;
+        }
+        return view('page.custumPage.resultSearchBar',['stories'=> $stories]);
     }
     public function getChapterPage($story_name_link,$chapter_name_link){
 

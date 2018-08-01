@@ -218,6 +218,19 @@
 section.content{
   margin: 0;
 }
+.result-search-bar{
+    position: fixed;
+    top: 1000px;
+    right: 0;
+    left: 0;
+    z-index: 999;
+    max-height: 476px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.result-search-bar.open{
+  top: 71px;
+}
 /* Materialize Css | Taken from www.materializecss.com */
 /* Media ======================================= */
 @media only screen and (max-width: 600px) {

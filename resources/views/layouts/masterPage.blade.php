@@ -48,7 +48,7 @@
     @include('page.custumPage.topBar')
     <!-- #Top Bar -->
     <!-- Alignments -->
-    @include('page.custumPage.breadcrumb')
+    @yield('breadcrumb')
     <!-- #END  Alignments -->
     <section>
     <!-- Left Sidebar -->
@@ -114,6 +114,8 @@
 
     <!-- Demo Js -->
     <script src="{{ asset('js/page.js') }}"></script>
+    <!-- search -->
+    <script src="{{ asset('js/search.js') }}"></script>
 
 </body>
 

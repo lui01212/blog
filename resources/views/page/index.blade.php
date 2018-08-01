@@ -1,5 +1,15 @@
 @extends('layouts.masterPage')
 
+@section('breadcrumb')
+<div class="row clearfix" style="margin: 80px 0 0 0;">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ol class="breadcrumb align-center">
+            <li><a href="{{ url('/') }}"><i class="material-icons">home</i> Home</a></li>
+        </ol>
+    </div>
+</div>
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row" id="story-hot">

@@ -1,5 +1,16 @@
 @extends('page.detailPage')
 
+@section('breadcrumb')
+<div class="row clearfix" style="margin: 80px 0 0 0;">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ol class="breadcrumb align-center">
+            <li><a href="{{ url('/') }}"><i class="material-icons">home</i> Home</a></li>
+            <li><a href="javascript:void(0);"><i class="material-icons">library_books</i>Search</a></li>
+        </ol>
+    </div>
+</div>
+@endsection
+
 @section('list-content')
 <!-- Badges -->
 <div class="block-header block-header-custum">

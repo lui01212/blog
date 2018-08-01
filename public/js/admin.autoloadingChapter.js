@@ -14,7 +14,7 @@ function OnJscStartUp()
 	    //
 	    setTimeout(function() 
 			    {
-			       if($('input[name="chapter_link"]').val() !="" && $.cookie("flagautoloadchapter") == 1 && $('input[name="chapter_from"]').val() < 10){
+			       if($('input[name="chapter_link"]').val() !="" && $.cookie("flagautoloadchapter") == 1){
 			       	$('#i_autoloadchapter').click();
 			    } 
 	    }, 2000);
@@ -33,3 +33,4 @@ function stopAuutoLoadChapter(){
 	 	$('#i_stopautoloadchapter').text('CHO PHÉP');
 	 }
 }
+$

@@ -21,7 +21,9 @@ Route::get('/truyen/{story_name_link}',['as' =>'storydetailpage.index','uses' =>
 
 Route::get('/truyen/{story_name_link}/{chapter_name_link}',['as' =>'chapterpage.index','uses' =>'Page\\detailController@getChapterPage']);
 
-Route::post('/seach',['as' =>'seachpage.index','uses' =>'Page\\detailController@getSeachPage']);
+Route::post('/search',['as' =>'seachpage.index','uses' =>'Page\\detailController@postSeachPage']);
+
+Route::get('/search/{keyword}','Page\\detailController@getSeachPage');
 
 Auth::routes();
 
