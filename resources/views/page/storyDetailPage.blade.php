@@ -85,7 +85,7 @@
             @break;
             @endif
             <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}" title="Vương {{$value ->story_name}} - {{$value->chapter_name}}"><span class="book-text"><span class="chapter-text"><span>{{$value->chapter_name}}</a>
+                <span class="glyphicon glyphicon-certificate"></span> <a href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}" title="Vương {{$value ->story_name}} - {{$value->chapter_name}}">{{$value->chapter_name}}</a>
             </div>
             @endforeach
         </div>
@@ -95,7 +95,7 @@
             @continue;
             @endif
             <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}" title="Vương {{$value ->story_name}} - {{$value->chapter_name}}"><span class="book-text"><span class="chapter-text"><span>{{$value->chapter_name}}</a>
+                <span class="glyphicon glyphicon-certificate"></span><a href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}" title="Vương {{$value ->story_name}} - {{$value->chapter_name}}">{{$value->chapter_name}}</a>
             </div>
             @endforeach
        </div>

@@ -208,6 +208,10 @@
 .list-item > a{
   line-height: 30px;
 }
+.nav-custum > li > a {
+    padding-left: 13px;
+    padding-right: 13px;
+}
 /*.row-convert{
   background-image: url('../images/background.jpg');
   background-repeat: no-repeat;
@@ -247,13 +251,20 @@ section.content{
   .col-sm-0 , .col-xs-0{
     display: none;
   }
+  .chapter-text span {
+    display: none;
+  }
+  .chapter-text:before {
+    display: inline;
+    content: "C";
+  }
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .column img {
     vertical-align: middle;
     height: 70%;
   }
-  .col-sm-0 , .col-xs-0{
+  .col-sm-0 {
     display: none;
   }
 }

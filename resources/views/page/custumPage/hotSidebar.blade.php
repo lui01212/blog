@@ -3,7 +3,7 @@
 </div>
 <div class="card">
     <div class="body">
-        <ul class="nav nav-tabs tab-col-teal" role="tablist">
+        <ul class="nav nav-tabs tab-col-teal nav-custum" role="tablist">
             <li role="presentation" class="active">
                 <a href="#profile_md_col_3" data-toggle="tab">TUẦN</a>
             </li>
@@ -11,7 +11,7 @@
                 <a href="#messages_md_col_3" data-toggle="tab">THÁNG</a>
             </li>
             <li role="presentation">
-                <a href="#messages_animation_1" data-toggle="tab">ALL TIME</a>
+                <a href="#messages_animation_1" data-toggle="tab">NĂM+</a>
             </li>
         </ul>
         <!-- Tab panes -->

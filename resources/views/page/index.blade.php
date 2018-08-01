@@ -105,8 +105,7 @@
                         <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9 font-16">
                             <span class="glyphicon glyphicon-chevron-right"></span><a href="{{route('storydetailpage.index',['story'=>$story ->story_name_link])}}" title="{{$story ->story_name}}">{{$story ->story_name}}</a>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-0">
-
+                        <div class="col-lg-3 col-md-0 col-sm-2 col-xs-0">
                             <?php $step = ''; ?>
                             @foreach($storyType as $type)
                                         @foreach(unserialize($story ->story_type) as $types)
@@ -118,10 +117,10 @@
                                         @endforeach
                             @endforeach
                         </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+                        <div class="col-lg-2 col-md-4 col-sm-2 col-xs-3">
                             <a href="{{route('chapterpage.index',['story'=>$story->story_name_link,'chapter'=>$story ->chapter_name_link])}}" title="{{$story->story_name}}  -  {{$story->chapter_name}}"><span class="chapter-text"><span>Chương </span></span>{{$story ->chapter}}</a>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0">
+                        <div class="col-lg-2 col-md-3 col-sm-2 col-xs-0">
                             <?php 
                                 $date = new DateTime($story->updated_at);
                                 $now  = new DateTime('now');
@@ -150,6 +149,23 @@
                         </div>
                         @foreach($storiesFull as $story)
                         <div class="row row-list-item">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                        <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
+                                            1
+                                        </button>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        
+                                    </div>
+
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
                                 <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">1</button><a href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}" title="{{$story->story_name}}">{{$story->story_name}}</a>
                             </div>
