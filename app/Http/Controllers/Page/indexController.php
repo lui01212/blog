@@ -138,11 +138,17 @@ class indexController extends Controller
                                      ->on('story_list_details.chapter','=','stories.story_sum_chapter')
                                      ->where('story_list_details.flag','=',1);
                     })
+                    ->leftjoin('story_authors',function($leftjoin){
+                            $leftjoin->on('story_authors.author_id','stories.author_id')
+                                     ->where('stories.flag','=',1);
+                    })
 					->select('stories.story_name'
 							,'stories.story_image'
 							,'stories.story_name_link'
 							,'stories.story_type'
 							,'stories.story_view'
+							,'stories.story_type'
+							,'story_authors.author_name'
 							,'story_list_details.chapter'
 							)
 
@@ -158,13 +164,19 @@ class indexController extends Controller
                                      ->on('story_list_details.chapter','=','stories.story_sum_chapter')
                                      ->where('story_list_details.flag','=',1);
                     })
+                    ->leftjoin('story_authors',function($leftjoin){
+                            $leftjoin->on('story_authors.author_id','stories.author_id')
+                                     ->where('stories.flag','=',1);
+                    })
 					->select('stories.story_name'
 							,'stories.story_image'
 							,'stories.story_name_link'
 							,'stories.story_type'
 							,'stories.story_view'
+							,'stories.story_type'
+							,'story_authors.author_name'
 							,'story_list_details.chapter'
-					         )
+							)
 					->orderBy('stories.created_at', 'desc')
 
 					->limit(10)
@@ -178,12 +190,18 @@ class indexController extends Controller
 	                                     ->on('story_list_details.chapter','=','stories.story_sum_chapter')
 	                                     ->where('story_list_details.flag','=',1);
 	                    })
+	                    ->leftjoin('story_authors',function($leftjoin){
+	                            $leftjoin->on('story_authors.author_id','stories.author_id')
+	                                     ->where('stories.flag','=',1);
+	                    })
 						->select('stories.story_name'
-									,'stories.story_image'
-									,'stories.story_name_link'
-									,'stories.story_type'
-									,'stories.story_view'
-									,'story_list_details.chapter'
+								,'stories.story_image'
+								,'stories.story_name_link'
+								,'stories.story_type'
+								,'stories.story_view'
+								,'stories.story_type'
+								,'story_authors.author_name'
+								,'story_list_details.chapter'
 								)
 
 						->orderBy('stories.story_rating', 'desc')

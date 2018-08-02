@@ -50,7 +50,7 @@
                             <img src="{{asset('images/' . $story ->story_image )}}" />
                             <div class="my-card-content">
                                 <p>{{$story ->story_name}}</p>
-                                <a href="{{route('storydetailpage.index',['story'=> $story ->story_name_link])}}" class="btn bg-pink btn-block btn-xs waves-effect">Đọc<span class="badge">{{round ($story ->story_view/1000 , 2)}}Kv</span></a>
+                                <a href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" class="btn bg-pink btn-block btn-xs waves-effect">Đọc<span class="badge">{{round ($story ->story_view/1000 , 2)}}Kv</span></a>
                             </div>
                         </div>
                         @endforeach
@@ -139,75 +139,184 @@
             </div>
         </div>
     </div>
+    <?php 
+        $arrayColor  = array('bg-green' ,'bg-light-green','bg-lime','bg-yellow','bg-amber','bg-orange','bg-deep-orange','bg-brown','bg-grey','bg-blue-grey');
+    ?>
     <div class="row m-t-50">
         <div class="col-md-10 col-md-offset-1">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="row p-r-25 p-l-25 block">
+                    <div class="row p-r-25 p-l-15">
                         <div class="block-header block-header-custum">
                             <h2>TRUYỆN ĐÃ HOÀN THÀNH</h2>
                         </div>
-                        @foreach($storiesFull as $story)
-                        <div class="row row-list-item">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="row">
-                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                        <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
-                                            1
-                                        </button>
+                        <ul class="list-group">
+                        @foreach($storiesFull as $key => $story)
+                            @if($key == 0)
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 m-r-5">
+                                            <button type="button" class="btn {{$arrayColor[$key]}} btn-circle waves-effect waves-circle waves-float" style="width: 30px;height: 30px; line-height: 15px;">
+                                            {{$key +1 }}
+                                            </button>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-overflow align-center">
+                                            <a href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span>{{$story->story_name}}</span>
+                                            </a>
+                                            <div class="m-t-10 font-12">
+                                                <p>Thể loại:
+                                                    <?php $step = ''; ?>
+                                                    @foreach($storyType as $type)
+                                                                @foreach(unserialize($story ->story_type) as $types)
+                                                                        @if($types == $type ->type_id)
+                                                                        {{$step}}
+                                                                        {{$type->type_name}}
+                                                                        <?php $step =','; ?>
+                                                                        @break;
+                                                                        @endif
+                                                                @endforeach
+                                                    @endforeach
+                                                </p>
+                                                <p>Tác Giả :{{$story->author_name}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<!--                                             <div class="books">
+                                              <div class="book">
+                                                <img src="{{asset('images/' . $story ->story_image )}}" style="width: 100px; height: 120px;" />
+                                              </div>
+                                            </div> -->
+                                        </div>
                                     </div>
-
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        
-                                    </div>
-
-                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">1</button><a href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}" title="{{$story->story_name}}">{{$story->story_name}}</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                {{$story->story_view}}
-                            </div>
-                        </div>
+                                </li>
+                            @endif
+                            @if($key > 0)
+                                <li class="list-group-item text-overflow">
+                                    <button type="button" class="btn {{$arrayColor[$key]}} btn-circle waves-effect waves-circle waves-float m-r-5" style="width: 30px;height: 30px; line-height: 15px;">
+                                            {{$key +1 }}
+                                    </button>
+                                    <a href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span class="style:">{{$story->story_name}}</span>
+                                    </a>
+                                </li>
+                            @endif
                         @endforeach
+                        </ul>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-l-15 p-r-15">
-                    <div class="row p-r-25 p-l-25 block">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="row p-r-25 p-l-15">
                         <div class="block-header block-header-custum">
-                            <h2>TRUYỆN MỚI ĐĂNG</h2>
+                            <h2>TRUYỆN ĐÃ HOÀN THÀNH</h2>
                         </div>
-                        @foreach($storiesNew as $story)
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">1</button><a href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}" title="{{$story->story_name}}">{{$story->story_name}}</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                {{$story->story_view}}
-                            </div>
-                        </div>
+                        <ul class="list-group">
+                        @foreach($storiesNew as $key => $story)
+                            @if($key == 0)
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 m-r-5">
+                                            <button type="button" class="btn {{$arrayColor[$key]}} btn-circle waves-effect waves-circle waves-float" style="width: 30px;height: 30px; line-height: 15px;">
+                                            {{$key +1 }}
+                                            </button>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-overflow align-center">
+                                            <a href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span>{{$story->story_name}}</span>
+                                            </a>
+                                            <div class="m-t-10 font-12">
+                                                <p>Thể loại:
+                                                    <?php $step = ''; ?>
+                                                    @foreach($storyType as $type)
+                                                                @foreach(unserialize($story ->story_type) as $types)
+                                                                        @if($types == $type ->type_id)
+                                                                        {{$step}}
+                                                                        {{$type->type_name}}
+                                                                        <?php $step =','; ?>
+                                                                        @break;
+                                                                        @endif
+                                                                @endforeach
+                                                    @endforeach
+                                                </p>
+                                                <p>Tác Giả :{{$story->author_name}}</p>
+                                            </div>
+                                        </div>
+<!--                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="books">
+                                              <div class="book">
+                                                <img src="{{asset('images/' . $story ->story_image )}}" style="width: 100px; height: 120px;" />
+                                              </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </li>
+                            @endif
+                            @if($key > 0)
+                                <li class="list-group-item text-overflow">
+                                    <button type="button" class="btn {{$arrayColor[$key]}} btn-circle waves-effect waves-circle waves-float m-r-5" style="width: 30px;height: 30px; line-height: 15px;">
+                                            {{$key +1 }}
+                                    </button>
+                                    <a href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span class="style:">{{$story->story_name}}</span>
+                                    </a>
+                                </li>
+                            @endif
                         @endforeach
+                        </ul>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-l-15 p-r-15">
-                    <div class="row p-r-25 p-l-25 block">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="row p-r-25 p-l-15">
                         <div class="block-header block-header-custum">
-                            <h2>TRUYỆN BTV ĐỀ CỬ</h2>
+                            <h2>TRUYỆN ĐÃ HOÀN THÀNH</h2>
                         </div>
-                        @foreach($storiesOffer as $story)
-                        <div class="row row-list-item">
-                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">1</button><a href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}" title="{{$story->story_name}}">{{$story->story_name}}</a>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                {{$story->story_view}}
-                            </div>
-                        </div>
+                        <ul class="list-group">
+                        @foreach($storiesOffer as $key => $story)
+                            @if($key == 0)
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 m-r-5">
+                                            <button type="button" class="btn {{$arrayColor[$key]}} btn-circle waves-effect waves-circle waves-float" style="width: 30px;height: 30px; line-height: 15px;">
+                                            {{$key +1 }}
+                                            </button>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-overflow align-center">
+                                            <a href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span>{{$story->story_name}}</span>
+                                            </a>
+                                            <div class="m-t-10 font-12">
+                                                <p>Thể loại:
+                                                    <?php $step = ''; ?>
+                                                    @foreach($storyType as $type)
+                                                                @foreach(unserialize($story ->story_type) as $types)
+                                                                        @if($types == $type ->type_id)
+                                                                        {{$step}}
+                                                                        {{$type->type_name}}
+                                                                        <?php $step =','; ?>
+                                                                        @break;
+                                                                        @endif
+                                                                @endforeach
+                                                    @endforeach
+                                                </p>
+                                                <p>Tác Giả :{{$story->author_name}}</p>
+                                            </div>
+                                        </div>
+<!--                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="books">
+                                              <div class="book">
+                                                <img src="{{asset('images/' . $story ->story_image )}}" style="width: 100px; height: 120px;" />
+                                              </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </li>
+                            @endif
+                            @if($key > 0)
+                                <li class="list-group-item text-overflow">
+                                    <button type="button" class="btn {{$arrayColor[$key]}} btn-circle waves-effect waves-circle waves-float m-r-5" style="width: 30px;height: 30px; line-height: 15px;">
+                                            {{$key +1 }}
+                                    </button>
+                                    <a href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span class="style:">{{$story->story_name}}</span>
+                                    </a>
+                                </li>
+                            @endif
                         @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>
