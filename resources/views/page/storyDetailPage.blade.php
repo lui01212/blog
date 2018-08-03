@@ -16,13 +16,13 @@
 </div>
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <a href="javascript:void(0);" class="thumbnail">
-            <img src="{{asset('images/' . $story ->story_image )}}">
+        <a href="javascript:void(0);" class="thumbnail" style="height: 80%;width: 80%; margin:0 auto;">
+            <img src="{{asset('images/' . $story ->story_image )}}" style="height: 100%;width: 100%;" >
         </a>
     </div>
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
         <div class="align-center boder-dashed">
-            <h2>{{$story ->story_name}}</h2>
+            <h2 class="font-30">{{$story ->story_name}}</h2>
         </div>
         <ul class="list-unstyled">
             <li>&nbsp;</li>
@@ -67,7 +67,7 @@
 <div class="row">
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-t-20">
     <div class="align-center boder-dashed m-b-10">
-            <h3>TÓM LƯỢC</h3>
+            <h3 class="font-25">TÓM LƯỢC</h3>
     </div>
     <span>
     {!! $story ->story_intro !!}
@@ -85,7 +85,7 @@
             @break;
             @endif
             <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span> <a href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}" title="Vương {{$value ->story_name}} - {{$value->chapter_name}}">{{$value->chapter_name}}</a>
+                <span class="glyphicon glyphicon-certificate"></span> <a class="m-l-5" href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}" title="Vương {{$value ->story_name}} - {{$value->chapter_name}}">{{$value->chapter_name}}</a>
             </div>
             @endforeach
         </div>
@@ -95,14 +95,14 @@
             @continue;
             @endif
             <div class="list-item">
-                <span class="glyphicon glyphicon-certificate"></span><a href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}" title="Vương {{$value ->story_name}} - {{$value->chapter_name}}">{{$value->chapter_name}}</a>
+                <span class="glyphicon glyphicon-certificate"></span><a class="m-l-10" href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}" title="Vương {{$value ->story_name}} - {{$value->chapter_name}}">{{$value->chapter_name}}</a>
             </div>
             @endforeach
        </div>
     </div>
-    <div class="row">
+    <div class="row m-t-20 m-r-10 m-l-10" style="background-color: #fff;">
     @if ($stories->lastPage() > 1)
-    <ul class="pagination">
+    <ul class="pagination m-l-10">
         @for ($i = 1; $i <= $stories->lastPage(); $i++)
             <li class="{{ ($stories->currentPage() == $i) ? ' active' : '' }}">
                 <a href="{{ $stories->url($i) }}">{{ $i }}</a>

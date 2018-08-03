@@ -126,7 +126,7 @@
                                 $now  = new DateTime('now');
                                 $diff = $now->getTimestamp() - $date->getTimestamp();
                             ?>
-                            {{round($diff/3600,0) . ' tiếng trước'}}
+                            {{round($diff/3600,0)==0 ? ' Vừa Mới Đăng' : (round($diff/3600,0) . ' tiếng trước')}}
                         </div>
                     </div>
                     @endforeach
@@ -153,7 +153,7 @@
                         <ul class="list-group">
                         @foreach($storiesFull as $key => $story)
                             @if($key == 0)
-                                <li class="list-group-item">
+                                <li class="list-group-item" style="background-image: url('images/backgroud-list1.jpg'); background-size: 100% 100%;">
                                     <div class="row">
                                         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 m-r-5">
                                             <button type="button" class="btn {{$arrayColor[$key]}} btn-circle waves-effect waves-circle waves-float" style="width: 30px;height: 30px; line-height: 15px;">
@@ -161,7 +161,7 @@
                                             </button>
                                         </div>
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-overflow align-center">
-                                            <a href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span>{{$story->story_name}}</span>
+                                            <a class="btn bg-purple waves-effect" href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span>{{$story->story_name}}</span>
                                             </a>
                                             <div class="m-t-10 font-12">
                                                 <p>Thể loại:
@@ -181,11 +181,6 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-<!--                                             <div class="books">
-                                              <div class="book">
-                                                <img src="{{asset('images/' . $story ->story_image )}}" style="width: 100px; height: 120px;" />
-                                              </div>
-                                            </div> -->
                                         </div>
                                     </div>
                                 </li>
@@ -206,12 +201,12 @@
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="row p-r-25 p-l-15">
                         <div class="block-header block-header-custum">
-                            <h2>TRUYỆN ĐÃ HOÀN THÀNH</h2>
+                            <h2>TRUYỆN ĐÃ MỚI</h2>
                         </div>
                         <ul class="list-group">
                         @foreach($storiesNew as $key => $story)
                             @if($key == 0)
-                                <li class="list-group-item">
+                                <li class="list-group-item" style="background-image: url('images/backgroud-list2.jpg'); background-size: 100% 100%;">
                                     <div class="row">
                                         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 m-r-5">
                                             <button type="button" class="btn {{$arrayColor[$key]}} btn-circle waves-effect waves-circle waves-float" style="width: 30px;height: 30px; line-height: 15px;">
@@ -219,7 +214,7 @@
                                             </button>
                                         </div>
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-overflow align-center">
-                                            <a href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span>{{$story->story_name}}</span>
+                                            <a class="btn bg-purple waves-effect" href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span>{{$story->story_name}}</span>
                                             </a>
                                             <div class="m-t-10 font-12">
                                                 <p>Thể loại:
@@ -238,13 +233,6 @@
                                                 <p>Tác Giả :{{$story->author_name}}</p>
                                             </div>
                                         </div>
-<!--                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="books">
-                                              <div class="book">
-                                                <img src="{{asset('images/' . $story ->story_image )}}" style="width: 100px; height: 120px;" />
-                                              </div>
-                                            </div>
-                                        </div> -->
                                     </div>
                                 </li>
                             @endif
@@ -264,12 +252,12 @@
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="row p-r-25 p-l-15">
                         <div class="block-header block-header-custum">
-                            <h2>TRUYỆN ĐÃ HOÀN THÀNH</h2>
+                            <h2>TRUYỆN ĐÃ BTV ĐỀ CỬ</h2>
                         </div>
                         <ul class="list-group">
                         @foreach($storiesOffer as $key => $story)
                             @if($key == 0)
-                                <li class="list-group-item">
+                                <li class="list-group-item" style="background-image: url('images/backgroud-list3.jpg'); background-size: 100% 100%;">
                                     <div class="row">
                                         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 m-r-5">
                                             <button type="button" class="btn {{$arrayColor[$key]}} btn-circle waves-effect waves-circle waves-float" style="width: 30px;height: 30px; line-height: 15px;">
@@ -277,7 +265,7 @@
                                             </button>
                                         </div>
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-overflow align-center">
-                                            <a href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span>{{$story->story_name}}</span>
+                                            <a class="btn bg-purple waves-effect" href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span>{{$story->story_name}}</span>
                                             </a>
                                             <div class="m-t-10 font-12">
                                                 <p>Thể loại:
@@ -296,13 +284,6 @@
                                                 <p>Tác Giả :{{$story->author_name}}</p>
                                             </div>
                                         </div>
-<!--                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="books">
-                                              <div class="book">
-                                                <img src="{{asset('images/' . $story ->story_image )}}" style="width: 100px; height: 120px;" />
-                                              </div>
-                                            </div>
-                                        </div> -->
                                     </div>
                                 </li>
                             @endif
