@@ -59,16 +59,11 @@ class indexController extends Controller
 		$storiesHotWeek = DB::table('stories')
 							->where('stories.story_rating','>=','9')
 							->where('stories.story_view','>','1000')
-		                    ->leftjoin('story_list_details',function($leftjoin){
-		                            $leftjoin->on('story_list_details.story_id','stories.story_id')
-		                                     ->on('story_list_details.chapter','=','stories.story_sum_chapter')
-		                                     ->where('story_list_details.flag','=',1);
-		                    })
 							->select('stories.story_name'
 								,'stories.story_image'
 								,'stories.story_name_link'
 								,'stories.story_type'
-								,'story_list_details.chapter'
+								,'stories.story_sum_chapter'
 								)
 							->orderBy('stories.story_rating', 'desc')
 
@@ -84,17 +79,11 @@ class indexController extends Controller
 
 							->where('stories.updated_at','>',date_modify(new \DateTime(), "-1 months"))
 
-		                    ->leftjoin('story_list_details',function($leftjoin){
-		                            $leftjoin->on('story_list_details.story_id','stories.story_id')
-		                                     ->on('story_list_details.chapter','=','stories.story_sum_chapter')
-		                                     ->where('story_list_details.flag','=',1);
-		                    })
-
 							->select('stories.story_name'
 								,'stories.story_image'
 								,'stories.story_name_link'
 								,'stories.story_type'
-								,'story_list_details.chapter'
+								,'stories.story_sum_chapter'
 							)
 							->orderBy('stories.story_rating', 'desc')
 
@@ -108,17 +97,11 @@ class indexController extends Controller
 
 						->where('stories.story_view','>','1000')
 
-	                    ->leftjoin('story_list_details',function($leftjoin){
-	                            $leftjoin->on('story_list_details.story_id','stories.story_id')
-	                                     ->on('story_list_details.chapter','=','stories.story_sum_chapter')
-	                                     ->where('story_list_details.flag','=',1);
-	                    })
-
 						->select('stories.story_name'
 							,'stories.story_image'
 							,'stories.story_name_link'
 							,'stories.story_type'
-							,'story_list_details.chapter'
+							,'stories.story_sum_chapter'
 							)
 
 						->orderBy('stories.updated_at', 'desc')
@@ -133,11 +116,6 @@ class indexController extends Controller
 
 					->where('stories.story_status','=','1')
 
-                    ->leftjoin('story_list_details',function($leftjoin){
-                            $leftjoin->on('story_list_details.story_id','stories.story_id')
-                                     ->on('story_list_details.chapter','=','stories.story_sum_chapter')
-                                     ->where('story_list_details.flag','=',1);
-                    })
                     ->leftjoin('story_authors',function($leftjoin){
                             $leftjoin->on('story_authors.author_id','stories.author_id')
                                      ->where('stories.flag','=',1);
@@ -149,7 +127,7 @@ class indexController extends Controller
 							,'stories.story_view'
 							,'stories.story_type'
 							,'story_authors.author_name'
-							,'story_list_details.chapter'
+							,'stories.story_sum_chapter'
 							)
 
 					->orderBy('stories.updated_at', 'desc')
@@ -159,11 +137,6 @@ class indexController extends Controller
 					->get();
 		//----------------------------------------------------------------------//
 		$storiesNew= DB::table('stories')
-                    ->leftjoin('story_list_details',function($leftjoin){
-                            $leftjoin->on('story_list_details.story_id','stories.story_id')
-                                     ->on('story_list_details.chapter','=','stories.story_sum_chapter')
-                                     ->where('story_list_details.flag','=',1);
-                    })
                     ->leftjoin('story_authors',function($leftjoin){
                             $leftjoin->on('story_authors.author_id','stories.author_id')
                                      ->where('stories.flag','=',1);
@@ -175,7 +148,7 @@ class indexController extends Controller
 							,'stories.story_view'
 							,'stories.story_type'
 							,'story_authors.author_name'
-							,'story_list_details.chapter'
+							,'stories.story_sum_chapter'
 							)
 					->orderBy('stories.created_at', 'desc')
 
@@ -185,11 +158,6 @@ class indexController extends Controller
 		//----------------------------------------------------------------------//
 		$storiesOffer= DB::table('stories')
 						->where('stories.story_view','>','1000')
-	                    ->leftjoin('story_list_details',function($leftjoin){
-	                            $leftjoin->on('story_list_details.story_id','stories.story_id')
-	                                     ->on('story_list_details.chapter','=','stories.story_sum_chapter')
-	                                     ->where('story_list_details.flag','=',1);
-	                    })
 	                    ->leftjoin('story_authors',function($leftjoin){
 	                            $leftjoin->on('story_authors.author_id','stories.author_id')
 	                                     ->where('stories.flag','=',1);
@@ -201,7 +169,7 @@ class indexController extends Controller
 								,'stories.story_view'
 								,'stories.story_type'
 								,'story_authors.author_name'
-								,'story_list_details.chapter'
+								,'stories.story_sum_chapter'
 								)
 
 						->orderBy('stories.story_rating', 'desc')
