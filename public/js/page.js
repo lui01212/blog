@@ -467,11 +467,13 @@ $(function () {
 
     setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
 
-    $('.content-chapter a').remove();
-    // your script
-    $('.content-chapter').html($('.content-chapter').html().replace('đọc truyện với http://truｙencuatui.net/',''));
-    $('.content-chapter').html($('.content-chapter').html().replace('tui','moi nguoi ung ho minh nhe'));
-    $('.content-chapter').html($('.content-chapter').html().replace('t r u y e n c u a❤t u i n e t','moi nguoi ung ho minh nhe'));
-    $('.content-chapter').html($('.content-chapter').html().replace(' Truy Ｃập http://truyencuatuｉ.Net/ để  đọc truyện ','moi nguoi ung ho minh nhe'));
- 
+});
+$(function(){
+    $(window).scroll(function () {
+    if ($(this).scrollTop() > 100) $("#backtotop").fadeIn();
+    else $("#backtotop").fadeOut();
+    });
+    $("#backtotop").click(function () {
+    $("body,html").animate({scrollTop: 0}, "slow");
+    });
 });

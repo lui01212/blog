@@ -101,7 +101,7 @@
             </div>
         </div>
     </section>
-
+    <div id="backtotop" style="display: block;">Back To Top</div>
     <!-- Jquery Core Js -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     

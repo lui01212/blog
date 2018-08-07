@@ -298,6 +298,25 @@ section.content{
   -webkit-transform: perspective(100) rotateY(20deg);
 }
 /*books end */
+.not-hover:hover{
+    text-decoration: none;
+}
+#backtotop{
+    bottom: 20px;
+    cursor: pointer;
+    display: none;
+    height: 42px;
+    position: fixed;
+    right: 20px;
+    text-indent: -9999px;
+    width: 39px;
+    z-index: 1;
+    background-image: url('../images/backtotop2x.png');
+    background-repeat: no-repeat;
+}
+.none{
+  display: none;
+}
 /* Materialize Css | Taken from www.materializecss.com */
 /* Media ======================================= */
 @media only screen and (max-width: 600px) {
