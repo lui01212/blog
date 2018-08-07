@@ -21,7 +21,8 @@ class CreateStoriesTable extends Migration
             $table->string('story_image');
             $table->text('story_type');
             $table->text('story_intro');
-            $table->integer('story_rating') ->unsigned();
+            $table->float('story_rating', 5, 2);
+            $table->integer('story_rating_sum') ->unsigned();
             $table->integer('story_view') ->unsigned();
             $table->integer('story_sum_chapter') ->unsigned();
             $table->string('story_source');

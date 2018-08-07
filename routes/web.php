@@ -17,13 +17,21 @@ Route::get('/tac-gia/{author_name_link}',['as' =>'authorpage.index','uses' =>'Pa
 
 Route::get('/the-loai/{type_name_link}',['as' =>'typepage.index','uses' =>'Page\\detailController@getStoryForType']);
 
+Route::post('/the-loai',['as' =>'typepageredirect.index','uses' =>'Page\\detailController@postStoryForType']);
+
 Route::get('/truyen/{story_name_link}',['as' =>'storydetailpage.index','uses' =>'Page\\detailController@getStoryDetail']);
 
 Route::get('/truyen/{story_name_link}/{chapter_name_link}',['as' =>'chapterpage.index','uses' =>'Page\\detailController@getChapterPage']);
 
-Route::post('/search',['as' =>'seachpage.index','uses' =>'Page\\detailController@postSeachPage']);
+Route::match(['get', 'post'],'/search',['as' =>'seachpage.index','uses' =>'Page\\detailController@postSeachPage']);
 
 Route::get('/search/{keyword}','Page\\detailController@getSeachPage');
+
+Route::get('/rating/{story_name_link}/{rating}','Page\\detailController@getRating');
+
+Route::get('/404', function(){
+	return view('layouts.404');
+})->name('404');
 
 Auth::routes();
 

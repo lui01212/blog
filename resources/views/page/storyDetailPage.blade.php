@@ -22,7 +22,12 @@
     </div>
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
         <div class="align-center boder-dashed">
-            <h2 class="font-30">{{$story ->story_name}}</h2>
+            <h2 class="font-25 col-purple">{{$story ->story_name}}</h2>
+        </div>
+        <div class="align-center m-t-20">
+            <h3 class="font-20 col-purple">Đánh Giá</h3>
+            <div class="rateit" data-productid="{{$story ->story_name_link}}" data-rateit-value="{{$story ->story_rating}}" data-rateit-min="0" data-rateit-max="10"></div><span class="badge bg-purple font-20 m-l-5 rateit-text">{{$story ->story_rating}}</span>
+            <h6 class="font-italic comment-rateit-text">Đã có <span class="rating_sum">{{$story ->story_rating_sum}}</span> lược đánh giá <span class="rating">{{$story ->story_rating}}</span>/10</h6>
         </div>
         <ul class="list-unstyled">
             <li>&nbsp;</li>
@@ -67,7 +72,7 @@
 <div class="row">
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-t-20">
     <div class="align-center boder-dashed m-b-10">
-            <h3 class="font-25">TÓM LƯỢC</h3>
+            <h3 class="font-25 col-purple">Tóm Lược</h3>
     </div>
     <span>
     {!! $story ->story_intro !!}
@@ -113,3 +118,14 @@
     </div>
 </div>
 @endsection
+<!-- Custom Js -->
+@section('customJs')
+<link href="{{ asset('plugins/rateit/src/rateit.css') }}" rel="stylesheet" />
+<script src="{{ asset('plugins/jquery-cookie/jquery.cookie.js') }}"></script>
+<script src="{{ asset('plugins/rateit/src/jquery.rateit.min.js') }}"></script>
+<script src="{{ asset('js/storydetail.js') }}"></script>
+<script type="text/javascript">
+  var base_url = '{!! url('/rating/'. $story ->story_name_link) !!}';
+</script>
+@endsection
+<!-- #END# Custom Js -->

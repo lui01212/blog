@@ -36,24 +36,6 @@
     </div>
 </div>
 @endforeach
-
-@if ($stories->lastPage() > 1)
-<div class="card">
-<ul class="pagination">
-    <li class="{{ ($stories->currentPage() == 1) ? ' disabled' : '' }}">
-        <a href="{{ $stories->url(1) }}">Previous</a>
-    </li>
-    @for ($i = 1; $i <= $stories->lastPage(); $i++)
-        <li class="{{ ($stories->currentPage() == $i) ? ' active' : '' }}">
-            <a href="{{ $stories->url($i) }}">{{ $i }}</a>
-        </li>
-    @endfor
-    <li class="{{ ($stories->currentPage() == $stories->lastPage()) ? ' disabled' : '' }}">
-        <a href="{{ $stories->url($stories->currentPage()+1) }}" >Next</a>
-    </li>
-</ul>
-</div>
-@endif
 @else
 <h3>{{__('KẾT QUẢ TÌM KIẾM  '. mb_strtoupper($keyword ,'UTF-8') . ' KHÔNG TỒN TẠI')}}</h3>
 @endif

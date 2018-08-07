@@ -21,11 +21,14 @@
                         <h2><i class="material-icons">whatshot</i>TRUYỆN HOT</h2>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-5 col-xs-5 col-md-offset-6  col-lg-offset-6">
-                        <select class="form-control">
-                            @foreach($storyType as $type)
-                                <option value="{{$type ->type_name_link}}">{{$type->type_name}}</option>
-                            @endforeach
-                        </select>
+                        <form method="POST" action="{{ route('typepageredirect.index') }}">
+                            {{ csrf_field() }}
+                            <select class="form-control"  onchange="this.form.submit()" name="type_name_link">
+                                @foreach($storyType as $type)
+                                    <option value="{{$type ->type_name_link}}">{{$type->type_name}}</option>
+                                @endforeach
+                            </select>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -111,7 +114,7 @@
                                         @foreach(unserialize($story ->story_type) as $types)
                                                 @if($types == $type ->type_id)
                                                 {{$step}}<a class="font-14" title="{{$type->type_name}}" href="{{route('typepage.index',['type_name_link'=>$type->type_name_link])}}">{{$type->type_name}}</a>
-                                                <?php $step =','; ?>
+                                                <?php $step =', '; ?>
                                                 @break;
                                                 @endif
                                         @endforeach
@@ -171,7 +174,7 @@
                                                                         @if($types == $type ->type_id)
                                                                         {{$step}}
                                                                         {{$type->type_name}}
-                                                                        <?php $step =','; ?>
+                                                                        <?php $step =', '; ?>
                                                                         @break;
                                                                         @endif
                                                                 @endforeach
@@ -201,7 +204,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="row p-r-25 p-l-15">
                         <div class="block-header block-header-custum">
-                            <h2>TRUYỆN ĐÃ MỚI</h2>
+                            <h2>TRUYỆN MỚI</h2>
                         </div>
                         <ul class="list-group">
                         @foreach($storiesNew as $key => $story)
@@ -224,7 +227,7 @@
                                                                         @if($types == $type ->type_id)
                                                                         {{$step}}
                                                                         {{$type->type_name}}
-                                                                        <?php $step =','; ?>
+                                                                        <?php $step =', '; ?>
                                                                         @break;
                                                                         @endif
                                                                 @endforeach
@@ -252,7 +255,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="row p-r-25 p-l-15">
                         <div class="block-header block-header-custum">
-                            <h2>TRUYỆN ĐÃ BTV ĐỀ CỬ</h2>
+                            <h2>TRUYỆN BTV ĐỀ CỬ</h2>
                         </div>
                         <ul class="list-group">
                         @foreach($storiesOffer as $key => $story)

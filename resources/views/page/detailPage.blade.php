@@ -23,6 +23,7 @@
 
 <!-- Custom Js -->
 @section('customJs')
-<!-- <script src="{{ asset('js/index.js') }}"></script> -->
+<!-- <link href="{{ asset('plugins/rateit/src/rateit.css') }}" rel="stylesheet" />
+<script src="{{ asset('plugins/rateit/src/jquery.rateit.min.js') }}"></script> -->
 @endsection
 <!-- #END# Custom Js -->

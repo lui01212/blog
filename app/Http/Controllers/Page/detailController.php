@@ -112,10 +112,17 @@ class detailController extends Controller
                                             'stories' => $stories,
                                             'author' =>$author]);
         }else{
-            return 'trang không tồn tại';
+            return redirect()->route('404');
         }
     }
     //
+    public function postStoryForType(Request $request){
+
+        $type_name_link = $request->input('type_name_link');
+
+        return redirect()->route('typepage.index',['type_name_link'=>$type_name_link]);
+
+    }
     public  function getStoryForType($type_name_link){
 
         $storyType = StoryType::all();
@@ -220,7 +227,7 @@ class detailController extends Controller
                                             ,'storiesHotMonth'=>$storiesHotMonth
                                             ,'storiesHotAll'=>$storiesHotAll,'storyType'=>$storyType,'stories' => $stories,'type' => $type]);
         }else{
-            return 'trang không tồn tại';
+            return redirect()->route('404');
         }
     }
 
@@ -317,7 +324,7 @@ class detailController extends Controller
                                             ,'storiesHotMonth'=>$storiesHotMonth
                                             ,'storiesHotAll'=>$storiesHotAll,'storyType'=>$storyType,'story'=> $story,'stories'=>$stories]);
         }else{
-            return 'trang không tồn tại';
+            return redirect()->route('404');
         }
     }
     public function postSeachPage(Request $request){
@@ -413,7 +420,7 @@ class detailController extends Controller
                         ,'story_authors.author_name_link'
                         )
 
-                    ->paginate(5);
+                    ->get();
         }else{
 
             $stories = null;
@@ -478,6 +485,8 @@ class detailController extends Controller
                             )
 
                     ->first();
+        if($chapter == null) return redirect()->route('404');
+        if($chapter->chapter == null )  return redirect()->route('404');
 
         $chaptercurrent = $chapter->chapter;
 
@@ -522,5 +531,23 @@ class detailController extends Controller
                     ->first();
 
         return view('page.chapterPage',['storyType'=>$storyType,'chapterPrev' =>$chapterPrev,'chapter' =>$chapter,'chapterNext' =>$chapterNext]);
+    }
+    public function getRating($story_name_link,$rating){
+
+        $stories = DB::table('stories') ->where('stories.story_name_link',$story_name_link)->first();
+
+        if($stories == null) return redirect()->route('404');
+
+        $rating  = ($rating*1 + $stories->story_rating*$stories->story_rating_sum)/($stories->story_rating_sum +1);
+
+        $rating  = round($rating,2);
+
+        DB::table('stories') ->where('stories.story_name_link',$story_name_link)->update(['story_rating'=>$rating ,'story_rating_sum'=>$stories->story_rating_sum + 1]);
+
+        return response()->json([
+                'rating' => $rating,
+                'story_rating_sum' => $stories->story_rating_sum + 1
+        ]);
+
     }
 }

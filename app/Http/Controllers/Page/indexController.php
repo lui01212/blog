@@ -24,6 +24,9 @@ class indexController extends Controller
                             $leftjoin->on('story_authors.author_id','stories.author_id')
                                      ->where('stories.flag','=',1);
                     })
+					->where('stories.story_rating','>=','9')
+
+					->where('stories.story_view','>','10000')
 
     				->select('stories.story_name'
     					,'stories.story_name_link'
@@ -136,7 +139,7 @@ class indexController extends Controller
 
 					->get();
 		//----------------------------------------------------------------------//
-		$storiesNew= DB::table('stories')
+		$storiesNew = DB::table('stories')
                     ->leftjoin('story_authors',function($leftjoin){
                             $leftjoin->on('story_authors.author_id','stories.author_id')
                                      ->where('stories.flag','=',1);

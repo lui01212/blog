@@ -32,7 +32,7 @@
                                         @foreach(unserialize($story ->story_type) as $types)
                                                 @if($types == $type ->type_id)
                                                 {{$step}}<a title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
-                                                <?php $step =','; ?>
+                                                <?php $step =', '; ?>
                                                 @break;
                                                 @endif
                                         @endforeach
@@ -58,7 +58,7 @@
                                         @foreach(unserialize($story ->story_type) as $types)
                                                 @if($types == $type ->type_id)
                                                 {{$step}}<a title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
-                                                <?php $step =','; ?>
+                                                <?php $step =', '; ?>
                                                 @break;
                                                 @endif
                                         @endforeach
@@ -84,7 +84,7 @@
                                         @foreach(unserialize($story ->story_type) as $types)
                                                 @if($types == $type ->type_id)
                                                 {{$step}}<a title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
-                                                <?php $step =','; ?>
+                                                <?php $step =', '; ?>
                                                 @break;
                                                 @endif
                                         @endforeach
