@@ -1,10 +1,15 @@
 @extends('page.detailPage')
+
+@section('description','Đọc truyện '.$story ->story_name.' chương mới nhất của tác giả '. $story->author_name)
+
+@section('keywords',$story ->story_name.', truyện '.$story ->story_name .',đọc truyện '.$story ->story_name.', truyện '. $story ->story_name.' full ,'. $story->author_name)
+
 @section('breadcrumb')
 <div class="row clearfix" style="margin: 80px 0 0 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <ol class="breadcrumb align-center">
-            <li><a href="{{ url('/') }}"><i class="material-icons">home</i> Home</a></li>
-            <li><a href="javascript:void(0);"><i class="material-icons">library_books</i>{{$story ->story_name}}</a></li>
+            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="{{ url('/') }}"><i class="material-icons">home</i><span itemprop="title">Home</span></a></li>
+            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="{{ URL::current() }}"><i class="material-icons">library_books</i><span itemprop="title">{{$story ->story_name}}</span></a></li>
         </ol>
     </div>
 </div>
@@ -14,24 +19,24 @@
 <div class="block-header block-header-custum">
     <h2>THÔNG TIN TRUYỆN</h2>
 </div>
-<div class="row">
+<div class="row" itemscope itemtype="http://schema.org/Book">
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <a href="javascript:void(0);" class="thumbnail" style="height: 80%;width: 80%; margin:0 auto;">
-            <img src="{{asset('images/' . $story ->story_image )}}" style="height: 100%;width: 100%;" >
+            <img itemprop="image" src="{{asset('images/' . $story ->story_image )}}" style="height: 100%;width: 100%;" >
         </a>
     </div>
     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
         <div class="align-center boder-dashed">
-            <h2 class="font-25 col-purple">{{$story ->story_name}}</h2>
+            <h2 itemprop="name"  class="font-25 col-purple">{{$story ->story_name}}</h2>
         </div>
-        <div class="align-center m-t-20">
+        <div class="align-center m-t-20" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
             <h3 class="font-20 col-purple">Đánh Giá</h3>
             <div class="rateit" data-productid="{{$story ->story_name_link}}" data-rateit-value="{{$story ->story_rating}}" data-rateit-min="0" data-rateit-max="10"></div><span class="badge bg-purple font-20 m-l-5 rateit-text">{{$story ->story_rating}}</span>
-            <h6 class="font-italic comment-rateit-text">Đã có <span class="rating_sum">{{$story ->story_rating_sum}}</span> lược đánh giá <span class="rating">{{$story ->story_rating}}</span>/10</h6>
+            <h6 class="font-italic comment-rateit-text">Đã có <span class="rating_sum" itemprop="ratingCount" >{{$story ->story_rating_sum}}</span> lược đánh giá <span class="rating" itemprop="ratingValue">{{$story ->story_rating}}</span>/<span itemprop="bestRating">10</span></h6>
         </div>
         <ul class="list-unstyled">
             <li>&nbsp;</li>
-            <li><span class="font-bold">Tác Giả : </span><span>{{$story->author_name}}</span></li>
+            <li itemprop="author" itemscope itemtype="http://schema.org/Person" ><span class="font-bold">Tác Giả : </span><a itemprop="url" href="{{route('authorpage.index',['author'=>$story ->author_name_link])}}" title="{{$story ->author_name}}"><span itemprop="name">{{$story->author_name}}</span></a></li>
             <li>&nbsp;</li>
             <li><span class="font-bold">Thể Loại :</span>
             <span>
@@ -39,7 +44,7 @@
             @foreach($storyType as $type)
                 @foreach(unserialize($story ->story_type) as $types)
                         @if($types == $type ->type_id)
-                        {{$step}}<a title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
+                        {{$step}}<a itemprop="genre" title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
                         <?php $step =','; ?>
                         @break;
                         @endif
@@ -68,6 +73,9 @@
             <a href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}"" class="btn bg-pink btn-block btn-lg waves-effect">ĐỌC TỪ ĐẦU</a>
             @endforeach
     </div>
+    <span class="none" itemprop="description">
+    {!! $story ->story_intro !!}
+    </span>
 </div>
 <div class="row">
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-t-20">
@@ -116,6 +124,27 @@
     </ul>
     @endif
     </div>
+</div>
+@endsection
+@section('description_Sidebar')
+<?php 
+    $arrayColor  = array('bg-green' ,'bg-light-green','bg-lime','bg-yellow','bg-amber','bg-orange','bg-deep-orange','bg-brown','bg-grey','bg-blue-grey');
+?>
+<div class="row p-r-25 p-l-15">
+    <div class="block-header block-header-custum">
+        <h2>TRUYỆN CÙNG TÁC GIẢ</h2>
+    </div>
+    <ul class="list-group">
+    @foreach($authorStory as  $key => $story)
+            <li class="list-group-item text-overflow">
+                <button type="button" class="btn {{$arrayColor[$key]}} btn-circle waves-effect waves-circle waves-float m-r-5" style="width: 30px;height: 30px; line-height: 15px;">
+                        {{$key +1 }}
+                </button>
+                <a href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span class="style:">{{$story->story_name}}</span>
+                </a>
+            </li>
+    @endforeach
+    </ul>
 </div>
 @endsection
 <!-- Custom Js -->

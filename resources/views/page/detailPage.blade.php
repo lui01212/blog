@@ -12,6 +12,7 @@
                     <!-- hot For Sidebars -->
                     @include('page.custumPage.hotSidebar')
                     <!-- #END# hot For Sidebars -->
+                    @yield('description_Sidebar')
                 </div>
             </div>
             <!-- #END# Badges -->

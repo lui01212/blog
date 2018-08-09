@@ -33,4 +33,3 @@ function stopAuutoLoadChapter(){
 	 	$('#i_stopautoloadchapter').text('CHO PHÉP');
 	 }
 }
-$

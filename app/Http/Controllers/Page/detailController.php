@@ -240,6 +240,12 @@ class detailController extends Controller
                         ->leftjoin('story_authors','stories.author_id','=','story_authors.author_id')
 
                         ->first();
+        $authorStory   = DB::table('story_authors')->where('story_authors.author_id',$story->author_id)
+                                                   ->leftjoin('stories','stories.author_id','=','story_authors.author_id')
+                                                   ->select('stories.story_name'
+                                                        ,'stories.story_name_link'
+                                                    )
+                                                   ->get();
         // ---------------------------------------------------------------------//  
         //----------------------------------------------------------------------//
         $storiesHotWeek = DB::table('stories')
@@ -322,7 +328,10 @@ class detailController extends Controller
 
     	   return view('page.storyDetailPage',['storiesHotWeek'=>$storiesHotWeek
                                             ,'storiesHotMonth'=>$storiesHotMonth
-                                            ,'storiesHotAll'=>$storiesHotAll,'storyType'=>$storyType,'story'=> $story,'stories'=>$stories]);
+                                            ,'storiesHotAll'=>$storiesHotAll,'storyType'=>$storyType
+                                            ,'story'=> $story
+                                            ,'stories'=>$stories
+                                            ,'authorStory'=> $authorStory]);
         }else{
             return redirect()->route('404');
         }

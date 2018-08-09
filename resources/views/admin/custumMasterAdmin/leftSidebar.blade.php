@@ -29,6 +29,12 @@
                     </li>
                 </ul>
             </li>
+            <li class="{{ request()->is('admin/autoloadlist') ? 'active' : '' }}">
+                <a href="{{ route('autoloadlist.index') }}">
+                    <i class="material-icons">view_list</i>
+                    <span>Auto Loading</span>
+                </a>
+            </li>
         </ul>
     </div>
     <!-- #Menu -->

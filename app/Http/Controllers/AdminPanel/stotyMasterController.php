@@ -61,6 +61,9 @@ class stotyMasterController extends Controller
         $StoryType  = new StoryType();
         $StoryType  ->type_name      = $typeName;
         $StoryType  ->type_name_link = str_slug($typeName);
+        $StoryType  ->keywords       = $request->input('keywords');
+        $StoryType  ->description    = $request->input('description');
+        $StoryType  ->description_head    = $request->input('description_head');
         $StoryType  ->flag = 1;
         $StoryType  ->save();
         //
@@ -105,6 +108,12 @@ class stotyMasterController extends Controller
         $storyType = storyType::find($id);
 
         $storyType->type_name = $request->input('type_name');
+
+        $storyType->keywords  = $request->input('keywords');
+
+        $storyType->description  = $request->input('description');
+
+        $storyType->description_head  = $request->input('description_head');
 
         $storyType->flag = $request->input('flag');
         //

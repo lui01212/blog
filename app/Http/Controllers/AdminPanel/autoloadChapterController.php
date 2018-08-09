@@ -20,6 +20,10 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 use App\storyListDetail;
 
+use App\autoloading;
+
+
+
 class autoloadChapterController extends Controller
 {
      /**
@@ -85,6 +89,15 @@ class autoloadChapterController extends Controller
             //
             $Stories ->save();
             /////////////////////////////////////////////////////////////
+            $autoloading1 = autoloading::updateOrCreate(
+                 ['story_id' => $id], ['story_id' => $id,'auto_chapter_link' => $link,'auto_flag'=>1,'flag'=>1]
+            );
+            if($link_next !=""){
+                $autoloading2 = autoloading::updateOrCreate(
+                 ['story_id' => $id], ['story_id' => $id,'auto_chapter_link' => $link_next,'auto_flag'=>2,'flag'=>1]
+                );
+            }
+            /////////////////////////////////////////////////////////////
             DB::commit();
             /////////////////////////////////////////////////////////////
             $user = Auth::user();
@@ -109,11 +122,12 @@ class autoloadChapterController extends Controller
     public function autoupload(Request $request,$id)
     {
         try{
-            $link_next = $request ->chapter_link;
+            $link_next      = $request ->chapter_link;
             $chapter_to = $request ->chapter_to;
             $chapter_from = $request ->chapter_from;
             for ($i= $chapter_to; $i <= $chapter_from ; $i++) { 
                 try{
+                    $link_save      = $link_next;
                     $html = HtmlDomParser::file_get_html($link_next);
                     $chapter_name = $html->find('div.container h1',0)->innertext();
                     $chapter_content = $html ->find('div.txt',0) ->innertext();
@@ -142,9 +156,22 @@ class autoloadChapterController extends Controller
                 $Stories = Stories::find($id);
                 //
                 $Stories ->story_sum_chapter = $i;
-                //
+                //////////////////////////////////
+                DB::beginTransaction();
                 $storyListDetail  ->save();
                 $Stories ->save();
+                DB::commit();
+                //////////////////////////////////
+                $autoloading1 = autoloading::updateOrCreate(
+                 ['story_id' => $id], ['story_id' => $id,'auto_chapter_link' => $link_save,'auto_flag'=>1,'flag'=>1]
+                );
+            }
+            /////////////////////////////////////////////////////////////
+
+            if($link_next !=""){
+                $autoloading2 = autoloading::updateOrCreate(
+                 ['story_id' => $id], ['story_id' => $id,'auto_chapter_link' => $link_next,'auto_flag'=>2,'flag'=>1]
+                );
             }
             /////////////////////////////////////////////////////////////
             $user = Auth::user();

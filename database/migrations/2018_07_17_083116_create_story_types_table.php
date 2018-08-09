@@ -17,6 +17,8 @@ class CreateStoryTypesTable extends Migration
             $table->increments('type_id');
             $table->string('type_name');
             $table->string('type_name_link');
+            $table->text('keywords');
+            $table->text('description');
             $table->integer('flag');
             $table->timestamps();
         });

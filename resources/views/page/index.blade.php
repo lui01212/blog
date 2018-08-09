@@ -1,13 +1,24 @@
 @extends('layouts.masterPage')
 
+@section('description','Đọc truyện online hay nhất.Luôn cập nhật những truyện hay và truyện hot liên tục với các thể loại truyện Kiếm hiệp, Tiên hiệp, Sắc hiệp, Đô thị, Ngôn tình, Truyện Convert, Truyện VIP, Truyện Dịch Hoàn Thành Full')
+
+@section('keywords','Đọc truyện, truyện hay,doc truyen online,truyen chu,truyện tiên hiệp')
+
 @section('breadcrumb')
 <div class="row clearfix" style="margin: 80px 0 0 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <ol class="breadcrumb align-center">
-            <li><a href="{{ url('/') }}"><i class="material-icons">home</i> Home</a></li>
+            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="{{ url('/') }}"><i class="material-icons">home</i><span itemprop="title" >Home</span></a></li>
         </ol>
     </div>
 </div>
+@endsection
+
+@section('OpenGraph')
+<meta property="og:title" content="" />
+<meta property="og:type" content="" />
+<meta property="og:url" content="" />
+<meta property="og:image" content="" />
 @endsection
 
 @section('content')
@@ -49,11 +60,11 @@
                             @if($key == 7)
                                 @break;
                             @endif
-                        <div class="my-card">
-                            <img src="{{asset('images/' . $story ->story_image )}}" />
+                        <div class="my-card" itemscope itemtype="http://schema.org/Book">
+                            <img itemprop="image" src="{{asset('images/' . $story ->story_image )}}" />
                             <div class="my-card-content">
-                                <p>{{$story ->story_name}}</p>
-                                <a href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" class="btn bg-pink btn-block btn-xs waves-effect">Đọc<span class="badge">{{round ($story ->story_view/1000 , 2)}}Kv</span></a>
+                                <p itemprop="name">{{$story ->story_name}}</p>
+                                <a itemprop="url" href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" class="btn bg-pink btn-block btn-xs waves-effect">Đọc<span class="badge">{{round ($story ->story_view/1000 , 2)}}Kv</span></a>
                             </div>
                         </div>
                         @endforeach
@@ -71,11 +82,11 @@
                         @if($key < 7)
                             @continue;
                         @endif
-                    <div class="column col-lg-2 col-md-2 col-sm-4 col-xs-4  m-t-25">
-                        <img class="hover-shadow" src="{{asset('images/' . $story ->story_image )}}" style="width: 100%" />
+                    <div class="column col-lg-2 col-md-2 col-sm-4 col-xs-4  m-t-25" itemscope itemtype="http://schema.org/Book">
+                        <img itemprop="image" class="hover-shadow" src="{{asset('images/' . $story ->story_image )}}" style="width: 100%" />
                         <div class="top-right"><span class="badge bg-pink">New</span></div>
                         <div class="column-contents">
-                            <h6 class="text-nowrap"><a href="{{route('storydetailpage.index',['story'=> $story ->story_name_link])}}" >{{$story->story_name}}</a></h6>
+                            <h6 class="text-nowrap" itemprop="name" ><a itemprop="url" href="{{route('storydetailpage.index',['story'=> $story ->story_name_link])}}" >{{$story->story_name}}</a></h6>
                             <h6 class="col-teal">{{$story->story_sum_chapter}} chương</h6>
                         </div>
                         <a href="{{route('storydetailpage.index',['story'=> $story ->story_name_link])}}" class="btn bg-pink btn-block btn-xs waves-effect">Đọc<span class="badge">{{round ($story ->story_view/1000 , 2)}}Kv</span></a>
@@ -104,16 +115,16 @@
                         <h2>TRUYỆN MỚI CẬP NHẬT</h2>
                     </div>
                     @foreach($storiesNewUpdate as $story)
-                    <div class="row row-list-item">
+                    <div class="row row-list-item" itemscope itemtype="http://schema.org/Book">
                         <div class="col-lg-5 col-md-5 col-sm-6 col-xs-9 font-16">
-                            <span class="glyphicon glyphicon-chevron-right"></span><a href="{{route('storydetailpage.index',['story'=>$story ->story_name_link])}}" title="{{$story ->story_name}}">{{$story ->story_name}}</a>
+                            <span class="glyphicon glyphicon-chevron-right"></span><a itemprop="url" href="{{route('storydetailpage.index',['story'=>$story ->story_name_link])}}" title="{{$story ->story_name}}"><h3 itemprop="name" class="none">{{$story ->story_name}}</h3>{{$story ->story_name}}</a>
                         </div>
                         <div class="col-lg-3 col-md-0 col-sm-2 col-xs-0">
                             <?php $step = ''; ?>
                             @foreach($storyType as $type)
                                         @foreach(unserialize($story ->story_type) as $types)
                                                 @if($types == $type ->type_id)
-                                                {{$step}}<a class="font-14" title="{{$type->type_name}}" href="{{route('typepage.index',['type_name_link'=>$type->type_name_link])}}">{{$type->type_name}}</a>
+                                                {{$step}}<a itemprop="genre" class="font-14" title="{{$type->type_name}}" href="{{route('typepage.index',['type_name_link'=>$type->type_name_link])}}">{{$type->type_name}}</a>
                                                 <?php $step =', '; ?>
                                                 @break;
                                                 @endif
@@ -163,8 +174,8 @@
                                             {{$key +1 }}
                                             </button>
                                         </div>
-                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-overflow align-center">
-                                            <a class="btn bg-purple waves-effect" href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span>{{$story->story_name}}</span>
+                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-overflow align-center" itemscope itemtype="http://schema.org/Book">
+                                            <a itemprop="url" class="btn bg-purple waves-effect" href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span itemprop="name">{{$story->story_name}}</span>
                                             </a>
                                             <div class="m-t-10 font-12">
                                                 <p>Thể loại:
@@ -216,8 +227,8 @@
                                             {{$key +1 }}
                                             </button>
                                         </div>
-                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-overflow align-center">
-                                            <a class="btn bg-purple waves-effect" href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span>{{$story->story_name}}</span>
+                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-overflow align-center" itemscope itemtype="http://schema.org/Book">
+                                            <a itemprop="url" class="btn bg-purple waves-effect" href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span itemprop ="name">{{$story->story_name}}</span>
                                             </a>
                                             <div class="m-t-10 font-12">
                                                 <p>Thể loại:
@@ -267,8 +278,8 @@
                                             {{$key +1 }}
                                             </button>
                                         </div>
-                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-overflow align-center">
-                                            <a class="btn bg-purple waves-effect" href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span>{{$story->story_name}}</span>
+                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-overflow align-center" itemscope itemtype="http://schema.org/Book">
+                                            <a  itemprop="url" class="btn bg-purple waves-effect" href="{{route('storydetailpage.index',['story_name_link'=> $story ->story_name_link])}}" ><span itemprop="name">{{$story->story_name}}</span>
                                             </a>
                                             <div class="m-t-10 font-12">
                                                 <p>Thể loại:
@@ -284,7 +295,7 @@
                                                                 @endforeach
                                                     @endforeach
                                                 </p>
-                                                <p>Tác Giả :{{$story->author_name}}</p>
+                                                <p>Tác Giả :<h4>{{$story->author_name}}<h4></p>
                                             </div>
                                         </div>
                                     </div>

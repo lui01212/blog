@@ -4,9 +4,9 @@
 <div class="row clearfix" style="margin: 80px 0 0 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <ol class="breadcrumb align-center">
-            <li><a href="{{ url('/') }}"><i class="material-icons">home</i> Home</a></li>
-            <li><a href="{{route('storydetailpage.index',['story'=>$chapter ->story_name_link])}}"><i class="material-icons">library_books</i>{{$chapter ->story_name}}</a></li>
-            <li><a href="javascript:void(0);" class="active"><i class="material-icons">archive</i>{{$chapter ->chapter_name}}</a></li>
+            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb" ><a itemprop="url" href="{{ url('/') }}"><i class="material-icons">home</i><span itemprop="title">Home</span></a></li>
+            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a  itemprop="url" href="{{route('storydetailpage.index',['story'=>$chapter ->story_name_link])}}"><i class="material-icons">library_books</i><span itemprop="title">{{$chapter ->story_name}}</span></a></li>
+            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a   itemprop="url" href="{{ URL::current() }}"><i class="material-icons">archive</i><span itemprop="title">{{$chapter ->chapter_name}}</span></a></li>
         </ol>
     </div>
 </div>

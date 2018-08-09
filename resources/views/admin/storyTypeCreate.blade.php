@@ -36,7 +36,23 @@
                             <label id="email-error" class="error" for="email">{{ $errors->first('type_name') }}</label>
                             @endif
                         </div>
-						
+                        <label for="keywords">keywords</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text"  name ="keywords" id="keywords" class="form-control" placeholder="Nhập keywords .....">
+                            </div>
+                        </div>
+                        <label for="description_head">MÔ TẢ HEAD</label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text"  name ="description_head" id="description_head" class="form-control">
+                            </div>
+                        </div>
+						<label for="type_name">MÔ TẢ</label>
+                        <div class="form-group">
+                            <textarea id="tinymce" name="description">
+                            </textarea>
+                        </div>
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">THÊM</button>
                     </form>
                 </div>
@@ -50,6 +66,27 @@
 
 <!-- Custom Js -->
 @section('customJs')
+<!-- TinyMCE -->
+<script src="{{ asset('plugins/tinymce/tinymce.js') }}"></script>
 <script src="{{ asset('js/admin.js') }}"></script>
+<script language="javascript">
+    //TinyMCE
+    tinymce.init({
+        selector: "textarea#tinymce",
+        theme: "modern",
+        height: 300,
+        plugins: [
+            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            'searchreplace wordcount visualblocks visualchars code fullscreen',
+            'insertdatetime media nonbreaking save table contextmenu directionality',
+            'emoticons template paste textcolor colorpicker textpattern imagetools'
+        ],
+        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        toolbar2: 'print preview media | forecolor backcolor emoticons',
+        image_advtab: true
+    });
+    tinymce.suffix = ".min";
+    tinyMCE.baseURL = "{{ asset('plugins/tinymce') }}";
+</script>
 @endsection
 <!-- #END# Custom Js -->

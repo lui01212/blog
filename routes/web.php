@@ -88,4 +88,13 @@ Route::group(['prefix' => 'admin'],function(){
 		Route::post('/{id}/autoupload',['as' =>'autoloadchapter.autoupload','uses' =>'AdminPanel\\autoloadChapterController@autoupload']);
 		//
 	});
+	//-----------------------------------------------------------------------
+	//autoloadList
+	//-----------------------------------------------------------------------
+	Route::group(['prefix' => 'autoloadlist'],function(){
+		//
+		Route::get('/',['as' =>'autoloadlist.index','uses' =>'AdminPanel\\autoloadingListController@index']);
+		//
+		Route::post('/{id}/store',['as' =>'autoloadlist.store','uses' =>'AdminPanel\\autoloadingListController@store']);
+	});
 });
