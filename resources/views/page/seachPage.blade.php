@@ -4,6 +4,16 @@
 
 @section('keywords',$keyword .', truyen , truyen '.$keyword .', tim kiem')
 
+@section('OpenGraph')
+<meta name="ROBOTS" content="INDEX, FOLLOW">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="{{ __('Đọc Truyện Online|Truyện Hay Nhất') }}">
+<meta property="og:description" content="{{'kết quả tìm kiếm '. $keyword)}}">
+<meta property="og:url" content="{{ URL::current() }}">
+<meta property="og:site_name" content="filter">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{asset('images/logo.jpg')}}">
+@endsection
 
 @section('breadcrumb')
 <div class="row clearfix" style="margin: 80px 0 0 0;">

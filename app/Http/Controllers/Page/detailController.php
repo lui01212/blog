@@ -475,6 +475,10 @@ class detailController extends Controller
     public function getChapterPage($story_name_link,$chapter_name_link){
 
         $storyType = StoryType::all();
+
+        $updateStory = DB::table('stories')->where('story_name_link','=',$story_name_link)
+        
+                                           ->increment('story_view');
         //----------------------------------------------------------------------//
         $chapter = DB::table('stories')
 

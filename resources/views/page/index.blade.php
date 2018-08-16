@@ -15,10 +15,14 @@
 @endsection
 
 @section('OpenGraph')
-<meta property="og:title" content="" />
-<meta property="og:type" content="" />
-<meta property="og:url" content="" />
-<meta property="og:image" content="" />
+<meta name="ROBOTS" content="INDEX, FOLLOW">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="{{ __('Đọc Truyện Online|Truyện Hay Nhất') }}">
+<meta property="og:description" content="Đọc truyện online hay nhất.Luôn cập nhật những truyện hay và truyện hot liên tục với các thể loại truyện Kiếm hiệp, Tiên hiệp, Sắc hiệp, Đô thị, Ngôn tình, Truyện Convert, Truyện VIP, Truyện Dịch Hoàn Thành Full.">
+<meta property="og:url" content="{{ URL::current() }}">
+<meta property="og:site_name" content="main">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{asset('images/logo.jpg')}}">
 @endsection
 
 @section('content')
@@ -295,7 +299,7 @@
                                                                 @endforeach
                                                     @endforeach
                                                 </p>
-                                                <p>Tác Giả :<h4>{{$story->author_name}}<h4></p>
+                                                <p>Tác Giả :{{$story->author_name}}</p>
                                             </div>
                                         </div>
                                     </div>

@@ -4,6 +4,17 @@
 
 @section('keywords',$author ->author_name .',truyen cua '.$author ->author_name .', tim kiem '.$author ->author_name)
 
+@section('OpenGraph')
+<meta name="ROBOTS" content="INDEX, FOLLOW">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="{{ __('Đọc Truyện Online|Truyện Hay Nhất') }}">
+<meta property="og:description" content="{{'tác các phẩm của '. $author ->author_name}}">
+<meta property="og:url" content="{{ URL::current() }}">
+<meta property="og:site_name" content="author">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{asset('images/logo.jpg')}}">
+@endsection
+
 @section('breadcrumb')
 <div class="row clearfix" style="margin: 80px 0 0 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

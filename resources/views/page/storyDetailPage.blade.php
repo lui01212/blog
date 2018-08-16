@@ -4,6 +4,17 @@
 
 @section('keywords',$story ->story_name.', truyện '.$story ->story_name .',đọc truyện '.$story ->story_name.', truyện '. $story ->story_name.' full ,'. $story->author_name)
 
+@section('OpenGraph')
+<meta name="ROBOTS" content="INDEX, FOLLOW">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="{{ __('Đọc Truyện Online|Truyện Hay Nhất') }}">
+<meta property="og:description" content="{{'Đọc truyện '.$story ->story_name.' chương mới nhất của tác giả '. $story->author_name}}">
+<meta property="og:url" content="{{ URL::current() }}">
+<meta property="og:site_name" content="detail">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{asset('images/' . $story ->story_image )}}">
+@endsection
+
 @section('breadcrumb')
 <div class="row clearfix" style="margin: 80px 0 0 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

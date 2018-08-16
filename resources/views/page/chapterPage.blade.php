@@ -1,5 +1,18 @@
 @extends('layouts.masterPage')
 
+@section('OpenGraph')
+<meta name="description" content="Bạn đang đọc truyện {{$chapter ->story_name}} {{$chapter ->chapter_name}} trên website đọc truyện online.">
+<meta name="keywords" content="Truyện {{$chapter ->story_name}} , {{$chapter ->chapter_name}}">
+<meta name="ROBOTS" content="INDEX, FOLLOW">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="{{ __('Đọc Truyện Online|Truyện Hay Nhất') }}">
+<meta property="og:description" content="Bạn đang đọc truyện {{$chapter ->story_name}} {{$chapter ->chapter_name}} trên website đọc truyện online.">
+<meta property="og:url" content="{{ URL::current() }}">
+<meta property="og:site_name" content="content">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{asset('images/logo.jpg')}}">
+@endsection
+
 @section('breadcrumb')
 <div class="row clearfix" style="margin: 80px 0 0 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -24,7 +37,7 @@
                 <a href="{{route('storydetailpage.index',['story_name_link'=> $chapter ->story_name_link])}}" class="truyen-title not-hover" href="{{route('storydetailpage.index',['story'=>$chapter ->story_name_link])}}" title="Thực Nhân Hoa"><h2 class="col-teal">{{$chapter ->story_name}}</h2></a>
             </div>
             <div class="align-center">
-                <span class="chapter-text">{{$chapter ->chapter_name}} </span>
+                <span class="font-14"><h3 class="font-18">{{$chapter ->chapter_name}}</h3></span>
             </div>
             <div class="align-center m-t-10">
                 <a @if($chapterPrev->chapter_name_link !=null) href="{{route('chapterpage.index',['story_name_link'=>$chapterPrev ->story_name_link,'chapter_name_link'=>$chapterPrev ->chapter_name_link])}}" @endif class="btn bg-pink waves-effect" @if($chapterPrev->chapter_name_link == null) disabled="disabled" @endif>
@@ -45,7 +58,7 @@
     <div class="row custum-width" style="margin: 0 auto;">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-r-10 p-l-0">
             <div class="content-chapter font-24 align-justify">
-                       {!!$chapter ->chapter_content!!}
+                {!!$chapter ->chapter_content!!}
             </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-l-30 p-r-30">
