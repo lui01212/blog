@@ -26,8 +26,8 @@ class indexController extends Controller
                     })
 					->where('stories.story_rating','>=','9')
 
-					->where('stories.story_view','>','10000')
-
+					->where('stories.story_status','=','1')
+					
     				->select('stories.story_name'
     					,'stories.story_name_link'
     					,'stories.story_sum_chapter'
@@ -35,6 +35,9 @@ class indexController extends Controller
     					,'stories.story_image'
     					,'story_authors.author_name'
     				)
+
+    				->orderBy('stories.story_view', 'desc')
+
     				->limit(13)
 
     				->get();
@@ -45,6 +48,9 @@ class indexController extends Controller
 		                                     ->on('story_list_details.chapter','=','stories.story_sum_chapter')
 		                                     ->where('story_list_details.flag','=',1);
 		                    })
+
+		                    ->where('stories.story_status','=','1')
+
 							->select('stories.story_name'
 									,'stories.story_name_link'
 									,'stories.story_type'
@@ -62,6 +68,7 @@ class indexController extends Controller
 		$storiesHotWeek = DB::table('stories')
 							->where('stories.story_rating','>=','9')
 							->where('stories.story_view','>','1000')
+							->where('stories.story_status','=','1')
 							->select('stories.story_name'
 								,'stories.story_image'
 								,'stories.story_name_link'
@@ -79,6 +86,8 @@ class indexController extends Controller
 							->where('stories.story_rating','>=','9')
 
 							->where('stories.story_view','>','1000')
+
+							->where('stories.story_status','=','1')
 
 							->where('stories.updated_at','>',date_modify(new \DateTime(), "-1 months"))
 
@@ -99,6 +108,8 @@ class indexController extends Controller
 						->where('stories.story_rating','>=','9')
 
 						->where('stories.story_view','>','1000')
+
+						->where('stories.story_status','=','1')
 
 						->select('stories.story_name'
 							,'stories.story_image'

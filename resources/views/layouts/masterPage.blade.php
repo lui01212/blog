@@ -92,7 +92,7 @@
                             </p>
                             <hr  width="30%" align="left" /> 
                             <div class="align-left">
-                                Truyện Tiên Hiệp Full - Đọc truyện online, đọc truyện chữ, truyện hay. Website luôn cập nhật những bộ truyện mới thuộc các thể loại đặc sắc như truyện tiên hiệp, truyện kiếm hiệp, hay truyện ngôn tình một cách nhanh nhất. Hỗ trợ mọi thiết bị như di động và máy tính bảng.
+                                Cuồng Truyện - Đọc truyện online, đọc truyện chữ, truyện hay. Website luôn cập nhật những bộ truyện mới thuộc các thể loại đặc sắc như truyện tiên hiệp, truyện kiếm hiệp, hay truyện ngôn tình một cách nhanh nhất. Hỗ trợ mọi thiết bị như di động và máy tính bảng.
                             </div>
                         </div>
                         <div class="col-md-5 m-t-10">
@@ -101,13 +101,13 @@
                             </p>
                             <hr  width="30%" align="left" /> 
                             <div class="align-left" style="display: inline-flex; float: left;">
-                                <i class="material-icons">email</i><span class="icon-name" style="margin-top: 3px;">truyentienhiepfull@gmail.com</span>
+                                <i class="material-icons">email</i><span class="icon-name" style="margin-top: 3px;">webcuongtruyen@gmail.com</span>
                             </div>
                         </div>
                     </div>
                     <div class="legal m-t-30">
                         <div class="copyright col-teal">
-                            &copy; 2018 <a href="javascript:void(0);">Admin - TruyenTienHiepFull</a>.
+                            &copy; 2018 <a href="javascript:void(0);">Admin - Cuongtruyen.com</a>.
                         </div>
                         <div class="version">
                             <b>Version: </b>1.0.0
@@ -118,6 +118,16 @@
         </div>
     </section>
     <div id="backtotop" style="display: block;">Back To Top</div>
+        <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.1&appId=2161062837497350&autoLogAppEvents=1';
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+     </script>
     <!-- Jquery Core Js -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     

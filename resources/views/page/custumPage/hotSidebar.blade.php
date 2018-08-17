@@ -1,5 +1,10 @@
-<div class="block-header block-header-custum">
-    <h2>TRUYỆN ĐANG HOT</h2>
+<div class="block-header" style="margin-top: 15px;
+    margin-bottom: 0px;" >
+    <div class="block-header-class">
+        <h3 class="block-header-content">         
+            <span>TRUYỆN ĐANG HOT</span>         
+        </h3>
+    </div>
 </div>
 <div class="card">
     <div class="body">
@@ -21,22 +26,22 @@
                 @foreach($storiesHotWeek as $story)
                 <div class="media media-custum" itemscope itemtype="http://schema.org/Book">
                     <div class="media-left">
-                        <a href="javascript:void(0);">
-                            <img itemprop="image" class="media-object" src="{{asset('images/' . $story ->story_image )}}" width="40" height="40">
+                        <a href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}">
+                            <img @if(Request::is('/')) alt="doc truyen,doc truyen online" title="doc truyen,doc truyen online" @endif @if(!Request::is('/')) alt="{{$story ->story_name}}" title="doc truyen,doc truyen online" @endif itemprop="image" class="media-object" src="{{asset('images/' . $story ->story_image )}}" width="40" height="40">
                         </a>
                     </div>
                     <div class="media-body">
                         <h4 itemprop="name" class="media-heading text-truncate"><a itemprop="url" href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}" title="{{$story->story_name}}">{{$story->story_name}}</a></h4>
-                            <?php $step = ''; ?>
-                            @foreach($storyType as $type)
-                                        @foreach(unserialize($story ->story_type) as $types)
-                                                @if($types == $type ->type_id)
-                                                {{$step}}<a itemprop="genre" title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
-                                                <?php $step =', '; ?>
-                                                @break;
-                                                @endif
-                                        @endforeach
-                            @endforeach
+                        <?php $step = ''; ?>
+                        @foreach($storyType as $type)
+                        @foreach(unserialize($story ->story_type) as $types)
+                        @if($types == $type ->type_id)
+                        {{$step}}<a itemprop="genre" title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
+                        <?php $step =', '; ?>
+                        @break;
+                        @endif
+                        @endforeach
+                        @endforeach
                     </div>
                 </div>
                 @endforeach
@@ -47,22 +52,22 @@
                 @foreach($storiesHotMonth as $story)
                 <div class="media media-custum" itemscope itemtype="http://schema.org/Book">
                     <div class="media-left">
-                        <a href="javascript:void(0);">
-                            <img itemprop="image" class="media-object" src="{{asset('images/' . $story ->story_image )}}" width="40" height="40">
+                        <a href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}">
+                            <img @if(Request::is('/')) alt="doc truyen,doc truyen online" title="doc truyen,doc truyen online" @endif  @if(!Request::is('/')) alt="{{$story ->story_name}}" title="doc truyen,doc truyen online" @endif  itemprop="image" class="media-object" src="{{asset('images/' . $story ->story_image )}}" width="40" height="40">
                         </a>
                     </div>
                     <div class="media-body">
                         <h4 itemprop="name" class="media-heading text-truncate"><a itemprop="url" href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}" title="{{$story->story_name}}">{{$story->story_name}}</a></h4>
-                            <?php $step = ''; ?>
-                            @foreach($storyType as $type)
-                                        @foreach(unserialize($story ->story_type) as $types)
-                                                @if($types == $type ->type_id)
-                                                {{$step}}<a itemprop="genre" title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
-                                                <?php $step =', '; ?>
-                                                @break;
-                                                @endif
-                                        @endforeach
-                            @endforeach
+                        <?php $step = ''; ?>
+                        @foreach($storyType as $type)
+                        @foreach(unserialize($story ->story_type) as $types)
+                        @if($types == $type ->type_id)
+                        {{$step}}<a itemprop="genre" title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
+                        <?php $step =', '; ?>
+                        @break;
+                        @endif
+                        @endforeach
+                        @endforeach
                     </div>
                 </div>
                 @endforeach
@@ -73,22 +78,22 @@
                 @foreach($storiesHotAll as $story)
                 <div class="media media-custum" itemscope itemtype="http://schema.org/Book">
                     <div class="media-left">
-                        <a href="javascript:void(0);">
-                            <img itemprop="image" class="media-object" src="{{asset('images/' . $story ->story_image )}}" width="40" height="40">
+                        <a href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}">
+                            <img @if(Request::is('/')) alt="doc truyen,doc truyen online" title="doc truyen,doc truyen online" @endif @if(!Request::is('/')) alt="{{$story ->story_name}}" title="doc truyen,doc truyen online" @endif itemprop="image" class="media-object" src="{{asset('images/' . $story ->story_image )}}" width="40" height="40">
                         </a>
                     </div>
                     <div class="media-body">
                         <h4 itemprop="name" class="media-heading text-truncate"><a itemprop="url" href="{{route('storydetailpage.index',['story'=>$story->story_name_link])}}" title="{{$story->story_name}}">{{$story->story_name}}</a></h4>
-                            <?php $step = ''; ?>
-                            @foreach($storyType as $type)
-                                        @foreach(unserialize($story ->story_type) as $types)
-                                                @if($types == $type ->type_id)
-                                                {{$step}}<a itemprop="genre" title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
-                                                <?php $step =', '; ?>
-                                                @break;
-                                                @endif
-                                        @endforeach
-                            @endforeach
+                        <?php $step = ''; ?>
+                        @foreach($storyType as $type)
+                        @foreach(unserialize($story ->story_type) as $types)
+                        @if($types == $type ->type_id)
+                        {{$step}}<a itemprop="genre" title="{{$type->type_name}}" href="{{route('typepage.index',['type'=>$type->type_name_link])}}">{{$type->type_name}}</a>
+                        <?php $step =', '; ?>
+                        @break;
+                        @endif
+                        @endforeach
+                        @endforeach
                     </div>
                 </div>
                 @endforeach

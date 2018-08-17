@@ -8,7 +8,7 @@
 <meta name="ROBOTS" content="INDEX, FOLLOW">
 <meta property="og:locale" content="vi_VN">
 <meta property="og:title" content="{{ __('Đọc Truyện Online|Truyện Hay Nhất') }}">
-<meta property="og:description" content="{{'kết quả tìm kiếm '. $keyword)}}">
+<meta property="og:description" content="{{'kết quả tìm kiếm '. $keyword}}">
 <meta property="og:url" content="{{ URL::current() }}">
 <meta property="og:site_name" content="filter">
 <meta property="og:type" content="website">
@@ -28,8 +28,13 @@
 
 @section('list-content')
 <!-- Badges -->
-<div class="block-header block-header-custum">
-    <h2>KẾT QUẢ TÌM KIẾM</h2>
+<div class="block-header">
+    <div class='block-header-class'>
+        <h2 class="block-header-content">         
+            <span>KẾT QUẢ TÌM KIẾM</span>
+        </h2>
+        <hr>
+    </div>
 </div>
 @if($stories)
 @foreach($stories as $story)
@@ -37,17 +42,17 @@
     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
         <div class="media media-custum" itemscope itemtype="http://schema.org/Book">
             <div class="media-left">
-                <a href="javascript:void(0);">
-                    <img itemprop="image" class="media-object" src="{{asset('images/' . $story ->story_image )}}"  width="80" height="80">
+                <a href="{{route('storydetailpage.index',['story'=>$story ->story_name_link])}}" title="{{$story ->story_name}}">
+                    <img alt="{{$keyword}}" title="Đọc truyện hay và mới nhất" itemprop="image" class="media-object" src="{{asset('images/' . $story ->story_image )}}"  width="80" height="80">
                 </a>
             </div>
             <div class="media-body">
-                <h4 class="media-heading" itemprop="name"><a itemprop="url" href="{{route('storydetailpage.index',['story'=>$story ->story_name_link])}}" title="{{$story ->story_name}}">{{$story ->story_name}}</a></h4><a itemprop="author" href="{{route('authorpage.index',['author'=>$story ->author_name_link])}}" title="{{$story ->author_name}}"><span >{{$story->author_name}}</span></a>
+                <h4 class="media-heading" itemprop="name"><a class="col-teal" itemprop="url" href="{{route('storydetailpage.index',['story'=>$story ->story_name_link])}}" title="{{$story ->story_name}}">{{$story ->story_name}}</a></h4><a itemprop="author" href="{{route('authorpage.index',['author'=>$story ->author_name_link])}}" title="{{$story ->author_name}}"><span >{{$story->author_name}}</span></a>
             </div>
         </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-        <a href="{{route('chapterpage.index',['story'=>$story ->story_name_link,'chapter'=>$story ->chapter_name_link])}}" title="{{$story ->story_name}} - Chương {{$story ->chapter}}"><span><span>Chương </span></span>{{$story ->chapter}}</a>
+        <a class="col-teal" href="{{route('chapterpage.index',['story'=>$story ->story_name_link,'chapter'=>$story ->chapter_name_link])}}" title="{{$story ->story_name}} - Chương {{$story ->chapter}}"><span><span>Chương </span></span>{{$story ->chapter}}</a>
     </div>
 </div>
 @endforeach
