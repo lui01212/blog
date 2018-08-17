@@ -518,7 +518,7 @@ class detailController extends Controller
 
                     ->where('stor.story_name_link','=',$story_name_link)
 
-                    ->where('stor.story_status','=','1')
+                    ->where('stor.flag','=','1')
 
                     ->select('stor.story_name'
                             ,'stor.story_name_link'
@@ -529,9 +529,9 @@ class detailController extends Controller
 
                     ->first();
                     
-        // if($chapter == null) return redirect()->route('404');
+        if($chapter == null) return redirect()->route('404');
 
-        // if($chapter->chapter == null )  return redirect()->route('404');
+        if($chapter->chapter == null )  return redirect()->route('404');
 
         $chaptercurrent = $chapter->chapter;
 
@@ -539,15 +539,13 @@ class detailController extends Controller
 
                     ->where('stor.story_name_link','=',$story_name_link)
 
-                    ->where('stor.story_status','=','1')
-
                     ->leftjoin('story_list_details AS  det',function($leftjoin)use($chaptercurrent){
                             $leftjoin->on('det.story_id','stor.story_id')
                                      ->where('det.chapter','>',$chaptercurrent)
-                                     ->where('det.flag','=',1);
+                                     ->where('det.flag','=','1');
                     })
 
-
+                    ->where('stor.flag','=','1')
 
                     ->select('stor.story_name_link'
                             ,'det.chapter_name_link'
@@ -564,15 +562,13 @@ class detailController extends Controller
 
                     ->where('stor.story_name_link','=',$story_name_link)
 
-                    ->where('stor.story_status','=','1')
-
                     ->leftjoin('story_list_details AS  det',function($leftjoin)use($chaptercurrent){
                             $leftjoin->on('det.story_id','stor.story_id')
                                      ->where('det.chapter','<',$chaptercurrent)
-                                     ->where('det.flag','=',1);
+                                     ->where('det.flag','=','1');
                     })
 
-
+                    ->where('stor.flag','=','1')
 
                     ->select('stor.story_name_link'
                             ,'det.chapter_name_link'
@@ -582,9 +578,9 @@ class detailController extends Controller
                     ->limit(1)
 
                     ->first();
+                    // return $chapterPrev;
 
-        // return view('page.chapterPage',['storyType'=>$storyType,'chapterPrev' =>$chapterPrev,'chapter' =>$chapter,'chapterNext' =>$chapterNext]);
-                    return $chapter_name_link;
+        return view('page.chapterPage',['storyType'=>$storyType,'chapterPrev' =>$chapterPrev,'chapter' =>$chapter,'chapterNext' =>$chapterNext]);
     }
     public function getRating($story_name_link,$rating){
 
