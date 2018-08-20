@@ -11,7 +11,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ __('Đọc Truyện Online|Truyện Hay Nhất') }}</title>
+    <title>@yield('title')</title>
 
     <!-- Favicon-->
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
@@ -44,7 +44,7 @@
           "target": "{{ URL::to('/') }}/search/{keyword}",
           "query-input": "required name=keyword"
         },
-         "description": "Đọc truyện online hay nhất.Luôn cập nhật những truyện hay và truyện hot liên tục với các thể loại truyện Kiếm hiệp, Tiên hiệp, Sắc hiệp, Đô thị, Ngôn tình, Truyện Convert, Truyện VIP, Truyện Dịch Hoàn Thành Full."
+         "description": "web truyện trực tuyến hay nhất.Luôn cập nhật những truyện hay nhất liên tục với các thể loại truyện Kiếm hiệp, Tiên hiệp, Sắc hiệp, Đô thị, Ngôn tình, Truyện Convert, Truyện VIP, Truyện Dịch Hoàn Thành Full."
     }
     </script>
     @yield('OpenGraph')

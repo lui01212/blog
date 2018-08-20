@@ -29,7 +29,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ __('Cuồng Truyện') }}
                     </a>
                 </div>
 
@@ -52,19 +52,16 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
+
+                                    @if(Auth::user() &&  Auth::user()->level == 1)
                                     <li>
-                                        <a href="{{ route('admin') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('Admin-form').submit();">
+                                        <a href="{{ route('admin') }}">
                                             Admin
                                         </a>
-
-                                        <form id="Admin-form" action="{{ route('admin') }}" method="GET" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
                                     </li>
+                                    @endif
                                     <li>
-                                        <a href="{{ route('logout') }}"
+                                        <a href="javascript:void(0);"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout

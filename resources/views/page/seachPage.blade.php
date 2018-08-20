@@ -4,6 +4,10 @@
 
 @section('keywords',$keyword .', truyen , truyen '.$keyword .', tim kiem')
 
+@section('title')
+    {{ 'Kết quả tìm kiếm '.$keyword }}
+@endsection
+
 @section('OpenGraph')
 <meta name="ROBOTS" content="INDEX, FOLLOW">
 <meta property="og:locale" content="vi_VN">

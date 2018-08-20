@@ -4,6 +4,10 @@
 
 @section('keywords',$author ->author_name .',truyen cua '.$author ->author_name .', tim kiem '.$author ->author_name)
 
+@section('title')
+    {{ 'Tác giả '.$author ->author_name }}
+@endsection
+
 @section('OpenGraph')
 <meta name="ROBOTS" content="INDEX, FOLLOW">
 <meta property="og:locale" content="vi_VN">

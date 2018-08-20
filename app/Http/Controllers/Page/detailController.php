@@ -19,71 +19,9 @@ class detailController extends Controller
 
     public  function getStoryForAuthor($author_name_link){
 
-        $storyType = StoryType::all();
-        //----------------------------------------------------------------------//
         $author =  StoryAuthor::where('author_name_link','=',$author_name_link)->first();
 
         if($author == null) return redirect()->route('404');
-        //----------------------------------------------------------------------//
-        //----------------------------------------------------------------------//
-        $storiesHotWeek = DB::table('stories')
-                            ->where('stories.story_rating','>=','9')
-                            ->where('stories.story_view','>','1000')
-                            ->where('stories.story_status','=','1')
-                            ->select('stories.story_name'
-                                ,'stories.story_image'
-                                ,'stories.story_name_link'
-                                ,'stories.story_type'
-                                ,'stories.story_sum_chapter'
-                                )
-                            ->orderBy('stories.story_rating', 'desc')
-
-                            ->limit(10)
-
-                            ->get();
-        //----------------------------------------------------------------------//
-        $storiesHotMonth = DB::table('stories')
-
-                            ->where('stories.story_rating','>=','9')
-
-                            ->where('stories.story_view','>','1000')
-
-                            ->where('stories.story_status','=','1')
-
-                            ->where('stories.updated_at','>',date_modify(new \DateTime(), "-1 months"))
-
-                            ->select('stories.story_name'
-                                ,'stories.story_image'
-                                ,'stories.story_name_link'
-                                ,'stories.story_type'
-                                ,'stories.story_sum_chapter'
-                            )
-                            ->orderBy('stories.story_rating', 'desc')
-
-                            ->limit(10)
-
-                            ->get();
-        //----------------------------------------------------------------------//
-        $storiesHotAll= DB::table('stories')
-
-                        ->where('stories.story_rating','>=','9')
-
-                        ->where('stories.story_view','>','1000')
-
-                        ->where('stories.story_status','=','1')
-
-                        ->select('stories.story_name'
-                            ,'stories.story_image'
-                            ,'stories.story_name_link'
-                            ,'stories.story_type'
-                            ,'stories.story_sum_chapter'
-                            )
-
-                        ->orderBy('stories.updated_at', 'desc')
-
-                        ->limit(10)
-
-                        ->get();
         //----------------------------------------------------------------------//
         $stories    = DB::table('story_authors')
 
@@ -93,13 +31,13 @@ class detailController extends Controller
 
                     ->leftjoin('stories',function($leftjoin){
                             $leftjoin->on('story_authors.author_id','stories.author_id')
-                                     ->where('stories.flag','=',1);
+                                     ->where('stories.flag','=','1');
                     })
 
                     ->leftjoin('story_list_details',function($leftjoin){
                             $leftjoin->on('story_list_details.story_id','stories.story_id')
                                      ->on('story_list_details.chapter','=','stories.story_sum_chapter')
-                                     ->where('story_list_details.flag','=',1);
+                                     ->where('story_list_details.flag','=','1');
                     })
 
                     ->select('stories.story_name'
@@ -111,17 +49,9 @@ class detailController extends Controller
                     )
 
                     ->paginate(15);
-        //----------------------------------------------------------------------//
-        if($author !=null){           
-    	    return view('page.authorPage',['storiesHotWeek'=>$storiesHotWeek
-                                            ,'storiesHotMonth'=>$storiesHotMonth
-                                            ,'storiesHotAll'=>$storiesHotAll,
-                                            'storyType'=>$storyType,
-                                            'stories' => $stories,
+        //----------------------------------------------------------------------//        
+    	return view('page.authorPage',['stories' => $stories,
                                             'author' =>$author]);
-        }else{
-            return redirect()->route('404');
-        }
     }
     //
     public function postStoryForType(Request $request){
@@ -132,95 +62,33 @@ class detailController extends Controller
 
     }
     public  function getStoryForType($type_name_link){
-
-        $storyType = StoryType::all();
         //----------------------------------------------------------------------//
         $type =  storyType::where('type_name_link','=',$type_name_link)->first();
 
         if($type == null) return redirect()->route('404');
         // ---------------------------------------------------------------------//
-        //----------------------------------------------------------------------//
-        $storiesHotWeek = DB::table('stories')
-                            ->where('stories.story_rating','>=','9')
-                            ->where('stories.story_view','>','1000')
-                            ->where('stories.story_status','=','1')
-                            ->select('stories.story_name'
-                                ,'stories.story_image'
-                                ,'stories.story_name_link'
-                                ,'stories.story_type'
-                                ,'stories.story_sum_chapter'
-                                )
-                            ->orderBy('stories.story_rating', 'desc')
-
-                            ->limit(10)
-
-                            ->get();
-        //----------------------------------------------------------------------//
-        $storiesHotMonth = DB::table('stories')
-
-                            ->where('stories.story_rating','>=','9')
-
-                            ->where('stories.story_view','>','1000')
-
-                            ->where('stories.story_status','=','1')
-
-                            ->where('stories.updated_at','>',date_modify(new \DateTime(), "-1 months"))
-
-                            ->select('stories.story_name'
-                                ,'stories.story_image'
-                                ,'stories.story_name_link'
-                                ,'stories.story_type'
-                                ,'stories.story_sum_chapter'
-                            )
-                            ->orderBy('stories.story_rating', 'desc')
-
-                            ->limit(10)
-
-                            ->get();
-        //----------------------------------------------------------------------//
-        $storiesHotAll= DB::table('stories')
-
-                        ->where('stories.story_rating','>=','9')
-
-                        ->where('stories.story_view','>','1000')
-
-                        ->where('stories.story_status','=','1')
-
-                        ->select('stories.story_name'
-                            ,'stories.story_image'
-                            ,'stories.story_name_link'
-                            ,'stories.story_type'
-                            ,'stories.story_sum_chapter'
-                            )
-
-                        ->orderBy('stories.updated_at', 'desc')
-
-                        ->limit(10)
-
-                        ->get();
-        //----------------------------------------------------------------------//
         $stories   = DB::table('story_types')
 
                     ->where('story_types.type_name_link','=',$type_name_link)
 
-                    ->where('story_types.flag','=',1) 
+                    ->where('story_types.flag','=','1') 
 
                     ->leftjoin('story_type_details','story_type_details.type_id','=','story_types.type_id')
 
                     ->leftjoin('stories',function($leftjoin){
                             $leftjoin->on('story_type_details.story_id','stories.story_id')
-                                     ->where('stories.flag','=',1);
+                                     ->where('stories.flag','=','1');
                     })
 
                     ->leftjoin('story_list_details',function($leftjoin){
                             $leftjoin->on('story_list_details.story_id','stories.story_id')
                                      ->on('story_list_details.chapter','=','stories.story_sum_chapter')
-                                     ->where('story_list_details.flag','=',1);
+                                     ->where('story_list_details.flag','=','1');
                     })
 
                     ->leftjoin('story_authors',function($leftjoin){
                             $leftjoin->on('story_authors.author_id','stories.author_id')
-                                     ->where('stories.flag','=',1);
+                                     ->where('stories.flag','=','1');
                     })
 
                     ->select('story_types.type_name'
@@ -237,13 +105,7 @@ class detailController extends Controller
                     ->paginate(15);
         // ---------------------------------------------------------------------//
         // ------------------------------EXIT-----------------------------------//
-        if($type != null){
-    	   return view('page.typePage',['storiesHotWeek'=>$storiesHotWeek
-                                            ,'storiesHotMonth'=>$storiesHotMonth
-                                            ,'storiesHotAll'=>$storiesHotAll,'storyType'=>$storyType,'stories' => $stories,'type' => $type]);
-        }else{
-            return redirect()->route('404');
-        }
+    	return view('page.typePage',['stories' => $stories,'type' => $type]);
     }
 
     public function getStoryDetail($story_name_link){
@@ -265,75 +127,16 @@ class detailController extends Controller
                                                     )
                                                    ->get();
         // ---------------------------------------------------------------------//  
-        //----------------------------------------------------------------------//
-        $storiesHotWeek = DB::table('stories')
-                            ->where('stories.story_rating','>=','9')
-                            ->where('stories.story_view','>','1000')
-                            ->where('stories.story_status','=','1')
-                            ->select('stories.story_name'
-                                ,'stories.story_image'
-                                ,'stories.story_name_link'
-                                ,'stories.story_type'
-                                ,'stories.story_sum_chapter'
-                                )
-                            ->orderBy('stories.story_rating', 'desc')
-
-                            ->limit(10)
-
-                            ->get();
-        //----------------------------------------------------------------------//
-        $storiesHotMonth = DB::table('stories')
-
-                            ->where('stories.story_rating','>=','9')
-
-                            ->where('stories.story_view','>','1000')
-
-                            ->where('stories.story_status','=','1')
-
-                            ->where('stories.updated_at','>',date_modify(new \DateTime(), "-1 months"))
-
-                            ->select('stories.story_name'
-                                ,'stories.story_image'
-                                ,'stories.story_name_link'
-                                ,'stories.story_type'
-                                ,'stories.story_sum_chapter'
-                            )
-                            ->orderBy('stories.story_rating', 'desc')
-
-                            ->limit(10)
-
-                            ->get();
-        //----------------------------------------------------------------------//
-        $storiesHotAll= DB::table('stories')
-
-                        ->where('stories.story_rating','>=','9')
-
-                        ->where('stories.story_view','>','1000')
-
-                        ->where('stories.story_status','=','1')
-
-                        ->select('stories.story_name'
-                            ,'stories.story_image'
-                            ,'stories.story_name_link'
-                            ,'stories.story_type'
-                            ,'stories.story_sum_chapter'
-                            )
-
-                        ->orderBy('stories.updated_at', 'desc')
-
-                        ->limit(10)
-
-                        ->get();
         //----------------------------------------------------------------------//             
         $stories  = DB::table('stories')
 
                         ->where('story_name_link','=',$story_name_link)
 
-                        ->where('stories.flag','=',1) 
+                        ->where('stories.flag','=','1') 
 
                         ->leftjoin('story_list_details',function($leftjoin){
                             $leftjoin->on('story_list_details.story_id','stories.story_id')
-                                     ->where('story_list_details.flag','=',1);
+                                     ->where('story_list_details.flag','=','1');
                         })
 
                         ->select('stories.story_name'
@@ -346,85 +149,42 @@ class detailController extends Controller
 
                         ->paginate(50);
 
-        // ---------------------------------------------------------------------//   
-        if($story != null){
+        $stories5Top  = DB::table('stories')
 
-    	   return view('page.storyDetailPage',['storiesHotWeek'=>$storiesHotWeek
-                                            ,'storiesHotMonth'=>$storiesHotMonth
-                                            ,'storiesHotAll'=>$storiesHotAll,'storyType'=>$storyType
-                                            ,'story'=> $story
+                        ->where('story_name_link','=',$story_name_link)
+
+                        ->where('stories.flag','=','1') 
+
+                        ->leftjoin('story_list_details',function($leftjoin){
+                            $leftjoin->on('story_list_details.story_id','stories.story_id')
+                                     ->where('story_list_details.flag','=','1');
+                        })
+
+                        ->select(
+                            'stories.story_name'
+                            ,'stories.story_name_link'
+                            ,'story_list_details.chapter_name'
+                            ,'story_list_details.chapter_name_link'
+                            ,'story_list_details.created_at'
+                        )
+
+                        ->orderBy('story_list_details.chapter', 'desc')
+
+                        ->limit(5)
+
+                        ->get();
+
+        // ---------------------------------------------------------------------//   
+
+    	return view('page.storyDetailPage',['story'=> $story
                                             ,'stories'=>$stories
+                                            ,'stories5Top'=>$stories5Top
                                             ,'authorStory'=> $authorStory]);
-        }else{
-            return redirect()->route('404');
-        }
     }
     public function postSeachPage(Request $request){
-
-        $storyType = StoryType::all();
         //----------------------------------------------------------------------//
         $keyword = $request->input('search');
         //----------------------------------------------------------------------//
-        $storiesHotWeek = DB::table('stories')
-                            ->where('stories.story_rating','>=','9')
-                            ->where('stories.story_view','>','1000')
-                            ->where('stories.story_status','=','1')
-                            ->select('stories.story_name'
-                                ,'stories.story_image'
-                                ,'stories.story_name_link'
-                                ,'stories.story_type'
-                                ,'stories.story_sum_chapter'
-                                )
-                            ->orderBy('stories.story_rating', 'desc')
-
-                            ->limit(10)
-
-                            ->get();
-        //----------------------------------------------------------------------//
-        $storiesHotMonth = DB::table('stories')
-
-                            ->where('stories.story_rating','>=','9')
-
-                            ->where('stories.story_view','>','1000')
-
-                            ->where('stories.story_status','=','1')
-
-                            ->where('stories.updated_at','>',date_modify(new \DateTime(), "-1 months"))
-
-                            ->select('stories.story_name'
-                                ,'stories.story_image'
-                                ,'stories.story_name_link'
-                                ,'stories.story_type'
-                                ,'stories.story_sum_chapter'
-                            )
-                            ->orderBy('stories.story_rating', 'desc')
-
-                            ->limit(10)
-
-                            ->get();
-        //----------------------------------------------------------------------//
-        $storiesHotAll= DB::table('stories')
-
-                        ->where('stories.story_rating','>=','9')
-
-                        ->where('stories.story_view','>','1000')
-
-                        ->where('stories.story_status','=','1')
-
-                        ->select('stories.story_name'
-                            ,'stories.story_image'
-                            ,'stories.story_name_link'
-                            ,'stories.story_type'
-                            ,'stories.story_sum_chapter'
-                            )
-
-                        ->orderBy('stories.updated_at', 'desc')
-
-                        ->limit(10)
-
-                        ->get();
-        //----------------------------------------------------------------------//
-
         if($keyword !== null){
 
         $stories   = DB::table('stories')
@@ -432,12 +192,12 @@ class detailController extends Controller
                     ->leftjoin('story_list_details',function($leftjoin){
                             $leftjoin->on('story_list_details.story_id','stories.story_id')
                                      ->on('story_list_details.chapter','=','stories.story_sum_chapter')
-                                     ->where('story_list_details.flag','=',1);
+                                     ->where('story_list_details.flag','=','1');
                     })
 
                     ->leftjoin('story_authors',function($leftjoin){
                             $leftjoin->on('story_authors.author_id','stories.author_id')
-                                     ->where('stories.flag','=',1);
+                                     ->where('stories.flag','=','1');
                     })
 
                     ->where('stories.story_name','like','%' . $keyword . 'a%') 
@@ -463,9 +223,7 @@ class detailController extends Controller
             $stories = null;
 
         }
-    	return view('page.seachPage',['storiesHotWeek'=>$storiesHotWeek
-                                            ,'storiesHotMonth'=>$storiesHotMonth
-                                            ,'storiesHotAll'=>$storiesHotAll,'storyType'=>$storyType,'keyword'=>$keyword,'stories'=> $stories]);
+    	return view('page.seachPage',['keyword'=>$keyword,'stories'=> $stories]);
     }
     public function getSeachPage($keyword){
 
@@ -477,9 +235,10 @@ class detailController extends Controller
 
                     ->leftjoin('story_authors',function($leftjoin){
                             $leftjoin->on('story_authors.author_id','stories.author_id')
-                                     ->where('stories.flag','=',1);
+                                     ->where('stories.flag','=','1');
                     })
                     ->where('stories.flag','=',1) 
+
                     ->where(function ($query)use($keyword){
                             $query->where('stories.story_name','like','%' . $keyword . '%') 
                                   ->orWhere('story_authors.author_name','like','%' . $keyword . '%');
@@ -502,8 +261,6 @@ class detailController extends Controller
     }
     public function getChapterPage($story_name_link,$chapter_name_link){
 
-        $storyType = StoryType::all();
-
         $updateStory = DB::table('stories')->where('story_name_link','=',$story_name_link)
         
                                            ->increment('story_view');
@@ -513,7 +270,7 @@ class detailController extends Controller
                     ->leftjoin('story_list_details AS  det',function($leftjoin)use($chapter_name_link){
                             $leftjoin->on('det.story_id','stor.story_id')
                                      ->where('det.chapter_name_link','=',$chapter_name_link)
-                                     ->where('det.flag','=',1);
+                                     ->where('det.flag','=','1');
                     })
 
                     ->where('stor.story_name_link','=',$story_name_link)
@@ -578,9 +335,8 @@ class detailController extends Controller
                     ->limit(1)
 
                     ->first();
-                    // return $chapterPrev;
 
-        return view('page.chapterPage',['storyType'=>$storyType,'chapterPrev' =>$chapterPrev,'chapter' =>$chapter,'chapterNext' =>$chapterNext]);
+        return view('page.chapterPage',['chapterPrev' =>$chapterPrev,'chapter' =>$chapter,'chapterNext' =>$chapterNext]);
     }
     public function getRating($story_name_link,$rating){
 

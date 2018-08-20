@@ -4,6 +4,10 @@
 
 @section('keywords',$type ->keywords)
 
+@section('title')
+    {{ 'Truyện '.$type ->type_name }}
+@endsection
+
 @section('OpenGraph')
 <meta name="ROBOTS" content="INDEX, FOLLOW">
 <meta property="og:locale" content="vi_VN">

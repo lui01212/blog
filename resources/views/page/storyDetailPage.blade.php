@@ -4,6 +4,10 @@
 
 @section('keywords',$story ->story_name.', truyện '.$story ->story_name .',đọc truyện '.$story ->story_name.', truyện '. $story ->story_name.' full ,'. $story->author_name)
 
+@section('title')
+    {{ 'Truyện '.$story ->story_name }}
+@endsection
+
 @section('OpenGraph')
 <meta name="ROBOTS" content="INDEX, FOLLOW">
 <meta property="og:locale" content="vi_VN">
@@ -44,7 +48,7 @@
                     <a href="javascript:void(0);" class="thumbnail" style="height: 100%; width: 100%; margin: 0 auto;">
                         <img alt="{{$story ->story_name}}" itemprop="image" src="{{asset('images/' . $story ->story_image )}}" style="max-height: 300px; width: 100%;">
                     </a>
-                                        @foreach($stories as $key => $value)
+                    @foreach($stories as $key => $value)
                     @if($key == 1) 
                     @break;
                     @endif
@@ -104,8 +108,23 @@
                         <h3 class="font-25 col-teal">Tóm Lược</h3>
                         <hr width="30%" align="center">
                     </div>
-                    <div class="p-l-10 p-r-10 p-t-10 p-b-10 font-20" style="background-color: #f9f9f9;">
+                    <div class="p-l-10 p-r-10 p-t-10 p-b-10 font-16 align-justify" style="background-color: #f9f9f9;">
                         {!! $story ->story_intro !!}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="align-left m-b-10">
+                        <h3 class="font-20 col-teal">Các Chương Mới Nhất</h3>
+                        <hr width="30%" align="left">
+                    </div>
+                    <div class="p-l-10 p-r-10 p-t-10 p-b-10 font-16 align-justify" style="background-color: #f9f9f9;">
+                        @foreach($stories5Top as $key => $value)
+                        <div class="list-item" style="background-color: #f9f9f9;">
+                            <span class="glyphicon glyphicon-certificate"></span><a class="m-l-5 col-blue-grey"  href="{{route('chapterpage.index',['story_name_link'=>$value ->story_name_link,'chapter_name_link'=>$value->chapter_name_link])}}" title="Vương {{$value ->story_name}} - {{$value->chapter_name}}">{{$value->chapter_name}}-( cập nhật vào lúc {{\Carbon\Carbon::parse($value->created_at)->format('H:m d/m/Y')}})</a>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

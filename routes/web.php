@@ -97,4 +97,13 @@ Route::group(['prefix' => 'admin'],function(){
 		//
 		Route::post('/{id}/store',['as' =>'autoloadlist.store','uses' =>'AdminPanel\\autoloadingListController@store']);
 	});
+	//-----------------------------------------------------------------------
+	//autoloadList
+	//-----------------------------------------------------------------------
+	Route::group(['prefix' => 'deleteScript'],function(){
+		//
+		Route::get('/',['as' =>'deleteScript.index','uses' =>'AdminPanel\\deleteScriptController@index']);
+		//
+		Route::post('/{id}/update',['as' =>'deleteScript.update','uses' =>'AdminPanel\\deleteScriptController@update']);
+	});
 });

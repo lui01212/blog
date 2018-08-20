@@ -1,5 +1,9 @@
 @extends('layouts.masterPage')
 
+@section('title')
+    {{ $chapter ->story_name.' - '.$chapter ->chapter_name }}
+@endsection
+
 @section('OpenGraph')
 <meta name="description" content="Bạn đang đọc truyện {{$chapter ->story_name}} {{$chapter ->chapter_name}} trên website đọc truyện online.">
 <meta name="keywords" content="Truyện {{$chapter ->story_name}} , {{$chapter ->chapter_name}}">
@@ -31,7 +35,7 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-l-30 p-r-30">
             <div class="align-center p-t-10">
-                <button class="btn bg-purple btn-block btn-xs waves-effect full-page" style="width:  200px;" onclick="if($.cookie('ffullpage') == '1') {$.cookie('ffullpage',0,{ path: '/' });}else{$.cookie('ffullpage',1,{ path: '/' }); } ">Full Màn Hình</button>
+                <button class="btn bg-purple btn-block btn-lg btn-xs waves-effect full-page" style="width:  200px;" onclick="if($.cookie('ffullpage') == '1') {$.cookie('ffullpage',0,{ path: '/' });}else{$.cookie('ffullpage',1,{ path: '/' }); } ">Full Màn Hình</button>
             </div>
             <div class="align-center">
                 <a href="{{route('storydetailpage.index',['story_name_link'=> $chapter ->story_name_link])}}" class="truyen-title not-hover" href="{{route('storydetailpage.index',['story'=>$chapter ->story_name_link])}}" title="Thực Nhân Hoa"><h2 class="col-teal">{{$chapter ->story_name}}</h2></a>

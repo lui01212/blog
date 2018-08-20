@@ -4,6 +4,10 @@
 
 @section('keywords','Đọc truyện, truyện hay,doc truyen online,truyen chu,truyện tiên hiệp')
 
+@section('title')
+    {{ __('Cuồng Truyện|Đọc Truyện Online-Truyện Hay Nhất') }}
+@endsection
+
 @section('breadcrumb')
 <div class="row clearfix" style="margin: 80px 0 0 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -152,7 +156,7 @@
                         </div>
                         <div class="col-lg-2 col-md-3 col-sm-2 col-xs-0">
                             <?php 
-                            $date = new DateTime($story->updated_at);
+                            $date = new DateTime($story->created_at);
                             $now  = new DateTime('now');
                             $diff = $now->getTimestamp() - $date->getTimestamp();
                             ?>
@@ -348,6 +352,35 @@
 </div>
 </div>
 </div>
+    <div class="row m-t-50">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="block-header">
+                <div class='block-header-class'>
+                    <h2 class="block-header-content">         
+                        <span>REVIEW TRUYỆN</span>
+                    </h2>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+            @foreach($storiesReview as $key => $story)
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" itemscope itemtype="http://schema.org/Book">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="{{route('chapterpage.index',['story'=>$story->story_name_link,'chapter'=>$story ->chapter_name_link])}}">
+                            <img class="media-object" alt="doc truyen,doc truyen online" title="doc truyen,doc truyen online" itemprop="image" src="{{asset('images/' . $story ->story_image )}}" width="129" height="192">
+                        </a>
+                    </div>
+                    <div class="media-body align-justify" style="max-height: 192px; ">
+                        <h4 class="media-heading align-left"><a itemprop="url" href="{{route('chapterpage.index',['story'=>$story->story_name_link,'chapter'=>$story ->chapter_name_link])}}" class="col-teal"><span itemprop="name">{{$story->story_name}}</span></a></h4><span itemprop="description"> {!! str_limit($story ->story_intro, 350) !!}</span>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            </div>
+    </div>
+</div>
+    </div>
 </div>
 @endsection
 <!-- #END# Content -->
